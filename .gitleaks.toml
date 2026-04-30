@@ -1,0 +1,17 @@
+# gitleaks configuration — extends the default ruleset.
+# See https://github.com/gitleaks/gitleaks for documentation.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow template placeholders and example config"
+paths = [
+  '''.env.example''',
+  '''docs/.*''',
+  '''\.claude/.*''',
+]
+regexes = [
+  '''sk-ant-xxxxxxxx''',
+  '''your[-_]?api[-_]?key[-_]?here''',
+]

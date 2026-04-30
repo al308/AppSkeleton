@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm install*)",
+      "Bash(npm run *)",
+      "Bash(npm test*)",
+      "Bash(npm ci*)",
+      "Bash(npx expo *)",
+      "Bash(npx tsc*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add *)",
+      "Bash(git branch*)",
+      "Bash(git switch*)",
+      "Bash(git checkout*)",
+      "Bash(gh pr view*)",
+      "Bash(gh pr list*)",
+      "Bash(gh issue view*)",
+      "Bash(gh issue list*)",
+      "Bash(just *)",
+      "Bash(sips -g hasAlpha assets/icon.png assets/adaptive-icon.png assets/favicon.png assets/spash.png docs/web/logo.png docs/web/og-image.png)",
+      "Bash(sips -z 192 192 /Users/alex/Desktop/Coding/AppSkeleton/assets/favicon.png)",
+      "Bash(sips --resampleWidth 1200 /Users/alex/Desktop/Coding/AppSkeleton/docs/web/og-image.png)",
+      "Bash(sips -c 630 1200 /Users/alex/Desktop/Coding/AppSkeleton/docs/web/og-image.png)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(rm -rf *)",
+      "Bash(npm uninstall*)",
+      "Bash(npm publish*)"
+    ],
+    "additionalDirectories": ["/Users/alex/Desktop/Coding/AppSkeleton/assets"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | xargs -I{} sh -c 'case \"{}\" in *.ts|*.tsx|*.js|*.jsx) npx prettier --write \"{}\" >/dev/null 2>&1 && npx eslint --fix \"{}\" >/dev/null 2>&1 ;; esac'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/protect-files.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre-commit-tests.sh",
+            "if": "Bash(git commit *)"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Reminder: spec → plan → phased implement → full check → commit. Never bypass tests.'"
+          }
+        ]
+      }
+    ]
+  }
+}
