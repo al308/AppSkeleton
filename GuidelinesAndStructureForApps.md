@@ -79,7 +79,7 @@ Below is the bullet list you'd typically have for a "vibe coding" setup, expande
 | Concern           | Choice                                                             | Why                                                                                               |
 | ----------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
 | Framework         | **Expo SDK 54** (managed workflow)                                 | Removes the ceremony of bare React Native; OTA updates, EAS Build, expo-router available.         |
-| Language          | **TypeScript 5.3+** with `strict`                                  | Compile-time guarantees for the parts of an app you can't easily test (props, navigation params). |
+| Language          | **TypeScript 5.9+** with `strict`                                  | Compile-time guarantees for the parts of an app you can't easily test (props, navigation params). |
 | Lint              | **ESLint 9** flat config + `eslint-config-expo`                    | Replaces tslint et al.; flat config is the supported path forward.                                |
 | Formatter         | **Prettier 3**                                                     | Plus `eslint-config-prettier` so the two don't fight.                                             |
 | Type checker      | **tsc --noEmit**                                                   | Don't roll your own; let the compiler do it.                                                      |
@@ -439,26 +439,27 @@ Report findings with file:line.
     "check": "npm run lint && npm run typecheck && npm test"
   },
   "dependencies": {
-    "expo": "~52.0.0",
-    "expo-status-bar": "~2.0.0",
-    "expo-system-ui": "~4.0.5",
-    "react": "18.3.1",
-    "react-native": "0.76.3",
-    "react-native-safe-area-context": "4.12.0"
+    "expo": "~54.0.0",
+    "expo-status-bar": "~3.0.9",
+    "expo-system-ui": "~6.0.9",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-safe-area-context": "~5.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",
-    "@testing-library/jest-native": "^5.4.3",
-    "@testing-library/react-native": "^12.7.2",
+    "@testing-library/react-native": "^13.0.0",
     "@types/jest": "^29.5.12",
-    "@types/react": "~18.3.12",
+    "@types/react": "~19.1.0",
+    "babel-preset-expo": "~54.0.10",
     "eslint": "^9.0.0",
-    "eslint-config-expo": "~8.0.1",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-expo": "~10.0.0",
+    "eslint-config-prettier": "^10.0.0",
     "jest": "^29.7.0",
-    "jest-expo": "~52.0.0",
+    "jest-expo": "~54.0.0",
     "prettier": "^3.3.3",
-    "typescript": "~5.3.3"
+    "react-test-renderer": "19.1.0",
+    "typescript": "~5.9.0"
   },
   "jest": {
     "preset": "jest-expo",
@@ -842,6 +843,41 @@ code .
 ```
 
 Turn the whole thing into a **template repo** on GitHub. Future apps: "Use template" → done in 30 seconds.
+
+### Bumping the Expo SDK
+
+`npx expo install --fix` only manages **prod** Expo deps. Dev-only packages drift silently if you don't touch them. The order that actually works (captured in [ADR 0003](docs/adr/0003-expo-sdk-upgrade-playbook.md)):
+
+```bash
+# 1. Bump expo itself
+npx expo install expo@~<NEW>.0.0
+
+# 2. Pull all expo-managed prod deps in line
+npx expo install --fix
+
+# 3. Manually bump dev-deps that step 2 won't touch:
+#    - @types/react        → must match React major exactly
+#    - react-test-renderer → pin tracks `react`
+#    - @testing-library/react-native → v12=React 18, v13=React 19
+#    - jest-expo, eslint-config-expo, babel-preset-expo → match SDK major
+#    - typescript          → bump conservatively
+
+# 4. Wipe and reinstall (deterministic)
+rm -rf node_modules package-lock.json
+npm install
+
+# 5. Verify
+npx expo-doctor
+just check
+```
+
+**Don't reach for `--legacy-peer-deps` / `--force`.** Hides real version mismatches. Always fix the underlying pin.
+
+**Watch for testing-library breakage.** v12 → v13 dropped the `extend-expect` setup path; matchers now auto-load. If `setupFilesAfterEnv` complains about a missing module after the bump, just delete that array entry from `package.json`.
+
+### Known transitive vulnerabilities
+
+`npm audit` typically reports a handful of low/moderate findings inside Expo's own dependency tree (`@expo/cli`, `expo-asset`, etc.). These cannot be fixed locally — `npm audit fix` does nothing because the constraint comes from `expo` itself. The CI gate is intentionally `--audit-level=high`, so they don't block. Track Expo's release notes; usually one or two SDK minors clear them.
 
 ---
 

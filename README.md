@@ -100,7 +100,7 @@ Sub-agents available:
 ├── CLAUDE.md            # Project system prompt for Claude
 ├── package.json
 ├── tsconfig.json        # TypeScript strict
-├── .eslintrc.js         # ESLint config (extends eslint-config-expo)
+├── eslint.config.mjs    # ESLint flat config (extends eslint-config-expo)
 └── .prettierrc
 ```
 

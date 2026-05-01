@@ -3,7 +3,7 @@
 ## Stack
 
 - Expo SDK 54 (React Native + TypeScript), managed workflow
-- Lint: ESLint (`eslint-config-expo`) | Format: Prettier | Types: tsc --noEmit (strict) | Tests: Jest via `jest-expo`
+- Lint: ESLint 9 flat config (`eslint-config-expo`) | Format: Prettier | Types: tsc --noEmit (strict) | Tests: Jest via `jest-expo`
 - Static docs site: hand-written HTML/CSS under `docs/web/`
 
 ## Commands (use these, don't guess)
