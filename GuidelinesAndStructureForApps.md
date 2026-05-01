@@ -78,7 +78,7 @@ Below is the bullet list you'd typically have for a "vibe coding" setup, expande
 
 | Concern           | Choice                                                             | Why                                                                                               |
 | ----------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| Framework         | **Expo SDK 52** (managed workflow)                                 | Removes the ceremony of bare React Native; OTA updates, EAS Build, expo-router available.         |
+| Framework         | **Expo SDK 54** (managed workflow)                                 | Removes the ceremony of bare React Native; OTA updates, EAS Build, expo-router available.         |
 | Language          | **TypeScript 5.3+** with `strict`                                  | Compile-time guarantees for the parts of an app you can't easily test (props, navigation params). |
 | Lint              | **ESLint 9** flat config + `eslint-config-expo`                    | Replaces tslint et al.; flat config is the supported path forward.                                |
 | Formatter         | **Prettier 3**                                                     | Plus `eslint-config-prettier` so the two don't fight.                                             |
@@ -169,7 +169,7 @@ Keep it short. The official advice: _"For each line, ask: would removing this ca
 
 ## Stack
 
-- Expo SDK 52 (React Native + TypeScript), managed workflow
+- Expo SDK 54 (React Native + TypeScript), managed workflow
 - Lint: ESLint (flat config) | Format: Prettier | Types: tsc --noEmit (strict) | Tests: Jest via jest-expo
 
 ## Commands (use these, don't guess)

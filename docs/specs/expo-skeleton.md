@@ -6,7 +6,7 @@ Transform this repo from a Python project skeleton into a **skeleton for Expo (R
 
 ## Scope (in)
 
-- Expo SDK 52 (or latest stable) + React Native + TypeScript, managed workflow.
+- Expo SDK 54 (or latest stable) + React Native + TypeScript, managed workflow.
 - File-based routing with `expo-router` (single screen for now).
 - One screen rendering "Hello, world".
 - Static docs site with two pages: `index.html` (general info) and `privacy.html` (privacy policy), share a `styles.css`. Plain HTML/CSS — no build step.

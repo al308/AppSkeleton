@@ -2,7 +2,7 @@
 
 ## Stack
 
-- Expo SDK 52 (React Native + TypeScript), managed workflow
+- Expo SDK 54 (React Native + TypeScript), managed workflow
 - Lint: ESLint (`eslint-config-expo`) | Format: Prettier | Types: tsc --noEmit (strict) | Tests: Jest via `jest-expo`
 - Static docs site: hand-written HTML/CSS under `docs/web/`
 
@@ -52,7 +52,7 @@
 
 ## Dependency notes
 
-- `react-test-renderer` is pinned to `18.3.1` (matches `react@18.3.1`). Do NOT bump it independently — npm will pull `react-test-renderer@19` and break peer resolution against React 18.
+- `react-test-renderer` is pinned to match `react` exactly (currently `19.1.0`). Always bump them together — a mismatch between the two breaks Jest's renderer with cryptic peer-dep errors.
 - When adding a new Expo-managed dependency, use `npx expo install <pkg>` (not `npm install`). It picks the version compatible with the current Expo SDK.
 - When upgrading the Expo SDK, run `npx expo install --check` to bring all expo-managed packages in line.
 
