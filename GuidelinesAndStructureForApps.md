@@ -621,9 +621,24 @@ Then in **Settings → Branches → Branch protection rule** for `main`:
 
 ---
 
-## 11. Optional: Claude Code in CI (`.github/workflows/claude.yml`)
+## 11. Optional: Claude Code in CI (deliberately not shipped)
 
-Lets you mention `@claude` in an issue or PR comment and have Claude open a PR or review one. Useful when you're away from VS Code.
+The skeleton **does not** ship `.github/workflows/claude.yml`. This is on purpose, and worth understanding before you bring it back.
+
+The Anthropic GitHub Action lets you mention `@claude` in an issue or PR comment and have Claude open a PR or review one. As of May 2026 it requires either:
+
+- a paid **Anthropic API** key (`ANTHROPIC_API_KEY` repo secret) — usage billed pay-as-you-go via console.anthropic.com, **separate** from any Claude Pro / Max subscription, **or**
+- AWS Bedrock / Google Vertex / Microsoft Foundry credentials, billed via that provider.
+
+There is currently no OAuth path that reuses a Claude Pro / Max subscription — that was removed in 2025. So if you're a Pro/Max subscriber and you wire up the action with an `ANTHROPIC_API_KEY`, every `@claude` mention in CI burns separate API credits even though you're "already paying Anthropic".
+
+**Recommendation for solo / small teams:** stay in VS Code, talk to Claude there, let CI just gate (`quality` / `test` / `secrets`). Skip this workflow.
+
+**Recommendation when it becomes worth it:** you have multiple humans or you want async PR triage from your phone. Then:
+
+1. Buy API credits at [console.anthropic.com](https://console.anthropic.com).
+2. Set `ANTHROPIC_API_KEY` as a repo secret.
+3. Add `.github/workflows/claude.yml`. Reference template:
 
 ```yaml
 name: Claude
@@ -633,16 +648,30 @@ on:
     types: [created]
   pull_request_review_comment:
     types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
 
 jobs:
   claude:
-    if: contains(github.event.comment.body, '@claude')
+    # Only the repo owner can trigger — prevents drive-by credit burn on public repos.
+    # Add 'MEMBER' / 'COLLABORATOR' to the comparison if you want collaborators in.
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') && github.event.comment.author_association == 'OWNER') ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') && github.event.comment.author_association == 'OWNER') ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') && github.event.review.author_association == 'OWNER') ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) && github.event.issue.author_association == 'OWNER')
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       issues: write
+      id-token: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
