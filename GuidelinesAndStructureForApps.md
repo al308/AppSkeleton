@@ -910,7 +910,27 @@ just check
 
 ---
 
-## 18. Summary — where each rule lives
+## 18. Shipping — release runbook & lessons learned
+
+Everything above gets you to a working, well-guarded app. Two docs cover the
+last mile — getting it into the stores and not relearning the same lessons each
+time:
+
+- **[docs/RELEASE.md](./docs/RELEASE.md)** — the repeatable App Store + Play Store
+  submission runbook: account setup, the EAS credential model (keep
+  `submit.production` empty — credentials live in your EAS account, not the
+  repo), the pre-flight checklist, store-asset requirements, and the
+  **14-day / 12-tester Google Play closed-test gate** that is the Android
+  critical path. Read it *before* the first production build.
+- **[docs/LESSONS.md](./docs/LESSONS.md)** — cross-app hard-won knowledge: EAS
+  credentials, store-copy validation, feature-flag discipline, low-latency audio
+  (`expo-av` + `MixWithOthers`, lazy LRU sound cache), and doc hygiene
+  (one STATUS doc, verified against code each session). Append to it as every new
+  app teaches you something — that's what makes app N+1 cheaper than app N.
+
+---
+
+## 19. Summary — where each rule lives
 
 | Rule                       |     CLAUDE.md      | `.claude/rules` |        Sub-agent         |       Skill        |              Hook               |   pre-commit    |              CI              |
 | -------------------------- | :----------------: | :-------------: | :----------------------: | :----------------: | :-----------------------------: | :-------------: | :--------------------------: |
