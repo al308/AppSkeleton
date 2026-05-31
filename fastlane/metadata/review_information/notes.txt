@@ -1,0 +1,3 @@
+Notes for the App Review team: what the app does, how to exercise it, and any
+monetization / permissions / account facts. For an offline single-player app,
+state: no login, no ads, no IAP, no network calls, data stored locally only.

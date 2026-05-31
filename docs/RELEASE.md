@@ -122,3 +122,16 @@ App Review from App Store Connect.
 - Tag the release commit; add a `CHANGELOG.md` entry.
 - Record anything that surprised you in [LESSONS.md](./LESSONS.md) — that's how
   the next app starts faster.
+
+---
+
+## Store submission toolkit
+
+Reusable kit generalized from a real App Store launch (fill the `TODO(you)` placeholders):
+
+- **[STORE_PLAYBOOK.md](STORE_PLAYBOOK.md)** — hard-won lessons & traps.
+- **[../fastlane/README.md](../fastlane/README.md)** — automate the App Store listing via the ASC API (`fastlane ios metadata`); verify with `fastlane/scripts/asc-status.rb`.
+- **[../store-assets/](../store-assets/)** — metadata templates + asset checklist (Play Data Safety, 12-testers × 14-days closed test).
+- **[../web/](../web/)** + **[DEPLOY_WEBSITE.md](DEPLOY_WEBSITE.md)** — self-contained marketing + privacy/terms site (deploy before submitting).
+
+The reusable ASC **team key** is at the repo root (`AuthKey_*.p8`, gitignored) with its ids in `fastlane/.env` (gitignored).

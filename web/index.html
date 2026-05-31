@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- TODO(you): replace MyApp / tagline / URLs throughout -->
+    <title>MyApp — Tagline</title>
+    <meta name="description" content="One-line description of your app for search and previews." />
+    <link rel="icon" href="./assets/favicon.png" type="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MyApp — Tagline" />
+    <meta property="og:description" content="One-line description of your app." />
+    <meta property="og:image" content="./assets/icon-256.png" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #0a0a1a;
+        --surface: #12122a;
+        --border: #2a2a4a;
+        --accent: #7c5cfc;
+        --accent-light: #a78bfa;
+        --cyan: #60c8ff;
+        --text: #e2e2f0;
+        --text-muted: #8888aa;
+        --radius: 16px;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.7;
+        padding: 4rem 1.25rem;
+        background-image:
+          radial-gradient(circle at 18% 12%, rgba(124, 92, 252, 0.2), transparent 42%),
+          radial-gradient(circle at 85% 8%, rgba(96, 200, 255, 0.14), transparent 40%);
+        background-attachment: fixed;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .hero-icon {
+        width: 104px;
+        height: 104px;
+        border-radius: 24px;
+        box-shadow: 0 12px 40px rgba(124, 92, 252, 0.4);
+        margin-bottom: 1.5rem;
+      }
+      .logo {
+        font-size: clamp(2.4rem, 9vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: inline-block;
+      }
+      .tagline {
+        color: var(--text-muted);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin: 0.5rem 0 1.75rem;
+      }
+      .lede {
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        font-size: 1.1rem;
+      }
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+      }
+      .badge {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.45rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      .shots {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+      }
+      .shots img {
+        width: 220px;
+        max-width: 44vw;
+        border-radius: 22px;
+        border: 1px solid var(--border);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        padding-top: 2rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      footer a {
+        color: var(--accent-light);
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <img class="hero-icon" src="./assets/icon-256.png" alt="MyApp app icon" />
+      <h1 class="logo">MYAPP</h1>
+      <p class="tagline">Your one-line positioning</p>
+      <p class="lede">A short, friendly paragraph describing what the app does and why it's nice to use.</p>
+
+      <div class="badges">
+        <span class="badge">🆓 Free</span>
+        <span class="badge">📴 Offline</span>
+        <span class="badge">🚫 No ads</span>
+        <span class="badge">🔒 No data collected</span>
+      </div>
+
+      <div class="shots">
+        <!-- Drop a few phone screenshots in web/assets/screenshots/ -->
+        <img src="./assets/screenshots/01.png" alt="Screenshot 1" />
+        <img src="./assets/screenshots/02.png" alt="Screenshot 2" />
+        <img src="./assets/screenshots/03.png" alt="Screenshot 3" />
+      </div>
+
+      <footer>
+        <p>
+          <a href="./legal/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+          <a href="./legal/terms-of-service.html">Terms of Service</a> &nbsp;·&nbsp;
+          <a href="mailto:you@example.com">Contact</a>
+        </p>
+        <p style="margin-top: 0.75rem">© 2026 Your Name · MyApp</p>
+      </footer>
+    </div>
+  </body>
+</html>

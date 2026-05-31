@@ -1,0 +1,5 @@
+Your full App Store description goes here (max 4000 characters).
+
+Keep store claims truthful: every feature you mention (sound, modes, offline,
+etc.) must match what the shipped build actually does — mismatches get rejected
+and mislead users.

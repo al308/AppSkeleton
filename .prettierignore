@@ -6,3 +6,6 @@ ios
 android
 coverage
 package-lock.json
+
+# Store tooling / generated metadata (byte-exact for the stores)
+fastlane/

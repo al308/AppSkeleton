@@ -1,0 +1,10 @@
+# Reverse-DNS app id, must match app.json (iOS bundleIdentifier + Android package).
+# Convention used across these apps: com.<account>.<app>  (e.g. com.al3o8.myapp)
+app_identifier("com.example.app") # TODO(you)
+
+# Authentication uses an App Store Connect API key (see fastlane/README.md),
+# so apple_id / team ids are not required for the metadata lanes.
+#
+# If you want `fastlane ios create_app` (produce) to work, app creation needs an
+# Apple ID (the API key alone cannot create apps). Then set:
+# apple_id("you@example.com")   # TODO(you), only for produce

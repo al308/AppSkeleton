@@ -1,0 +1,2 @@
+What's new in this version. (Apple ignores this for the very first version —
+it only shows on updates.)
