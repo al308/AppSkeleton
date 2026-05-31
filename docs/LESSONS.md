@@ -103,7 +103,17 @@ Operational detail lives in [STORE_PLAYBOOK.md](./STORE_PLAYBOOK.md); the traps:
 - **Screenshots: right slot + no alpha.** 1320×2868 is *6.9"* (the only required
   size; ASC downscales for smaller phones), not 6.5". Flatten all store images.
 - **Bundle id is permanent** once the app exists in either store. Set `app.json`
-  (iOS + Android identical) before the first build; `ios/`/`android/` regenerate
-  from it.
+  (iOS + Android identical) before the first build; `ios`/`android` regenerate
+  from it. **And it's not the SKU** — if the record already exists, read the
+  *registered* bundle id off ASC (or `asc-status.rb`) and match config to it.
+  deliver looks the app up by bundle id; a mismatch is the real cause of the
+  `team_id nil` crash in `find_app`.
+- **No emoji in description / release notes.** Apple rejects them outright
+  (`Description can't contain the following character(s): …`). `×`, `—`, `•` are
+  fine; 🧩 ⭐ 🌌 are not.
+- **Keep `fastlane/` in `.prettierignore`.** Every deliver run regenerates
+  `fastlane/README.md` (and may touch `metadata/*.txt`); if it's not ignored, the
+  tree reads "unformatted" and blocks the next commit. A port that drops this
+  entry will fight the format hook on every store run.
 - **One `git commit` per step.** Batching a commit with other tool calls means a
   failing pre-commit hook cancels the whole batch and you misread stale output.
