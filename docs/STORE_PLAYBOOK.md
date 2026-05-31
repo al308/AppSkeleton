@@ -12,6 +12,11 @@ Hard-won lessons from shipping Expo/EAS apps to the App Store & Google Play.
   `bundleIdentifier` and Android `package` **identical** in `app.json`.
 - It is **permanent** once the app exists in either store — decide before the
   first build/app-record.
+- The **bundle id is not the SKU**. If the app record already exists, read the
+  registered bundle id off the ASC App Information page (or `asc-status.rb`) and
+  match `app.json` to *that* — don't assume your planned `com.<account>.<app>`.
+  `deliver` looks the app up by **bundle id**; a mismatch crashes `find_app`
+  with `undefined method 'team_id' for nil`.
 - `ios/` and `android/` are **gitignored**, regenerated from `app.json` by EAS
   prebuild. After changing the bundle id, the local `ios/` keeps the old value
   until `expo prebuild --clean`, but EAS rebuilds it fresh — so store builds use
@@ -66,6 +71,14 @@ noisy logs; query Apple directly.
 - Categories use API constants: `GAMES`, `GAMES_PUZZLE`, `GAMES_CASUAL`, …
 - deliver can't set: **age rating**, **App Privacy labels**, **pricing**, build
   selection, review submission. Those stay manual in the UI.
+- **No emoji** in `description.txt` / `release_notes.txt` — Apple rejects them
+  (`Description can't contain the following character(s): …`). Plain `-`/`•`
+  bullets and uppercase headers are fine; `×`, `—`, `'` are allowed.
+- The **review phone** must be `+<country code> <number>` (e.g. `+49 1525 …`).
+  An invalid/placeholder value fails late at `post_app_store_review_detail`.
+- Running any deliver lane **regenerates `fastlane/README.md`**, which trips a
+  format/pre-commit hook. Run your formatter as its **own** step after the lane
+  (a chained `format && deliver` won't help — the hook checks before running).
 
 ## Privacy & data
 
