@@ -21,7 +21,8 @@ require "net/http"
 KEY_ID = ENV.fetch("ASC_KEY_ID")
 ISSUER = ENV.fetch("ASC_ISSUER_ID")
 P8 = File.read(ENV.fetch("ASC_KEY_PATH"))
-BUNDLE = ENV.fetch("APP_BUNDLE_ID")
+BUNDLE = ENV["APP_BUNDLE_ID"] || ENV["ASC_BUNDLE_ID"] ||
+         abort("Set APP_BUNDLE_ID (or ASC_BUNDLE_ID) to the registered bundle id.")
 
 def b64(data) = Base64.urlsafe_encode64(data).delete("=")
 

@@ -66,6 +66,7 @@ at submit time — don't push a placeholder live.
 fastlane ios metadata      # text + screenshots (no binary, no review submit)
 fastlane ios text          # text only
 fastlane ios screenshots   # screenshots only
+fastlane ios status        # read-only: what's ACTUALLY live (wraps asc-status.rb)
 fastlane ios pull          # download live metadata into fastlane/metadata
 ```
 

@@ -57,6 +57,12 @@ platform :ios do
     deliver(**deliver_common, skip_metadata: true, skip_screenshots: false)
   end
 
+  desc "Read-only check of what's ACTUALLY live on App Store Connect"
+  lane :status do
+    script = File.expand_path("scripts/asc-status.rb", __dir__)
+    sh("APP_BUNDLE_ID=#{APP_ID} ruby #{script.shellescape}")
+  end
+
   desc "Download the live metadata into fastlane/metadata (overwrites local)"
   lane :pull do
     deliver(

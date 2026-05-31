@@ -76,9 +76,10 @@ noisy logs; query Apple directly.
   bullets and uppercase headers are fine; `×`, `—`, `'` are allowed.
 - The **review phone** must be `+<country code> <number>` (e.g. `+49 1525 …`).
   An invalid/placeholder value fails late at `post_app_store_review_detail`.
-- Running any deliver lane **regenerates `fastlane/README.md`**, which trips a
-  format/pre-commit hook. Run your formatter as its **own** step after the lane
-  (a chained `format && deliver` won't help — the hook checks before running).
+- Running any deliver lane **regenerates `fastlane/README.md`** and may touch the
+  `metadata/*.txt`. Keep **`fastlane/` in `.prettierignore`** (this skeleton does)
+  so those don't trip a format/pre-commit check. If a port forgets that entry,
+  every deliver run leaves the tree "unformatted" and blocks the next commit.
 
 ## Privacy & data
 
