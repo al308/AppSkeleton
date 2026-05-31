@@ -33,6 +33,26 @@ EAS runs):
   with `npx expo install <pkg>`, which writes the SDK-correct version.
 - `.nvmrc` controls the EAS Node version; the lockfile must be valid for it.
 
+## Submitting the binary (eas submit / --auto-submit)
+
+The binary ships with `eas`, not fastlane: `eas build -p ios --profile production
+--auto-submit` builds then uploads to App Store Connect.
+
+- **Non-interactive submit needs `ascAppId`.** Put the app's **Apple ID** (the
+  numeric id on the ASC App Information page, e.g. `6775036791`) under
+  `submit.production.ios.ascAppId` in `eas.json`. An empty submit profile errors
+  *"Set ascAppId in the submit profile … or re-run in interactive mode"*. The
+  build still queues fine — only the submission step blocks, so just add the id
+  and re-submit the finished build (`eas submit -p ios --id <BUILD_ID>`); no
+  rebuild needed.
+- Submission auths with the **EAS-managed `[Expo] EAS Submit` key**, separate
+  from the local fastlane Team key. EAS holds its `.p8` — you don't.
+- `eas submit --id <BUILD_ID>` only works once the build is **finished**; poll
+  `eas build:view <BUILD_ID>` (full UUID from the build URL) until `finished`.
+- After upload Apple **processes** the binary (~5–10 min) before it appears in
+  TestFlight / can be attached to a version. deliver/metadata is independent of
+  this — text can be live while the binary still processes.
+
 ## App Store Connect API key
 
 - Use a **Team key** (Users and Access → Integrations → Team Keys), role
