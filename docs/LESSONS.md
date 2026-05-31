@@ -81,3 +81,29 @@ From Lesen & Schreiben, which plays 660+ tiny syllable clips with zero perceived
   and the clock is 14 *continuous* days. Start it the moment a release build
   exists — see [RELEASE.md §3](./RELEASE.md). This rule has applied to every app
   shipped from this account so far.
+
+## Store automation (fastlane / App Store Connect)
+
+Operational detail lives in [STORE_PLAYBOOK.md](./STORE_PLAYBOOK.md); the traps:
+
+- **The ASC API cannot create apps.** `fastlane create_app` (produce) dies with
+  `No value found for 'username'` because the API has no create-app endpoint and
+  falls back to Apple-ID auth. Create the app once in the ASC UI, *then*
+  `fastlane ios metadata` uploads text + screenshots fine with just an API key.
+- **Verify against the source of truth, not scrollback.** fastlane/deliver logs
+  are noisy and easy to misread as success. `fastlane/scripts/asc-status.rb`
+  queries the ASC API directly and answers "did it actually upload?". A CLI exit
+  code or terminal output can lie — this bit twice in one session.
+- **Pass `api_key:` explicitly to deliver.** Relying on lane_context alone let it
+  fall back to legacy auth and fail with `team_id nil`.
+- **EAS "Install dependencies" failures = `npm ci` choking.** Reproduce locally
+  with `npm ci`. Causes: lockfile out of sync (`npm install`, commit it) or a
+  transitive peer pulling a too-new version (e.g. `react-dom@19.2` vs the SDK's
+  `react@19.1.0` — pin with `npx expo install`).
+- **Screenshots: right slot + no alpha.** 1320×2868 is *6.9"* (the only required
+  size; ASC downscales for smaller phones), not 6.5". Flatten all store images.
+- **Bundle id is permanent** once the app exists in either store. Set `app.json`
+  (iOS + Android identical) before the first build; `ios/`/`android/` regenerate
+  from it.
+- **One `git commit` per step.** Batching a commit with other tool calls means a
+  failing pre-commit hook cancels the whole batch and you misread stale output.

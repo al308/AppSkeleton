@@ -102,6 +102,11 @@ Adds whitespace / YAML / JSON / large-file / private-key checks, gitleaks secret
 | [docs/adr/0003-expo-sdk-upgrade-playbook.md](./docs/adr/0003-expo-sdk-upgrade-playbook.md) | SDK bump procedure with the three traps that bite people.                                                                    |
 | [docs/specs/expo-skeleton.md](./docs/specs/expo-skeleton.md)                               | The skeleton's own spec. New features go in `docs/specs/<feature>.md` next to it.                                            |
 | [docs/web/](./docs/web/)                                                                   | Hand-written static info + privacy pages (HTML + CSS, no build step). Host on GitHub Pages, Vercel, Netlify, or anywhere.    |
+| [docs/RELEASE.md](./docs/RELEASE.md)                                                        | Ship-to-store checklist (EAS build/submit, store assets, the 14-day Play gate).                                              |
+| [docs/STORE_PLAYBOOK.md](./docs/STORE_PLAYBOOK.md)                                          | Store-submission traps & fixes (ASC API can't create apps, screenshots, deliver). Read before submitting.                   |
+| [fastlane/README.md](./fastlane/README.md)                                                  | Automate the App Store listing (text + screenshots) via the ASC API; verify with `fastlane/scripts/asc-status.rb`.          |
+| [docs/DEPLOY_WEBSITE.md](./docs/DEPLOY_WEBSITE.md)                                          | Host the marketing + privacy/terms site ([web/](./web/)) — the privacy URL must be live before submitting.                  |
+| [docs/LESSONS.md](./docs/LESSONS.md)                                                        | Cross-app lessons learned (EAS, audio, store, process). Updated as you ship.                                                 |
 | [assets/README.md](./assets/README.md)                                                     | What binary assets the skeleton expects, with recommended sizes.                                                             |
 
 ### CI / GitHub
