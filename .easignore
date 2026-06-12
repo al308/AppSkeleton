@@ -1,0 +1,14 @@
+# Same syntax as .gitignore — trims what EAS uploads as the build context.
+# Keep store/marketing/docs assets and secrets out of the build tarball.
+
+# Assets and docs not needed in the build
+store-assets/
+web/
+docs/
+fastlane/
+*.p8
+
+# Test + tooling artifacts
+tests/
+coverage/
+.github/

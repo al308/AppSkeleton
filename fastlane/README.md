@@ -97,3 +97,53 @@ Works once the app record exists (step 3); deliver authenticates with the API ke
   If deliver rejects them, set the category in the UI once.
 - **Keep `.p8` out of git** (the `*.p8` ignore handles it) and **truthful store
   text** (don't claim features the build doesn't have).
+
+---
+
+## Android (Google Play)
+
+`platform :android` in the Fastfile manages the **Play listing** (text + feature
+graphic + screenshots) via `fastlane supply`. The `.aab` binary ships with
+`eas submit -p android` — these lanes never upload a binary.
+
+### Auth: Play service-account key
+
+Unlike iOS (where EAS holds the submit key), Android auth needs **your own
+Google Play service-account `.json`**:
+
+1. Play Console → **Setup → API access** → link a GCP project → create a service
+   account → grant it **Release Manager** role.
+2. Download the JSON key → save as `play-service-account.json` at the repo root
+   (already gitignored as a `.json` — the generic `*.p8`/`*.key` globs miss it).
+3. One key works for every app under the same Play developer account.
+
+### Commands
+
+```bash
+fastlane android metadata   # text + feature graphic + screenshots (no binary)
+fastlane android check      # lint metadata lengths + validate payload (no upload)
+fastlane android pull       # download live Play listing into fastlane/metadata/android
+```
+
+### Verify
+
+`fastlane/scripts/play-status.rb` queries the Android Publisher API directly:
+
+```bash
+SUPPLY_JSON_KEY=./play-service-account.json \
+  PLAY_PACKAGE=com.example.app ruby fastlane/scripts/play-status.rb
+```
+
+`NO APP found` = key authed fine, app not in Console yet (supply can't create
+it — seed with a first manual upload). A permission error = service account
+needs API access in Play Console.
+
+### Gotchas
+
+- **supply can't create the app** — seed it with a first `.aab` in the Console.
+- **First binary track is `internal`**, not `production` (new accounts need the
+  12-tester / 14-day closed test first; see `docs/RELEASE.md §3`).
+- **Feature Graphic: exactly 1024×500, no alpha** (`sips --resampleWidth 1024`
+  then `sips -c 500 1024`, then flatten alpha).
+- **Lint lengths before pushing** — `fastlane android check` catches over-limit
+  fields locally before any API call.

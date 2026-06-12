@@ -1,0 +1,40 @@
+// Reference eas.json — DO NOT rename this to eas.json blindly.
+//
+// Run `eas init` then `eas build:configure` first; that generates the real
+// eas.json with your projectId wiring. Then copy the `submit` block below in —
+// `eas build:configure` leaves submit minimal and does NOT add the Android
+// service-account path, which is the part teams forget.
+//
+// JSONC (comments) is for this template only; the real eas.json is plain JSON.
+{
+  "cli": {
+    "version": ">= 13.0.0",
+    "appVersionSource": "remote" // EAS owns versionCode/buildNumber; don't set them in app.json
+  },
+  "build": {
+    "development": { "developmentClient": true, "distribution": "internal" },
+    "preview": { "distribution": "internal" },
+    "production": { "autoIncrement": true }
+  },
+  "submit": {
+    "production": {
+      // iOS: EAS holds the submit key. The only field you need is the numeric
+      // Apple ID (App Store Connect → App Information). An empty ios block also
+      // works but then non-interactive submit prompts; see STORE_PLAYBOOK.
+      "ios": {
+        "ascAppId": "TODO_NUMERIC_APPLE_ID"
+      },
+      // Android has NO EAS-managed key — you must point at your own Google Play
+      // service-account JSON (gitignored as play-service-account.json). One key
+      // works for every app under the same Play developer account.
+      //
+      // First ship must target "internal" (or another closed track): a new
+      // account can't reach "production" until the 12-tester / 14-day closed
+      // test passes. Flip to "production" only after that gate clears.
+      "android": {
+        "serviceAccountKeyPath": "./play-service-account.json",
+        "track": "internal"
+      }
+    }
+  }
+}

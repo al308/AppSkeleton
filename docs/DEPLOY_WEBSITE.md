@@ -43,6 +43,7 @@ The tunnel ingress is often **cloud-managed**, not the local `config.yml`. Add
 the route in the dashboard:
 
 **Zero Trust → Networks → Tunnels → (your tunnel) → Public Hostnames → Add**
+
 - Subdomain `app`, domain `example.com`
 - Service: **HTTP** → `<nginx-container>:80`
 

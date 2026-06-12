@@ -8,3 +8,12 @@ app_identifier("com.example.app") # TODO(you)
 # If you want `fastlane ios create_app` (produce) to work, app creation needs an
 # Apple ID (the API key alone cannot create apps). Then set:
 # apple_id("you@example.com")   # TODO(you), only for produce
+
+# ── Google Play (supply) ──────────────────────────────────────────────────────
+# Android listing metadata ships via fastlane supply; the binary (.aab) ships
+# with `eas submit -p android`. supply auths with a Play service-account JSON key
+# — keep it out of git (see .gitignore) and point at it here.
+for_platform :android do
+  package_name("com.example.app") # TODO(you): keep in sync with app.json android.package
+  json_key_file(ENV["SUPPLY_JSON_KEY"] || "./play-service-account.json")
+end

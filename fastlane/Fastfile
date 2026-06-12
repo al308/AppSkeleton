@@ -92,3 +92,44 @@ platform :ios do
     )
   end
 end
+
+# ── Google Play (Android) ─────────────────────────────────────────────────────
+# Manages the Play *listing* (text metadata, feature graphic, screenshots) via
+# fastlane supply. The *binary* (.aab) ships with `eas submit -p android` — these
+# lanes never upload a binary (skip_upload_aab) and never touch the production
+# track. supply, like iOS produce, CANNOT create the app: the listing must exist
+# in the Play Console (seeded by a first manual/internal upload) before the first
+# supply run. Metadata lives in fastlane/metadata/android/<locale>/ — see
+# fastlane/metadata/android/README for the expected layout.
+platform :android do
+  desc "Push Play listing text + images (no binary; does not change the track)"
+  lane :metadata do
+    supply(
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      skip_upload_changelogs: false,
+      validate_only: false
+    )
+  end
+
+  desc "Lint metadata lengths, then validate the Play payload (no upload)"
+  lane :check do
+    # Local length lint first — catches over-limit fields before any API call.
+    sh("bash #{File.expand_path('scripts/check-play-metadata.sh', __dir__).shellescape}")
+    supply(
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      validate_only: true
+    )
+  end
+
+  desc "Download the live Play listing into fastlane/metadata/android (overwrites local)"
+  lane :pull do
+    supply(
+      track: "internal",
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      download_metadata: true
+    )
+  end
+end

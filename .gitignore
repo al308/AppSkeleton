@@ -49,3 +49,12 @@ Thumbs.db
 # App Store Connect API private keys — never commit
 *.p8
 AuthKey_*.p8
+
+# Google Play service-account key — a .json, so the credential globs miss it.
+# Used by `eas submit -p android` and fastlane supply. Never commit.
+play-service-account.json
+
+# Local build artifacts (eas build --local output)
+*.aab
+*.apk
+*.ipa

@@ -1,7 +1,7 @@
 # Store submission playbook
 
 Hard-won lessons from shipping Expo/EAS apps to the App Store & Google Play.
-`RELEASE.md` is the checklist; this is the *why* and the traps. Pair with
+`RELEASE.md` is the checklist; this is the _why_ and the traps. Pair with
 `fastlane/README.md` (listing automation) and `docs/DEPLOY_WEBSITE.md` (privacy URL).
 
 ---
@@ -14,7 +14,7 @@ Hard-won lessons from shipping Expo/EAS apps to the App Store & Google Play.
   first build/app-record.
 - The **bundle id is not the SKU**. If the app record already exists, read the
   registered bundle id off the ASC App Information page (or `asc-status.rb`) and
-  match `app.json` to *that* — don't assume your planned `com.<account>.<app>`.
+  match `app.json` to _that_ — don't assume your planned `com.<account>.<app>`.
   `deliver` looks the app up by **bundle id**; a mismatch crashes `find_app`
   with `undefined method 'team_id' for nil`.
 - `ios/` and `android/` are **gitignored**, regenerated from `app.json` by EAS
@@ -41,7 +41,7 @@ The binary ships with `eas`, not fastlane: `eas build -p ios --profile productio
 - **Non-interactive submit needs `ascAppId`.** Put the app's **Apple ID** (the
   numeric id on the ASC App Information page, e.g. `6775036791`) under
   `submit.production.ios.ascAppId` in `eas.json`. An empty submit profile errors
-  *"Set ascAppId in the submit profile … or re-run in interactive mode"*. The
+  _"Set ascAppId in the submit profile … or re-run in interactive mode"_. The
   build still queues fine — only the submission step blocks, so just add the id
   and re-submit the finished build (`eas submit -p ios --id <BUILD_ID>`); no
   rebuild needed.
@@ -52,6 +52,44 @@ The binary ships with `eas`, not fastlane: `eas build -p ios --profile productio
 - After upload Apple **processes** the binary (~5–10 min) before it appears in
   TestFlight / can be attached to a version. deliver/metadata is independent of
   this — text can be live while the binary still processes.
+
+## Android: eas submit & the service-account key
+
+Unlike iOS (EAS-managed `[Expo] EAS Submit` key), Android `eas submit` needs
+**your own Google Play service-account `.json`** — there is no EAS-managed
+equivalent. Wire it once in `eas.json`:
+
+```jsonc
+"submit": {
+  "production": {
+    "android": {
+      "serviceAccountKeyPath": "./play-service-account.json",
+      "track": "internal"
+    }
+  }
+}
+```
+
+- **Gitignore the key explicitly.** It's a `.json`, so `*.p8`/`*.key`/`*.jks`
+  don't catch it. Add `play-service-account.json` to `.gitignore` _before_ you
+  copy the key in.
+- **One key, many apps.** A single service account can submit every app under the
+  same Play developer account — the binding is set in Play Console → Setup → API
+  access, not in the key's GCP project. (The skeleton's key came from a different
+  app's GCP project and still works.) In practice: keep one key, `cp` it into each
+  repo root as `play-service-account.json` (already gitignored), and point both
+  `eas.json` and the Appfile at that name.
+- **Verify reachability with `fastlane/scripts/play-status.rb`** — the read-only
+  Android pendant to `asc-status.rb`. It answers "does the app exist on Play, and
+  what's live on each track?" via the API. A clean `NO APP found` means the key
+  authed fine and the app just isn't created in the Console yet; a permission
+  error means the service account lacks API access to that app.
+- **First track is `internal` / `closed`, not `production`.** A new account can't
+  reach the Production track until the 12-tester / 14-day closed test has passed
+  (see §"Google Play closed testing"). Submit to `internal` first, flip to
+  `production` only after the gate clears.
+- The first `.aab` can also just be **uploaded by hand** in the Console to seed
+  the listing; `eas submit` automation is worth it from the second release on.
 
 ## App Store Connect API key
 
@@ -81,6 +119,15 @@ noisy logs; query Apple directly.
   it for smaller iPhones. Don't bother with the 6.5"/6.7" sets.
 - Dropping a 6.9" image into the 6.5" slot fails with "wrong dimensions".
 - Must be **flattened — no alpha channel** (same for the 1024 marketing icon).
+- **Play also wants a Feature Graphic: exactly 1024×500, no alpha** (iOS has no
+  such asset). If the source is the wrong ratio, scale to width 1024 then
+  centre-crop to height 500 rather than stretching — e.g.
+  `sips --resampleWidth 1024 in.png --out t.png && sips -c 500 1024 t.png --out out.png`,
+  then flatten the alpha against the splash/background colour.
+- **Lint listing text before pushing:** `fastlane/scripts/check-play-metadata.sh`
+  checks every locale against Play's limits (title ≤30, short ≤80, full ≤4000,
+  changelog ≤500). The `fastlane android check` lane runs it before `supply
+validate_only`, so an over-length field fails locally instead of at upload.
 
 ## fastlane deliver specifics
 
