@@ -921,7 +921,7 @@ time:
   `submit.production` empty — credentials live in your EAS account, not the
   repo), the pre-flight checklist, store-asset requirements, and the
   **14-day / 12-tester Google Play closed-test gate** that is the Android
-  critical path. Read it *before* the first production build.
+  critical path. Read it _before_ the first production build.
 - **[docs/LESSONS.md](./docs/LESSONS.md)** — cross-app hard-won knowledge: EAS
   credentials, store-copy validation, feature-flag discipline, low-latency audio
   (`expo-av` + `MixWithOthers`, lazy LRU sound cache), and doc hygiene
