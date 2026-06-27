@@ -58,3 +58,7 @@ play-service-account.json
 *.aab
 *.apk
 *.ipa
+
+# Solver precompute artifacts (regenerable; not source of truth)
+tools/levels-dump.json
+tools/solver-results.json
