@@ -1,0 +1,78 @@
+import { worldsUnlockedBy, computeStars, type PuzzleRecord } from '../../src/store/progressStore';
+import { WORLDS } from '../../src/data/worlds';
+
+jest.mock('@react-native-async-storage/async-storage', () =>
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
+
+const muster = WORLDS.find((w) => w.id === 'muster')!;
+const glyphen = WORLDS.find((w) => w.id === 'glyphen')!;
+
+function recordsWithStars(total: number): Record<string, PuzzleRecord> {
+  const records: Record<string, PuzzleRecord> = {};
+  let remaining = total;
+  let i = 0;
+  while (remaining > 0) {
+    const stars = Math.min(3, remaining) as 1 | 2 | 3;
+    records[`lvl_${i}`] = {
+      levelId: `lvl_${i}`,
+      completions: 1,
+      bestMoves: 10,
+      bestTime: 1000,
+      stars,
+      lastPlayedAt: '2026-01-01T00:00:00.000Z',
+      hintsUsedTotal: 0,
+    };
+    remaining -= stars;
+    i += 1;
+  }
+  return records;
+}
+
+describe('worldsUnlockedBy', () => {
+  it('keeps only the starter world unlocked below any threshold', () => {
+    const result = worldsUnlockedBy(recordsWithStars(5), ['natur']);
+
+    expect(result).toEqual(['natur']);
+  });
+
+  it('unlocks a world once its star threshold is reached', () => {
+    const result = worldsUnlockedBy(recordsWithStars(muster.unlockStarThreshold), ['natur']);
+
+    expect(result).toContain('muster');
+    expect(result).not.toContain('glyphen');
+  });
+
+  it('unlocks every world when the highest threshold is met', () => {
+    const result = worldsUnlockedBy(recordsWithStars(glyphen.unlockStarThreshold), ['natur']);
+
+    expect(result).toContain('muster');
+    expect(result).toContain('glyphen');
+  });
+
+  it('returns the same array reference when nothing changes (no needless re-render)', () => {
+    const already = ['natur'];
+    const result = worldsUnlockedBy(recordsWithStars(0), already);
+
+    expect(result).toBe(already);
+  });
+});
+
+describe('computeStars', () => {
+  it('awards three stars within 1.3x of optimal', () => {
+    expect(computeStars(13, 10)).toBe(3);
+  });
+
+  it('awards two stars within 2x of optimal', () => {
+    expect(computeStars(20, 10)).toBe(2);
+  });
+
+  it('awards one star beyond 2x of optimal', () => {
+    expect(computeStars(21, 10)).toBe(1);
+  });
+
+  it('falls back to one star when optimal is unknown', () => {
+    expect(computeStars(50, undefined)).toBe(1);
+  });
+});
