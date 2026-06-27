@@ -62,3 +62,7 @@ play-service-account.json
 # Solver precompute artifacts (regenerable; not source of truth)
 tools/levels-dump.json
 tools/solver-results.json
+
+# Python bytecode
+__pycache__/
+*.pyc
