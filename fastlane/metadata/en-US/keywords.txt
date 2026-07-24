@@ -1,1 +1,1 @@
-keyword,comma,separated,max,100,chars,no,spaces,after,commas
+sliding puzzle,15 puzzle,brain,logic,tile,relax,offline,casual,puzzle,number

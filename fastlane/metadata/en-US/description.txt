@@ -1,5 +1,25 @@
-Your full App Store description goes here (max 4000 characters).
+Shiffle is a calm, modern take on the classic sliding puzzle.
 
-Keep store claims truthful: every feature you mention (sound, modes, offline,
-etc.) must match what the shipped build actually does — mismatches get rejected
-and mislead users.
+Slide the tiles, rebuild the picture, solve the pattern. Three worlds, 36
+handcrafted levels, and a difficulty curve that grows with you from a gentle
+3×3 up to a proper 5×5 challenge.
+
+THREE WORLDS
+- Natur — restore beautiful animal and landscape photos
+- Muster — solve geometric colour patterns built from pure vector art
+- Glyphen — lines, numbers and abstract shapes
+
+BUILT TO FEEL GOOD
+- Tap or swipe to move — your choice
+- Optional move counter, timer and "moves to go" hint
+- Up to three stars per level, with a personal best for every puzzle
+- Built-in training that teaches the row-by-row solving method
+- Hints and a reference preview when you get stuck
+- Haptic feedback, smooth animations, light and dark themes
+
+PRIVATE BY DESIGN
+- Works completely offline
+- No ads, no in-app purchases, no accounts
+- No data collection and no tracking — your progress stays on your device
+
+Slide. Solve. Relax.

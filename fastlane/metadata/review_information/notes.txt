@@ -1,3 +1,5 @@
-Notes for the App Review team: what the app does, how to exercise it, and any
-monetization / permissions / account facts. For an offline single-player app,
-state: no login, no ads, no IAP, no network calls, data stored locally only.
+Shiffle is an offline single-player sliding-puzzle game. There is no login, no
+ads, no in-app purchases and no network calls. All progress is stored locally
+on the device via AsyncStorage. No test account is needed. To exercise it:
+open a world from the home carousel, tap or swipe tiles to solve a puzzle,
+complete it to earn stars and unlock the next level.
