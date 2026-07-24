@@ -158,6 +158,95 @@ großem zentralem, gestyltem Cover pro Welt und Kategorie-Fortschritt
 
 - _DoD:_ `grep -r WorldCard src` leer (außer Carousel) oder bewusst behalten; `just check` grün.
 
+## Feature: Worlds-Expansion + Per-World-Theming + Swipe-Fix + Unlock-Rebalance ✅ (erledigt)
+
+> Erledigt: alle 5 Phasen, `just check` grün (159 Tests). Swipe gehärtet +
+> `controlMode` (tap/swipe/both) verdrahtet; Unlock = kumulativ +5★ (0…35);
+> `worldThemes.ts` (Gradient/Akzent/Frame + optionaler `backgroundImage`-Slot),
+> `GameBackground` welt-bewusst; 8 Welten (Natur·Muster·Planeten·Fahrzeuge·
+> Glyphen·Sport·Kosmos·Urban), 5 neue mit prozeduralen Platzhalter-Levels,
+> optimalMoves frisch gebacken (67 Levels). `World.accentColor`/`totalLevels`
+> entfernt (Single Source of Truth: Theme bzw. Selektor). Asset-Ordner +
+> dokumentierte Registry-Seam für spätere echte PNGs.
+
+Spec: [docs/specs/worlds-expansion.md](docs/specs/worlds-expansion.md)
+
+Vier zusammenhängende Verbesserungen (gleiches Datenmodell, gleiche Screens):
+
+1. **Swipe-Fix** — Kachel-per-Finger fühlt sich kaputt an (nur Tap geht). Swipe
+   robuster machen **und** das `controlMode`-Setting (`tap`/`swipe`/`both`)
+   endlich verdrahten — heute liest es niemand. Kein Live-Follow-Drag (bewusst).
+2. **Per-World-Feeling** — pro Welt eigenes Theme-Token (Gradient, Akzent,
+   Frame). Optionaler `backgroundImage`-Slot ins Datenmodell (für spätere
+   organische Texturen), jetzt prozedural gerendert.
+3. **Mehr Welten** — von 3 auf **8** Welten, je **5–9** Levels. Neue Welten mit
+   **Platzhalter**-Quellen (prozedurale Pattern) + Asset-Ordner gescaffoldet.
+4. **Unlock-Rebalance** — Gate auf **kumulativ +5 Sterne pro Welt** (0,5,…,35).
+
+**Welt-Reihenfolge** (verschachtelt, Muster & Glyphen nicht nebeneinander):
+Natur(0) · Muster(5) · Planeten(10) · Fahrzeuge(15) · Glyphen(20) · Sport(25) ·
+Kosmos(30) · Urban(35).
+
+### Struktur-Änderungen
+
+| Datei                                                                   | Art  | Zweck                                                                 |
+| ----------------------------------------------------------------------- | ---- | --------------------------------------------------------------------- |
+| `src/data/worldThemes.ts` _(neu)_                                       | neu  | `WorldTheme`-Token pro Welt (Gradient/Akzent/Frame/opt. Bild)         |
+| `src/data/worlds.ts`                                                    | edit | `theme` pro Welt; 5 neue Welten; Schwellen = `index*5`                |
+| `src/data/levels.ts`                                                    | edit | Platzhalter-Levels (Pattern) für die 5 neuen Welten                   |
+| `src/data/images.ts`                                                    | edit | Registry-Seam: Platzhalter-Welten → prozedural; PNG-Slot dokumentiert |
+| `src/components/ui/GameBackground.tsx`                                  | edit | optional `world`-Prop → welt-spezifischer Gradient                    |
+| `src/components/ui/WorldCoverCard.tsx`                                  | edit | Frame/Border aus `theme`                                              |
+| `src/components/puzzle/PuzzleBoard.tsx`                                 | edit | `controlMode`-Prop; Gesten-Auswahl tap/swipe/both; Swipe gehärtet     |
+| `src/app/game/[id].tsx`                                                 | edit | `controlMode` + `world.theme` durchreichen                            |
+| `src/app/world/[id].tsx`, `src/app/worlds.tsx`                          | edit | welt-spezifischen Hintergrund nutzen                                  |
+| `assets/images/worlds/{planeten,fahrzeuge,sport,kosmos,urban}/.gitkeep` | neu  | Asset-Ordner-Scaffold (PNGs liefert der User später)                  |
+
+### Phasen mit Stage-Gates
+
+**Phase 1 — Swipe-Fix + `controlMode` verdrahten.** _(unabhängig, zuerst — schnellster Win)_
+
+- _DoD Funktion:_ Swipe schiebt eine Kachel Richtung Lücke zuverlässig;
+  `controlMode=tap` deaktiviert Swipe, `=swipe` deaktiviert Tap, `=both` beides;
+  falsche Richtung → Shake (unverändert).
+- _DoD Tests:_ `tests/components/puzzle/PuzzleBoard.test.tsx` deckt Gesten-Auswahl
+  je Modus ab; bestehende Puzzle-Tests bleiben grün.
+- _Verify:_ `just check` grün + manuelles Wischen am Dev-Server (Beweis im PR).
+
+**Phase 2 — Unlock-Rebalance.** _(Daten-only, isoliert)_
+
+- _DoD Funktion:_ Schwellen = `[0,5,10,15,20,25,30,35]`; `worldsUnlockedBy`
+  unverändert korrekt.
+- _DoD Tests:_ `tests/store/progressStore.test.ts` + Daten-Invariante (Schwellen
+  monoton, Schritt 5).
+- _Verify:_ `npm test -- tests/store/progressStore.test.ts` grün.
+
+**Phase 3 — Per-World-Theme-Token + welt-bewusster Hintergrund.**
+
+- _DoD Funktion:_ `worldThemes.ts` liefert pro Welt Gradient/Akzent/Frame +
+  optionalen `backgroundImage`-Slot; `GameBackground` rendert je Welt einen
+  eigenen Gradient; `WorldCoverCard`-Frame stammt aus dem Theme.
+- _DoD Tests:_ `tests/data/worldThemes.test.ts` (jede Welt hat vollständiges
+  Theme); `GameBackground` rendert mit/ohne `world`-Prop.
+- _Verify:_ `just check` grün; Screenshot zweier Welten mit sichtbar
+  unterschiedlichem Look.
+
+**Phase 4 — 5 neue Welten + Platzhalter-Levels + Ordner/Registry.**
+
+- _DoD Funktion:_ `WORLDS.length === 8`; jede Welt 5–9 Levels; alle Quellen
+  auflösbar (Platzhalter prozedural, kein fehlender `require`); Menü/Karussell
+  zeigt 8 Welten mit korrekten Locks.
+- _DoD Tests:_ Daten-Invariante in `tests/data/` (Anzahl Welten, 5–9 Levels je
+  Welt, `getLevelsForWorld` non-empty, Quellen auflösbar); `tests/app/worlds.test.tsx`
+  rendert 8 Karten.
+- _Verify:_ `just check` grün; Karussell durchwischbar, neue Welten gesperrt bis
+  Schwelle erreicht.
+
+**Phase 5 — Aufräumen + Doku.**
+
+- _DoD:_ `accentColor`-Altfeld migriert/entfernt; README/Concept-Hinweis, wie ein
+  echtes PNG je Welt eingehängt wird (ein-Zeilen-Registry-Eintrag); `just check` grün.
+
 ## Verifikationskommando (alle Phasen)
 
 ```

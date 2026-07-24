@@ -63,6 +63,11 @@ play-service-account.json
 tools/levels-dump.json
 tools/solver-results.json
 
+# genart pipeline: staged/generated images awaiting manual review, plus
+# ComfyUI workflow build artifacts. Never auto-committed.
+tools/.genart-staging/
+tools/genart/.build/
+
 # Python bytecode
 __pycache__/
 *.pyc

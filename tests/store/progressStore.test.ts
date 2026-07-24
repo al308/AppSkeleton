@@ -1,5 +1,5 @@
 import { worldsUnlockedBy, computeStars, type PuzzleRecord } from '../../src/store/progressStore';
-import { WORLDS } from '../../src/data/worlds';
+import { WORLDS, UNLOCK_STARS_PER_WORLD } from '../../src/data/worlds';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -30,9 +30,17 @@ function recordsWithStars(total: number): Record<string, PuzzleRecord> {
   return records;
 }
 
+describe('world unlock thresholds', () => {
+  it('starts at zero and steps by the per-world amount in menu order', () => {
+    WORLDS.forEach((world, index) => {
+      expect(world.unlockStarThreshold).toBe(index * UNLOCK_STARS_PER_WORLD);
+    });
+  });
+});
+
 describe('worldsUnlockedBy', () => {
-  it('keeps only the starter world unlocked below any threshold', () => {
-    const result = worldsUnlockedBy(recordsWithStars(5), ['natur']);
+  it('keeps later worlds locked below their threshold', () => {
+    const result = worldsUnlockedBy(recordsWithStars(muster.unlockStarThreshold - 1), ['natur']);
 
     expect(result).toEqual(['natur']);
   });

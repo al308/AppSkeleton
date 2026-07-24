@@ -118,6 +118,7 @@ function TrainingLessonView({ lesson }: { lesson: TrainingLesson }): React.React
               hintStep={0}
               showNumbers
               hapticsEnabled
+              controlMode="both"
               accentColor={Game.hintHighlight}
               backgroundColor={Game.tileBackground}
               textColor={Game.text}

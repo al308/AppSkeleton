@@ -129,6 +129,277 @@ aerial perspective, no people, --ar 1:1
 
 ---
 
+## World 3 — Planeten
+
+### planeten_01 · Roter Planet (`roter-planet.jpg`)
+
+```
+A rust-red alien planet surface with jagged rock spires and canyons, two small moons
+visible in a dusky orange sky, dramatic long shadows, stylized painterly illustration,
+flat digital art, vivid color contrast, centered composition, no people, no text, --ar 1:1
+```
+
+### planeten_02 · Gasriese (`gasriese.jpg`)
+
+```
+A massive gas giant planet close-up, swirling bands of amber, cream and deep orange clouds,
+storm vortices visible, stylized painterly illustration, bold graphic color blocks,
+centered composition filling the frame, no rings, no text, --ar 1:1
+```
+
+### planeten_03 · Ringsystem (`ringsystem.jpg`)
+
+```
+A blue-white ice giant planet with a wide flat ring system seen at a dramatic angle,
+starfield background, cool tones with a warm rim-light accent, stylized illustration,
+strong graphic silhouette, centered composition, no text, --ar 1:1
+```
+
+### planeten_04 · Mondsichel (`mondsichel.jpg`)
+
+```
+A crescent moon lit from one side against deep space, cratered surface texture visible
+in the lit portion, the dark portion faintly earthlit, stylized minimalist illustration,
+high contrast, centered composition, no text, --ar 1:1
+```
+
+### planeten_05 · Krater (`krater.jpg`)
+
+```
+Aerial view straight down into a large impact crater on a rocky moon surface, concentric
+rings of debris and shadow, dusty grey-brown palette with warm rim light on the crater edge,
+stylized illustration, strong radial composition, no text, --ar 1:1
+```
+
+### planeten_06 · Sonnenfinsternis (`sonnenfinsternis.jpg`)
+
+```
+A total solar eclipse, the sun's corona blazing white-gold around a black disc against
+a deep violet sky, a thin sliver of planet horizon at the bottom, stylized illustration,
+dramatic high contrast, centered composition, no text, --ar 1:1
+```
+
+---
+
+## World 4 — Fahrzeuge
+
+### fahrzeuge_01 · Rennwagen (`rennwagen.jpg`)
+
+```
+A sleek open-wheel racing car seen from a low three-quarter angle, bold red and white
+livery, motion blur on the wheels implying speed, stylized flat illustration, strong
+graphic shapes, centered composition, no people, no text, no logos, --ar 1:1
+```
+
+### fahrzeuge_02 · Motorrad (`motorrad.jpg`)
+
+```
+A classic sport motorcycle parked at a three-quarter angle, glossy black and chrome
+finish, dramatic studio-style lighting, stylized flat illustration, strong silhouette,
+centered composition, no people, no text, no logos, --ar 1:1
+```
+
+### fahrzeuge_03 · Segelschiff (`segelschiff.jpg`)
+
+```
+A tall sailing ship with full white sails on a deep blue ocean, dramatic sky with
+scattered clouds, viewed from a low angle to emphasize the sails, stylized painterly
+illustration, bold color contrast, centered composition, no people, no text, --ar 1:1
+```
+
+### fahrzeuge_04 · Flugzeug (`flugzeug.jpg`)
+
+```
+A vintage propeller airplane banking in flight against a clear blue sky with soft clouds
+below, viewed from the side, stylized flat illustration, clean graphic shapes, centered
+composition, no people, no text, no logos, --ar 1:1
+```
+
+### fahrzeuge_05 · Helikopter (`helikopter.jpg`)
+
+```
+A rescue helicopter hovering against a dramatic orange sunset sky, rotor blur implying
+motion, viewed from a low three-quarter angle, stylized illustration, strong silhouette,
+centered composition, no people, no text, no logos, --ar 1:1
+```
+
+### fahrzeuge_06 · Lokomotive (`lokomotive.jpg`)
+
+```
+A classic steam locomotive with a plume of white steam, viewed head-on from a low angle,
+deep green and black livery with brass details, stylized flat illustration, bold graphic
+shapes, centered composition, no people, no text, no logos, --ar 1:1
+```
+
+### fahrzeuge_07 · U-Boot (`u-boot.jpg`)
+
+```
+A submarine surfaced in open ocean, conning tower prominent, dramatic overcast sky and
+choppy dark blue water, stylized painterly illustration, strong silhouette, centered
+composition, no people, no text, no logos, --ar 1:1
+```
+
+### fahrzeuge_08 · Rakete (`rakete.jpg`)
+
+```
+A rocket launching with a bright exhaust plume and billowing smoke cloud at the base,
+viewed from a low angle against a twilight sky transitioning to space, stylized
+illustration, dramatic high contrast, centered composition, no text, no logos, --ar 1:1
+```
+
+---
+
+## World 6 — Sportarten
+
+### sport_01 · Fußball (`fussball.jpg`)
+
+```
+A soccer ball frozen mid-motion on bright green grass, dramatic side lighting casting
+a long shadow, stylized flat illustration, bold graphic color blocks, centered
+composition, no people, no text, no logos, --ar 1:1
+```
+
+### sport_02 · Basketball (`basketball.jpg`)
+
+```
+A wide view of an empty outdoor basketball court at golden hour, single hoop and backboard
+at the far end, long shadows stretching across the painted court lines, warm orange sky,
+distant city skyline silhouette, stylized illustration, bold graphic color blocks,
+no people, no text, no logos, --ar 1:1
+```
+
+### sport_03 · Eishockey (`eishockey.jpg`)
+
+```
+A hockey puck and stick on reflective ice with cool blue rink lighting, dynamic diagonal
+composition implying motion, stylized flat illustration, bold color contrast, no people,
+no text, no logos, --ar 1:1
+```
+
+### sport_04 · Tennis (`tennis.jpg`)
+
+```
+A wide elevated view of a single red clay tennis court seen at a three-quarter angle,
+white net dividing the court, bold white boundary lines, tall green windscreen fencing
+around the perimeter, soft morning light, stylized illustration, bold graphic shapes,
+no people, no text, no logos, --ar 1:1
+```
+
+### sport_05 · Schwimmen (`schwimmen.jpg`)
+
+```
+A wide indoor view of an empty swimming pool hall from one end, rows of starting blocks
+along the near edge, turquoise water with bold white lane dividers stretching into the
+distance, tall windows letting in soft daylight, stylized flat illustration, strong
+graphic perspective, no people, no text, --ar 1:1
+```
+
+### sport_06 · Leichtathletik (`leichtathletik.jpg`)
+
+```
+A red running track curve seen from a low angle with bold white lane lines converging,
+dramatic stadium lighting, stylized illustration, strong graphic perspective, centered
+composition, no people, no text, no logos, --ar 1:1
+```
+
+---
+
+## World 7 — Kosmos
+
+### kosmos_01 · Nebel (`nebel.jpg`)
+
+```
+A vast colorful nebula in deep space, swirling clouds of magenta, cyan and violet gas
+lit from within by embedded stars, stylized painterly illustration, rich texture,
+centered composition, no text, --ar 1:1
+```
+
+### kosmos_02 · Sternenfeld (`sternenfeld.jpg`)
+
+```
+A dense star field against deep black space, varying star brightness and subtle color
+temperature differences, a faint wisp of galactic dust, stylized minimalist illustration,
+high contrast, centered composition, no text, --ar 1:1
+```
+
+### kosmos_03 · Spiralgalaxie (`spiralgalaxie.jpg`)
+
+```
+A spiral galaxy viewed face-on, luminous core with sweeping arms of stars and cosmic dust
+in blue and gold tones, deep space background, stylized illustration, strong radial
+composition, no text, --ar 1:1
+```
+
+### kosmos_04 · Schwarzes Loch (`schwarzes-loch.jpg`)
+
+```
+A black hole with a glowing accretion disc of orange and white light bending around a
+dark center, deep space backdrop, stylized illustration, dramatic high contrast, strong
+radial composition, no text, --ar 1:1
+```
+
+### kosmos_05 · Supernova (`supernova.jpg`)
+
+```
+A supernova explosion, brilliant white core surrounded by expanding shells of orange,
+pink and blue gas, dramatic radiating light, stylized illustration, vivid color contrast,
+centered composition, no text, --ar 1:1
+```
+
+---
+
+## World 8 — Urban
+
+### urban_01 · Skyline (`skyline.jpg`)
+
+```
+A city skyline silhouette at dusk with illuminated windows, gradient sky from orange to
+deep purple, stylized flat illustration, bold graphic shapes, centered composition,
+no people, no text, no logos, --ar 1:1
+```
+
+### urban_02 · Neonschild (`neonschild.jpg`)
+
+```
+A glowing neon sign on a dark brick wall at night, vivid pink and cyan light with a soft
+glow and reflection on wet pavement below, stylized illustration, strong color contrast,
+centered composition, no readable text, no logos, --ar 1:1
+```
+
+### urban_03 · Fassade (`fassade.jpg`)
+
+```
+A grid of colorful apartment building windows and balconies viewed straight-on, varied
+warm and cool facade colors, stylized flat illustration, strong repeating graphic pattern,
+centered composition, no people, no text, --ar 1:1
+```
+
+### urban_04 · U-Bahn (`u-bahn.jpg`)
+
+```
+A subway train arriving at a platform, motion blur on the train implying speed, cool
+fluorescent platform lighting, stylized illustration, strong graphic perspective,
+centered composition, no people, no text, no logos, --ar 1:1
+```
+
+### urban_05 · Brücke (`bruecke.jpg`)
+
+```
+A suspension bridge viewed from below at dusk, cables converging dramatically toward
+illuminated towers, gradient sky, stylized flat illustration, bold graphic composition,
+no people, no text, no logos, --ar 1:1
+```
+
+### urban_06 · Nachtleben (`nachtleben.jpg`)
+
+```
+A lively city street at night with colorful illuminated shop signs and string lights,
+reflections on wet pavement, stylized illustration, vivid color contrast, centered
+composition, no people, no readable text, no logos, --ar 1:1
+```
+
+---
+
 ## App Assets
 
 ### App Icon (`assets/icon.png`, 1024×1024)

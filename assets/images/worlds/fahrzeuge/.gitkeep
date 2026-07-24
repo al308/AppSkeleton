@@ -1,0 +1,3 @@
+# Placeholder folder for fahrzeuge world image assets.
+# Add real PNGs here, then register them in src/data/images.ts and point the
+# matching levels in src/data/levels.ts at the new image source.

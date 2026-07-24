@@ -7,7 +7,9 @@
 > — it's the compounding asset that makes app N+1 faster than app N. Keep entries
 > app-agnostic: write the rule and the trap, not the level/feature it came from.
 >
-> Operational store steps live in [RELEASE.md](./RELEASE.md); this doc is the _why_.
+> Operational store steps live in [RELEASE.md](./RELEASE.md); AI asset generation
+> operational detail lives in [GENART_PLAYBOOK.md](./GENART_PLAYBOOK.md); this
+> doc is the _why_.
 
 ---
 
@@ -142,6 +144,23 @@ best: maybe } : {})}`.
   marketing site, tests and `*.p8` keys don't belong in the uploaded build
   context. An `.easignore` (same syntax as `.gitignore`) keeps uploads small and
   keeps secrets out of the tarball even when they're present locally.
+
+## AI asset generation (RunPod / ComfyUI)
+
+Operational detail and the full trap list live in
+[GENART_PLAYBOOK.md](./GENART_PLAYBOOK.md); the headline lessons:
+
+- **Low step counts cause duplicate/morphed objects** (double basketball hoop
+  on an 8-step "Turbo" SDXL run) — independent of which checkpoint. Run
+  Turbo-branded checkpoints at ~20 steps, not their marketed 1-8 minimum, for
+  anything with repeated/symmetric elements (wheels, hoops, limbs).
+- **Flux has no working negative-prompt path** (`cfg` pinned to 1.0) — content
+  exclusions like "no people" must be appended to the _positive_ prompt text,
+  not the negative conditioning, or Flux ignores them.
+- **RunPod's ComfyUI template ships with zero checkpoints and a
+  capacity-constrained `/workspace` volume.** Relocate
+  `ComfyUI/models/checkpoints` onto the pod's roomier `/` overlay disk via
+  symlink immediately after every fresh boot, before downloading anything.
 
 ## Platform process
 

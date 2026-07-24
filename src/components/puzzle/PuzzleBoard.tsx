@@ -15,8 +15,28 @@ import { derivePatternTiles, GlyphMotif } from '../../engine/patterns';
 import { Level } from '../../data/levels';
 import { resolveImageAsset } from '../../data/images';
 import { TILE_GAP, TILE_BORDER_RADIUS } from '../../constants/layout';
+import type { ControlMode } from '../../store/settingsStore';
 
-const SWIPE_THRESHOLD = 10;
+// A swipe only needs to clear a small distance before it counts — keeping this
+// low makes the gesture feel responsive instead of "dead" on short flicks.
+const SWIPE_THRESHOLD = 8;
+
+type TapGesture = ReturnType<typeof Gesture.Tap>;
+type PanGesture = ReturnType<typeof Gesture.Pan>;
+type BoardGesture = TapGesture | PanGesture | ReturnType<typeof Gesture.Race>;
+
+// Honor the player's chosen control scheme. `both` races the two so whichever
+// the finger performs first wins; `tap`/`swipe` enable exactly one.
+export function selectGesture(mode: ControlMode, tap: TapGesture, pan: PanGesture): BoardGesture {
+  switch (mode) {
+    case 'tap':
+      return tap;
+    case 'swipe':
+      return pan;
+    case 'both':
+      return Gesture.Race(tap, pan);
+  }
+}
 
 type Props = {
   level: Level;
@@ -28,6 +48,7 @@ type Props = {
   hintStep: number;
   showNumbers: boolean;
   hapticsEnabled: boolean;
+  controlMode: ControlMode;
   accentColor: string;
   backgroundColor: string;
   textColor: string;
@@ -43,6 +64,7 @@ export function PuzzleBoard({
   hintStep,
   showNumbers,
   hapticsEnabled,
+  controlMode,
   accentColor,
   backgroundColor,
   textColor,
@@ -95,21 +117,22 @@ export function PuzzleBoard({
   );
 
   const tapGesture = Gesture.Tap().onEnd((e) => {
-    const col = Math.floor(e.x / (tileSize + TILE_GAP));
-    const row = Math.floor(e.y / (tileSize + TILE_GAP));
-    const idx = row * size + col;
-    if (idx >= 0 && idx < size * size) {
-      runOnJS(handleTap)(idx);
-    }
+    const cell = tileSize + TILE_GAP;
+    const col = Math.min(size - 1, Math.max(0, Math.floor(e.x / cell)));
+    const row = Math.min(size - 1, Math.max(0, Math.floor(e.y / cell)));
+    runOnJS(handleTap)(row * size + col);
   });
 
   const panGesture = Gesture.Pan()
     .minDistance(SWIPE_THRESHOLD)
     .onEnd((e) => {
-      const col = Math.floor(e.x / (tileSize + TILE_GAP));
-      const row = Math.floor(e.y / (tileSize + TILE_GAP));
+      // Hit-test the tile the swipe started on. Clamp to the grid so a touch
+      // that begins a hair outside the board edge still maps to the edge tile
+      // instead of being silently dropped.
+      const cell = tileSize + TILE_GAP;
+      const col = Math.min(size - 1, Math.max(0, Math.floor(e.x / cell)));
+      const row = Math.min(size - 1, Math.max(0, Math.floor(e.y / cell)));
       const tileIdx = row * size + col;
-      if (tileIdx < 0 || tileIdx >= size * size) return;
       // You grab a tile and push it; the empty cell isn't grabbable.
       if (tiles[tileIdx] === 0) return;
 
@@ -137,7 +160,7 @@ export function PuzzleBoard({
       runOnJS(handleTap)(tileIdx);
     });
 
-  const composed = Gesture.Race(tapGesture, panGesture);
+  const composed = selectGesture(controlMode, tapGesture, panGesture);
 
   const shakeStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: shakeX.value }],

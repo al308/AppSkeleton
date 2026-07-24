@@ -177,7 +177,7 @@ export default function GameScreen(): React.ReactElement {
       : settings.referenceMode;
 
   return (
-    <GameBackground>
+    <GameBackground worldId={level.world}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.topBar}>
           <Pressable
@@ -223,6 +223,7 @@ export default function GameScreen(): React.ReactElement {
               hintStep={hints.currentHintStep}
               showNumbers={settings.tileNumbersVisible}
               hapticsEnabled={settings.hapticsEnabled}
+              controlMode={settings.controlMode}
               accentColor={Game.hintHighlight}
               backgroundColor={Game.tileBackground}
               textColor={Game.text}

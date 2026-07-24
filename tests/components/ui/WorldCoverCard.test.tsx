@@ -8,9 +8,7 @@ const world: World = {
   id: 'muster',
   title: 'Muster',
   description: 'Geometrische Muster und Farbverläufe',
-  accentColor: '#7b1fa2',
-  unlockStarThreshold: 18,
-  totalLevels: 15,
+  unlockStarThreshold: 5,
 };
 
 const progress: WorldProgress = {
@@ -46,7 +44,7 @@ describe('WorldCoverCard', () => {
 
     const button = screen.getByRole('button');
     expect(button.props.accessibilityState.disabled).toBe(true);
-    expect(screen.getByText('★ 18 zum Freischalten')).toBeTruthy();
+    expect(screen.getByText('★ 5 zum Freischalten')).toBeTruthy();
 
     fireEvent.press(button);
     expect(onPress).not.toHaveBeenCalled();

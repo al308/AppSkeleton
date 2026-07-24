@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getLevelsForWorld, Level } from '../../data/levels';
 import { getWorld } from '../../data/worlds';
+import { getWorldTheme } from '../../data/worldThemes';
 import { useProgressStore } from '../../store/progressStore';
 import { useGameStore } from '../../store/gameStore';
 import { LevelCard } from '../../components/ui/LevelCard';
@@ -43,7 +44,7 @@ export default function WorldScreen(): React.ReactElement {
   }
 
   return (
-    <GameBackground>
+    <GameBackground worldId={world.id}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
           <Pressable
@@ -57,7 +58,7 @@ export default function WorldScreen(): React.ReactElement {
           </Pressable>
           <View style={styles.headerText}>
             <View style={styles.titleRow}>
-              <View style={[styles.dot, { backgroundColor: world.accentColor }]} />
+              <View style={[styles.dot, { backgroundColor: getWorldTheme(world.id).accent }]} />
               <Text style={styles.worldTitle}>{world.title}</Text>
             </View>
             <Text style={styles.worldDesc}>{world.description}</Text>

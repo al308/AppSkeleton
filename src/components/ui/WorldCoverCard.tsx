@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { World } from '../../data/worlds';
 import { WorldProgress } from '../../store/selectors';
+import { getWorldTheme } from '../../data/worldThemes';
 import { Game, Spacing, Radii, Typography } from '../../constants/theme';
 
 type Props = {
@@ -49,13 +50,18 @@ export function WorldCoverCard({
   onPress,
 }: Props): React.ReactElement {
   const { solvedCount, totalLevels, earnedStars, maxStars } = progress;
+  const theme = getWorldTheme(world.id);
   const a11yLabel = isUnlocked
     ? `Welt ${world.title}. ${solvedCount} von ${totalLevels} Puzzles gelöst, ${earnedStars} von ${maxStars} Sternen.`
     : `Welt ${world.title}, gesperrt. Sammle ${world.unlockStarThreshold} Sterne zum Freischalten.`;
 
   return (
     <Pressable
-      style={({ pressed }) => [styles.card, pressed && isUnlocked && styles.pressed]}
+      style={({ pressed }) => [
+        styles.card,
+        { borderColor: theme.frame },
+        pressed && isUnlocked && styles.pressed,
+      ]}
       onPress={onPress}
       disabled={!isUnlocked}
       accessibilityRole="button"
@@ -63,12 +69,12 @@ export function WorldCoverCard({
       accessibilityState={{ disabled: !isUnlocked }}
     >
       <LinearGradient
-        colors={[hexWithAlpha(world.accentColor, 0.55), hexWithAlpha(world.accentColor, 0.12)]}
+        colors={[hexWithAlpha(theme.accent, 0.55), hexWithAlpha(theme.accent, 0.12)]}
         start={{ x: 0.1, y: 0 }}
         end={{ x: 0.9, y: 1 }}
         style={[styles.cover, !isUnlocked && styles.coverLocked]}
       >
-        <MiniPuzzle accent={world.accentColor} />
+        <MiniPuzzle accent={theme.accent} />
 
         {!isUnlocked && (
           <View style={styles.lockOverlay}>
