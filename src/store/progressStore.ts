@@ -30,6 +30,7 @@ type ProgressActions = {
     hintsUsed: number;
   }) => void;
   unlockWorld: (worldId: string) => void;
+  unlockAllWorlds: () => void;
   getRecord: (levelId: string) => PuzzleRecord | undefined;
   reset: () => void;
 };
@@ -68,6 +69,9 @@ export const useProgressStore = create<ProgressState & ProgressActions>()(
             ? state.unlockedWorldIds
             : [...state.unlockedWorldIds, worldId],
         }));
+      },
+      unlockAllWorlds: () => {
+        set(() => ({ unlockedWorldIds: WORLDS.map((world) => world.id) }));
       },
       getRecord: (levelId) => get().records[levelId],
       reset: () => set(INITIAL),

@@ -1,14 +1,26 @@
 import React from 'react';
-import { StyleSheet, View, Text, Switch, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Switch, ScrollView, Pressable, Platform } from 'react-native';
+import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSettingsStore, ControlMode, ReferenceMode } from '../../store/settingsStore';
+import { useProgressStore } from '../../store/progressStore';
 import { GameBackground } from '../../components/ui/GameBackground';
 import { Game, Spacing, Typography, Radii } from '../../constants/theme';
+
+function appVersionLabel(): string {
+  const version = Constants.expoConfig?.version ?? '';
+  const build =
+    Platform.OS === 'ios'
+      ? Constants.expoConfig?.ios?.buildNumber
+      : Constants.expoConfig?.android?.versionCode;
+  return build ? `${version} (${build})` : version;
+}
 
 export default function SettingsScreen(): React.ReactElement {
   const router = useRouter();
   const settings = useSettingsStore();
+  const unlockAllWorlds = useProgressStore((state) => state.unlockAllWorlds);
 
   return (
     <GameBackground>
@@ -18,7 +30,15 @@ export default function SettingsScreen(): React.ReactElement {
             <Text style={styles.closeBtn}>Fertig</Text>
           </Pressable>
           <Text style={styles.title}>Einstellungen</Text>
-          <View style={styles.placeholder} />
+          <Pressable
+            onLongPress={() => unlockAllWorlds()}
+            delayLongPress={5000}
+            hitSlop={8}
+            style={styles.placeholder}
+            accessibilityLabel="App-Version"
+          >
+            <Text style={styles.version}>{appVersionLabel()}</Text>
+          </Pressable>
         </View>
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -169,7 +189,8 @@ const styles = StyleSheet.create({
   },
   closeBtn: { ...Typography.bodyBold, color: Game.accent },
   title: { ...Typography.h3, color: Game.text },
-  placeholder: { width: 48 },
+  placeholder: { minWidth: 48, alignItems: 'flex-end' },
+  version: { ...Typography.caption, color: Game.textDim },
   content: { padding: Spacing.md, gap: Spacing.lg, paddingBottom: Spacing.xxl },
   section: { gap: Spacing.sm },
   sectionTitle: {

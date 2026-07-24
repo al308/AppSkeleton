@@ -1,4 +1,9 @@
-import { worldsUnlockedBy, computeStars, type PuzzleRecord } from '../../src/store/progressStore';
+import {
+  worldsUnlockedBy,
+  computeStars,
+  useProgressStore,
+  type PuzzleRecord,
+} from '../../src/store/progressStore';
 import { WORLDS, UNLOCK_STARS_PER_WORLD } from '../../src/data/worlds';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -64,6 +69,44 @@ describe('worldsUnlockedBy', () => {
     const result = worldsUnlockedBy(recordsWithStars(0), already);
 
     expect(result).toBe(already);
+  });
+});
+
+describe('unlockAllWorlds', () => {
+  beforeEach(() => {
+    useProgressStore.getState().reset();
+  });
+
+  it('unlocks every world id', () => {
+    useProgressStore.getState().unlockAllWorlds();
+
+    expect(useProgressStore.getState().unlockedWorldIds.sort()).toEqual(
+      WORLDS.map((world) => world.id).sort(),
+    );
+  });
+
+  it('does not modify existing records', () => {
+    useProgressStore.getState().recordCompletion({
+      levelId: 'lvl_0',
+      moves: 10,
+      time: 1000,
+      stars: 3,
+      hintsUsed: 0,
+    });
+    const recordsBefore = useProgressStore.getState().records;
+
+    useProgressStore.getState().unlockAllWorlds();
+
+    expect(useProgressStore.getState().records).toEqual(recordsBefore);
+  });
+
+  it('is idempotent on repeated calls', () => {
+    useProgressStore.getState().unlockAllWorlds();
+    const first = useProgressStore.getState().unlockedWorldIds;
+
+    useProgressStore.getState().unlockAllWorlds();
+
+    expect(useProgressStore.getState().unlockedWorldIds.sort()).toEqual([...first].sort());
   });
 });
 
