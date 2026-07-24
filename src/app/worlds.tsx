@@ -14,13 +14,13 @@ import { DEV_UNLOCK_ALL } from '../constants/devFlags';
 
 export default function WorldsScreen(): React.ReactElement {
   const router = useRouter();
-  const { records, unlockedWorldIds } = useProgressStore();
+  const { records, unlockedWorldIds, devUnlockAll } = useProgressStore();
   const reduceMotion = useReduceMotion();
 
   const entries: WorldEntry[] = WORLDS.map((world) => ({
     world,
     progress: worldProgress(records, world),
-    isUnlocked: DEV_UNLOCK_ALL || unlockedWorldIds.includes(world.id),
+    isUnlocked: DEV_UNLOCK_ALL || devUnlockAll || unlockedWorldIds.includes(world.id),
   }));
 
   const totalStars = entries.reduce((sum, e) => sum + e.progress.earnedStars, 0);

@@ -108,6 +108,14 @@ describe('unlockAllWorlds', () => {
 
     expect(useProgressStore.getState().unlockedWorldIds.sort()).toEqual([...first].sort());
   });
+
+  it('sets devUnlockAll so levels within a world unlock too', () => {
+    expect(useProgressStore.getState().devUnlockAll).toBe(false);
+
+    useProgressStore.getState().unlockAllWorlds();
+
+    expect(useProgressStore.getState().devUnlockAll).toBe(true);
+  });
 });
 
 describe('computeStars', () => {

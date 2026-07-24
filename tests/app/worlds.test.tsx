@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import WorldsScreen from '../../src/app/worlds';
 import { WORLDS } from '../../src/data/worlds';
+import { useProgressStore } from '../../src/store/progressStore';
 
 const mockPush = jest.fn();
 const mockBack = jest.fn();
@@ -18,6 +19,7 @@ describe('Worlds carousel screen', () => {
   beforeEach(() => {
     mockPush.mockClear();
     mockBack.mockClear();
+    useProgressStore.getState().reset();
   });
 
   it('renders one card per world', () => {
@@ -42,5 +44,15 @@ describe('Worlds carousel screen', () => {
     fireEvent.press(screen.getByLabelText('Zurück'));
 
     expect(mockBack).toHaveBeenCalledTimes(1);
+  });
+
+  it('unlocks an otherwise-locked world when devUnlockAll is set', () => {
+    const lastWorld = WORLDS[WORLDS.length - 1]!;
+    useProgressStore.getState().unlockAllWorlds();
+
+    render(<WorldsScreen />);
+
+    const card = screen.getByLabelText(new RegExp(`Welt ${lastWorld.title}(?!,)`));
+    expect(card.props.accessibilityState.disabled).toBe(false);
   });
 });

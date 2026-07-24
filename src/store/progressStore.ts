@@ -19,6 +19,7 @@ export type PuzzleRecord = {
 type ProgressState = {
   records: Record<string, PuzzleRecord>;
   unlockedWorldIds: string[];
+  devUnlockAll: boolean;
 };
 
 type ProgressActions = {
@@ -38,6 +39,7 @@ type ProgressActions = {
 const INITIAL: ProgressState = {
   records: {},
   unlockedWorldIds: ['natur'],
+  devUnlockAll: false,
 };
 
 export const useProgressStore = create<ProgressState & ProgressActions>()(
@@ -71,7 +73,10 @@ export const useProgressStore = create<ProgressState & ProgressActions>()(
         }));
       },
       unlockAllWorlds: () => {
-        set(() => ({ unlockedWorldIds: WORLDS.map((world) => world.id) }));
+        set(() => ({
+          unlockedWorldIds: WORLDS.map((world) => world.id),
+          devUnlockAll: true,
+        }));
       },
       getRecord: (levelId) => get().records[levelId],
       reset: () => set(INITIAL),

@@ -17,14 +17,14 @@ const COLUMNS = 3;
 export default function WorldScreen(): React.ReactElement {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { records } = useProgressStore();
+  const { records, devUnlockAll } = useProgressStore();
   const activeGame = useGameStore((s) => s.activeGame);
 
   const world = getWorld(id);
   const levels = getLevelsForWorld(id);
 
   const isUnlocked = (_level: Level, index: number): boolean => {
-    if (DEV_UNLOCK_ALL) return true;
+    if (DEV_UNLOCK_ALL || devUnlockAll) return true;
     if (index === 0) return true;
     const prev = levels[index - 1];
     return prev ? records[prev.id] !== undefined : false;

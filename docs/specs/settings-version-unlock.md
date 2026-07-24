@@ -2,7 +2,13 @@
 
 ## Outcome
 
-Im Settings-Dialog wird oben rechts (im Header, symmetrisch zum "Fertig"-Button links) die App-Version inkl. Build-Nummer angezeigt. Ein 5-Sekunden-Long-Press auf diesen Text schaltet alle Welten frei (Debug-/Cheat-Zugriff), ohne den bestehenden Sterne-Fortschritt zu verändern.
+Im Settings-Dialog wird oben rechts (im Header, symmetrisch zum "Fertig"-Button links) die App-Version inkl. Build-Nummer angezeigt. Ein 5-Sekunden-Long-Press auf diesen Text schaltet **alle Welten und alle Level darin** frei (Debug-/Cheat-Zugriff), ohne den bestehenden Sterne-Fortschritt zu verändern.
+
+## Ergänzung (Nachtrag)
+
+Die erste Umsetzung schaltete nur `unlockedWorldIds` frei (`unlockAllWorlds()`). Level-Sperren _innerhalb_ einer Welt sind aber eine eigene Bedingung: `src/app/world/[id].tsx:26-31` prüft pro Level `records[prevLevel.id] !== undefined` (Index-basierte Sequenz — Level N ist spielbar, sobald Level N-1 einen Abschlussrekord hat). Es existiert bereits ein statischer Compile-Time-Flag `DEV_UNLOCK_ALL` (`src/constants/devFlags.ts`, aktuell `false`), der genau diese Prüfung sowie die Welt-Prüfung in `src/app/worlds.tsx:23` umgeht — er ist aber ein Build-Flag, kein Runtime-Toggle, und daher für den Long-Press ungeeignet.
+
+Lösung: ein neues **persistiertes Runtime-Flag** `devUnlockAll: boolean` im `progressStore`. Der Long-Press setzt dieses Flag statt (nur) `unlockedWorldIds` zu befüllen. `worlds.tsx` und `world/[id].tsx` prüfen zusätzlich zu `DEV_UNLOCK_ALL` (Compile-Time) diesen Store-Wert (Runtime) — beide Bedingungen bleiben ODER-verknüpft. Records/Sterne werden nicht synthetisch erzeugt; Level gelten nur fürs Anzeigen/Antippen als entsperrt.
 
 ## Scope
 
@@ -11,14 +17,17 @@ Im Settings-Dialog wird oben rechts (im Header, symmetrisch zum "Fertig"-Button 
   - `version` aus `Constants.expoConfig?.version`.
   - `build` aus `Constants.expoConfig?.ios?.buildNumber` (iOS) bzw. `Constants.expoConfig?.android?.versionCode` (Android), via `Platform.OS`.
 - Long-Press-Dauer: 5000ms, via `Pressable`'s `onLongPress` + `delayLongPress={5000}`.
-- Bei Auslösen: neue Store-Action `unlockAllWorlds()` in `src/store/progressStore.ts`, die `unlockedWorldIds` auf alle IDs aus `WORLDS` setzt (Set-Semantik, idempotent, verändert `records`/Sterne nicht).
+- Bei Auslösen: Store-Action `unlockAllWorlds()` in `src/store/progressStore.ts` setzt sowohl `unlockedWorldIds` (alle IDs aus `WORLDS`) als auch `devUnlockAll: true` (Set-Semantik, idempotent, verändert `records`/Sterne nicht).
+- `src/app/worlds.tsx:23`: `isUnlocked` prüft zusätzlich `devUnlockAll` aus dem Store.
+- `src/app/world/[id].tsx:26-31`: `isUnlocked` prüft zusätzlich `devUnlockAll` aus dem Store.
 - Kein sichtbares Feedback ist funktional gefordert außer dem tatsächlichen Freischalten; ein kurzes Toast/Alert ist optional und nicht Teil der Kern-Anforderung (siehe Non-Goals).
 
 ## Non-Goals
 
 - Kein Debug-Menü, keine weiteren Cheat-Funktionen.
-- Keine Persistenz eines "Unlock benutzt"-Flags oder Analytics-Events.
+- Keine Persistenz eines "Unlock benutzt"-Flags oder Analytics-Events (außer dem `devUnlockAll`-Boolean selbst, der Teil des normalen Progress-Persistenzobjekts ist).
 - Keine Änderung an der Stern-basierten Freischaltlogik selbst (`worldsUnlockedBy` bleibt unangetastet, wird nur nicht mehr die einzige Quelle für `unlockedWorldIds`).
+- Keine synthetischen `PuzzleRecord`-Einträge — Sterne-Anzeige/Statistiken bleiben unverändert, nur die Spielbarkeit wird freigeschaltet.
 - Keine visuelle Bestätigung (Snackbar/Alert) ist zwingend — kann in der Umsetzung ergänzt werden, wenn trivial, ist aber keine Abnahmekriterium.
 
 ## Constraints
@@ -29,14 +38,17 @@ Im Settings-Dialog wird oben rechts (im Header, symmetrisch zum "Fertig"-Button 
 
 ## Task Breakdown
 
-1. `progressStore.ts`: `unlockAllWorlds()` Action hinzufügen + Typ-Erweiterung `ProgressActions`.
-2. `settings/index.tsx`: Header-Layout anpassen — rechter Slot wird `Pressable` mit Versions-`Text`, `onLongPress` ruft `unlockAllWorlds()`.
-3. Tests:
-   - `tests/store/progressStore.test.ts`: Test für `unlockAllWorlds()` (alle World-IDs enthalten, Records unverändert, idempotent bei erneutem Aufruf).
-   - `tests/app/settings.test.tsx` (neu, folgt Muster aus `tests/app/worlds.test.tsx`): Versions-Text wird gerendert; `fireEvent(pressable, 'longPress')` löst `unlockAllWorlds` im gemockten Store aus.
+1. `progressStore.ts`: `devUnlockAll: boolean` zu `ProgressState` hinzufügen (initial `false`, persistiert); `unlockAllWorlds()` erweitern, um zusätzlich `devUnlockAll: true` zu setzen.
+2. `worlds.tsx`: `isUnlocked` um `|| devUnlockAll` ergänzen.
+3. `world/[id].tsx`: `isUnlocked` um `|| devUnlockAll` ergänzen (zusätzlich zu bestehendem `DEV_UNLOCK_ALL`).
+4. `settings/index.tsx`: Header-Layout anpassen — rechter Slot wird `Pressable` mit Versions-`Text`, `onLongPress` ruft `unlockAllWorlds()`. (Bereits umgesetzt in vorherigem Commit, unverändert.)
+5. Tests:
+   - `tests/store/progressStore.test.ts`: Test erweitern — `unlockAllWorlds()` setzt auch `devUnlockAll` auf `true`.
+   - `tests/app/worlds.test.tsx`: neuer Test — mit `devUnlockAll: true` im Store sind alle Welten-Karten als entsperrt/antippbar gerendert, auch ohne `unlockedWorldIds`.
+   - Neuer Test für `world/[id].tsx` (kein bestehender Testfile) ODER minimal: Test in `tests/app/settings.test.tsx` erweitern, der nach Long-Press `useProgressStore.getState().devUnlockAll === true` prüft (Store-Ebene reicht, UI-Ebene der Level-Liste ist optional/nice-to-have, da kein bestehendes Testfile für `world/[id].tsx` existiert und ein neues Testsetup mehr Aufwand wäre als der Kern-Fix rechtfertigt).
 
 ## Verification
 
-- `npm test -- tests/store/progressStore.test.ts tests/app/settings.test.tsx`
+- `npm test -- tests/store/progressStore.test.ts tests/app/settings.test.tsx tests/app/worlds.test.tsx`
 - `just check` (lint + typecheck + vollständige Testsuite) vor Commit.
-- Manuell (falls Simulator verfügbar): Settings öffnen, Version oben rechts sichtbar, 5s gedrückt halten, Welten-Screen zeigt alle Welten entsperrt.
+- Manuell (falls Simulator verfügbar): Settings öffnen, Version oben rechts sichtbar, 5s gedrückt halten, Welten-Screen zeigt alle Welten entsperrt, in eine gesperrte Welt wechseln und prüfen dass auch alle Level dort antippbar sind.
