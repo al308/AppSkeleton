@@ -4,13 +4,13 @@ Human-readable source of truth for the App Store listing. The `fastlane/metadata
 files mirror these — keep them in sync (or treat fastlane as the source and this
 as the reference). Character limits are Apple's.
 
-| Field            | Limit | Value                                                                                                                 |
-| ---------------- | ----- | --------------------------------------------------------------------------------------------------------------------- |
-| App Name         | 30    | Shiffle                                                                                                               |
-| Subtitle         | 30    | Slide. Solve. Relax.                                                                                                  |
-| Promotional Text | 170   | 36 handcrafted sliding puzzles across three worlds — photos, patterns and glyphs. No ads, no tracking, fully offline. |
-| Keywords         | 100   | sliding puzzle,15 puzzle,brain,logic,tile,relax,offline,casual,puzzle,number                                          |
-| Description      | 4000  | (see below)                                                                                                           |
+| Field            | Limit | Value                                                                                                                      |
+| ---------------- | ----- | -------------------------------------------------------------------------------------------------------------------------- |
+| App Name         | 30    | Shiffle                                                                                                                    |
+| Subtitle         | 30    | Slide. Solve. Relax.                                                                                                       |
+| Promotional Text | 170   | 67 handcrafted sliding puzzles across nine worlds — nature, vehicles, cosmos and more. No ads, no tracking, fully offline. |
+| Keywords         | 100   | sliding puzzle,15 puzzle,brain,logic,tile,relax,offline,casual,puzzle,number                                               |
+| Description      | 4000  | (see below)                                                                                                                |
 
 - **Support URL / Marketing URL:** https://shiffle.tenfives.com/
 - **Privacy Policy URL:** https://shiffle.tenfives.com/legal/privacy-policy.html (must be live before submit)
@@ -24,14 +24,20 @@ as the reference). Character limits are Apple's.
 ```
 Shiffle is a calm, modern take on the classic sliding puzzle.
 
-Slide the tiles, rebuild the picture, solve the pattern. Three worlds, 36
+Slide the tiles, rebuild the picture, solve the pattern. Nine worlds, 67
 handcrafted levels, and a difficulty curve that grows with you from a gentle
 3×3 up to a proper 5×5 challenge.
 
-THREE WORLDS
-• Natur — restore beautiful animal and landscape photos
-• Muster — solve geometric colour patterns built from pure vector art
+NINE WORLDS
+• Natur — restore beautiful landscape photos
+• Tiere — restore wildlife photos
+• Planeten — worlds, moons and rings
+• Fahrzeuge — cars, ships and planes
 • Glyphen — lines, numbers and abstract shapes
+• Sportarten — scenes from sports and action
+• Kosmos — nebulae, stars and depth
+• Muster — geometric colour patterns built from pure vector art
+• Urban — cities, facades and neon
 
 BUILT TO FEEL GOOD
 • Tap or swipe to move — your choice
@@ -59,7 +65,7 @@ Slide. Solve. Relax.
 
 ## Keep claims truthful
 
-Every feature named here matches the shipped build: 3 worlds, 36 levels, tap +
+Every feature named here matches the shipped build: 9 worlds, 67 levels, tap +
 swipe, timer/moves/optimal HUD, stars, training, hints, reference preview,
 haptics, light/dark theme, offline, no ads/IAP/accounts, no data collection.
 v1 ships **silent** (no audio) — do not claim sound.

@@ -1,0 +1,31 @@
+Shiffle ist eine ruhige, moderne Version des klassischen Schiebepuzzles.
+
+Schiebe die Kacheln, setze das Bild zusammen, löse das Muster. Neun Welten, 67
+handgemachte Level und eine Schwierigkeitskurve, die mit dir wächst — von
+entspannten 3×3 bis zur echten 5×5-Herausforderung.
+
+NEUN WELTEN
+- Natur — stelle wunderschöne Landschaftsfotos wieder her
+- Tiere — stelle Fotos von Wildtieren wieder her
+- Planeten — Welten, Monde und Ringe
+- Fahrzeuge — Autos, Schiffe und Flieger
+- Glyphen — Linien, Zahlen und abstrakte Formen
+- Sportarten — Spielszenen und Action
+- Kosmos — Nebel, Sterne und Tiefe
+- Muster — geometrische Farbmuster aus reiner Vektorgrafik
+- Urban — Städte, Fassaden und Neon
+
+GUT DURCHDACHT
+- Tippen oder wischen zum Ziehen — du entscheidest
+- Optionaler Zugzähler, Timer und "Bis Ziel"-Hinweis
+- Bis zu drei Sterne pro Level, mit persönlicher Bestzeit für jedes Puzzle
+- Integriertes Training, das die Zeilen-für-Zeilen-Lösungsmethode erklärt
+- Tipps und Referenzbild bei Bedarf
+- Haptisches Feedback, flüssige Animationen, heller und dunkler Modus
+
+PRIVATSPHÄRE VON ANFANG AN
+- Funktioniert komplett offline
+- Keine Werbung, keine In-App-Käufe, keine Konten
+- Keine Datensammlung, kein Tracking — dein Fortschritt bleibt auf deinem Gerät
+
+Schieben. Lösen. Entspannen.

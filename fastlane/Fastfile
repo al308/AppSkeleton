@@ -1,9 +1,9 @@
 default_platform(:ios)
 
 # Reverse-DNS app id — keep in sync with app.json + Appfile.
-APP_ID = "com.example.app".freeze # TODO(you)
-APP_NAME = "MyApp".freeze # TODO(you)
-APP_VERSION = "1.0.0".freeze # TODO(you) — the App Store version to create/edit
+APP_ID = "com.shiffle.app".freeze
+APP_NAME = "Shiffle".freeze
+APP_VERSION = "1.0.0".freeze # the App Store version to create/edit
 
 # ── Why fastlane *here* ───────────────────────────────────────────────────────
 # This manages the App Store *listing* (text metadata + screenshots) via the

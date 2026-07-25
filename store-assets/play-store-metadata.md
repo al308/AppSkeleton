@@ -1,10 +1,10 @@
 # Google Play metadata
 
-| Field             | Limit | Value                                                            |
-| ----------------- | ----- | ---------------------------------------------------------------- |
-| App name          | 30    | Shiffle                                                          |
-| Short description | 80    | Calm sliding puzzles across three worlds. No ads, fully offline. |
-| Full description  | 4000  | (see below)                                                      |
+| Field             | Limit | Value                                                           |
+| ----------------- | ----- | --------------------------------------------------------------- |
+| App name          | 30    | Shiffle                                                         |
+| Short description | 80    | Calm sliding puzzles across nine worlds. No ads, fully offline. |
+| Full description  | 4000  | (see below)                                                     |
 
 - **Category:** Games → Puzzle (tags: brain games, casual, offline)
 - **Contact email / website:** support@shiffle.tenfives.com · https://shiffle.tenfives.com/
@@ -17,14 +17,20 @@
 ```
 Shiffle is a calm, modern take on the classic sliding puzzle.
 
-Slide the tiles, rebuild the picture, solve the pattern. Three worlds, 36
+Slide the tiles, rebuild the picture, solve the pattern. Nine worlds, 67
 handcrafted levels, and a difficulty curve that grows with you from a gentle
 3×3 up to a proper 5×5 challenge.
 
-THREE WORLDS
-• Natur — restore beautiful animal and landscape photos
-• Muster — solve geometric colour patterns built from pure vector art
+NINE WORLDS
+• Natur — restore beautiful landscape photos
+• Tiere — restore wildlife photos
+• Planeten — worlds, moons and rings
+• Fahrzeuge — cars, ships and planes
 • Glyphen — lines, numbers and abstract shapes
+• Sportarten — scenes from sports and action
+• Kosmos — nebulae, stars and depth
+• Muster — geometric colour patterns built from pure vector art
+• Urban — cities, facades and neon
 
 BUILT TO FEEL GOOD
 • Tap or swipe to move — your choice

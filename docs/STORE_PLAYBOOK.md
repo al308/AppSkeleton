@@ -118,6 +118,17 @@ noisy logs; query Apple directly.
 - Only **iPhone 6.9"** is required now (1320×2868 or 1290×2796); ASC downscales
   it for smaller iPhones. Don't bother with the 6.5"/6.7" sets.
 - Dropping a 6.9" image into the 6.5" slot fails with "wrong dimensions".
+- **The ASC API's enum for this slot is still `APP_IPHONE_67`** (named after the
+  iPhone 14 Pro Max, before Apple renamed the marketing size to 6.9"). Seeing
+  `screenshotDisplayType: APP_IPHONE_67` on a set built from 1320×2868 images is
+  correct, not a bug — don't "fix" it by hunting for an `APP_IPHONE_69` value
+  that doesn't exist.
+- **Upload each locale's screenshots separately.** `deliver` only reads
+  `fastlane/screenshots/<locale>/` for locales that have a folder — a locale
+  with real listing text but no screenshot folder ships with zero screenshots
+  and looks broken in the ASC UI even though the text is live. If one locale's
+  copy is a straight image reuse of another (e.g. the UI text is already in the
+  target language), just `cp -r` the folder under the new locale code.
 - Must be **flattened — no alpha channel** (same for the 1024 marketing icon).
 - **Play also wants a Feature Graphic: exactly 1024×500, no alpha** (iOS has no
   such asset). If the source is the wrong ratio, scale to width 1024 then
@@ -147,6 +158,19 @@ validate_only`, so an over-length field fails locally instead of at upload.
   `metadata/*.txt`. Keep **`fastlane/` in `.prettierignore`** (this skeleton does)
   so those don't trip a format/pre-commit check. If a port forgets that entry,
   every deliver run leaves the tree "unformatted" and blocks the next commit.
+  Before committing, `git checkout -- fastlane/README.md` to restore the
+  hand-written version — deliver's auto-generated one is just a lane listing
+  and throws away every setup/troubleshooting note.
+
+## Don't let `.gitignore`'s `android/` swallow `fastlane/metadata/android/`
+
+An unanchored `android/` line in `.gitignore` (meant for the Expo-prebuild
+native folder at the repo root) matches `fastlane/metadata/android/` too —
+silently. `git status` shows nothing changed there even after editing every
+file in it, so the whole Play Store text/asset tree can go uncommitted for
+months without any signal. Anchor root-only ignores with a leading slash:
+`/android/`, `/ios/`. Same trap applies to any other repo that gitignores
+`ios/`/`android/` unanchored.
 
 ## Privacy & data
 

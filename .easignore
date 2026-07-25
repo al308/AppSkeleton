@@ -12,3 +12,9 @@ fastlane/
 tests/
 coverage/
 .github/
+
+# Installed / generated locally — EAS reinstalls and re-prebuilds these
+node_modules/
+ios/
+android/
+.git/

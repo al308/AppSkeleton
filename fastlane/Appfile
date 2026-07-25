@@ -1,6 +1,6 @@
 # Reverse-DNS app id, must match app.json (iOS bundleIdentifier + Android package).
 # Convention used across these apps: com.<account>.<app>  (e.g. com.al3o8.myapp)
-app_identifier("com.example.app") # TODO(you)
+app_identifier("com.shiffle.app")
 
 # Authentication uses an App Store Connect API key (see fastlane/README.md),
 # so apple_id / team ids are not required for the metadata lanes.
@@ -14,6 +14,6 @@ app_identifier("com.example.app") # TODO(you)
 # with `eas submit -p android`. supply auths with a Play service-account JSON key
 # — keep it out of git (see .gitignore) and point at it here.
 for_platform :android do
-  package_name("com.example.app") # TODO(you): keep in sync with app.json android.package
+  package_name("com.shiffle.app") # keep in sync with app.json android.package
   json_key_file(ENV["SUPPLY_JSON_KEY"] || "./play-service-account.json")
 end

@@ -47,17 +47,18 @@ what actually satisfies "no alpha".
       copyright, review contact)
 - [x] `play-store-metadata.md` filled (short + full description, Data Safety)
 - [x] `fastlane/metadata/**` filled (iOS + Android) and mirrored
-- [ ] Privacy policy + terms deployed and reachable — currently returns
-      **401 Basic Auth** at https://shiffle.tenfives.com/ and
-      `/legal/privacy-policy.html`. Must be public (200) before submit; the
-      stores fetch this URL.
+- [x] Privacy policy + terms deployed and reachable — confirmed 200 at
+      https://shiffle.tenfives.com/ and `/legal/privacy-policy.html`.
+
+- [x] `fastlane/metadata/de-DE/` + `fastlane/metadata/android/de-DE/` added
+      (German is the store's live default locale; en-US kept as secondary)
 
 ## Still manual in the store consoles (not automatable)
 
-- 🔲 App Store: create the app record in ASC, App Privacy labels, age rating
-  (4+), pricing (Free), select build, Submit for Review
-- 🔲 Set the real numeric Apple ID in `eas.json` → `submit.production.ios.ascAppId`
-  once the app record exists (currently a `TODO` placeholder)
+- 🔲 App Store: App Privacy labels, age rating (4+), pricing (Free), select
+  build, Submit for Review — app record + `ascAppId` already exist
+- 🔲 Google Play: create `play-service-account.json` (Play Console → Setup →
+  API access) before `fastlane android metadata` can push
 - 🔲 Google Play: `play-service-account.json` is missing from the repo root —
   fetch it from Play Console (Setup → API access) before `eas submit -p android`
   can authenticate
