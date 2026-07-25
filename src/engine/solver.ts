@@ -124,6 +124,18 @@ export function remainingMoves(state: PuzzleState, isPattern = false): Remaining
   return { kind: 'atLeast', moves: lowerBound };
 }
 
+// How close the player is to the goal, for escalating "tension" chrome
+// (background/board glow). Only ever nonzero when the remaining-move count is
+// known exactly — a Manhattan lower bound can understate the true distance, so
+// escalating on `atLeast` could visually promise a finish that isn't close.
+export function tensionLevelFor(remaining: RemainingEstimate): 0 | 1 | 2 | 3 {
+  if (remaining.kind !== 'exact') return 0;
+  if (remaining.moves <= 5) return 3;
+  if (remaining.moves <= 10) return 2;
+  if (remaining.moves <= 20) return 1;
+  return 0;
+}
+
 export type HintResult = { type: 'moves'; moves: Move[] } | { type: 'unavailable' };
 
 export function computeHint(state: PuzzleState, steps: 1 | 3): HintResult {

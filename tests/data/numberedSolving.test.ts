@@ -27,7 +27,7 @@ const imageLevel: Level = {
   world: 'test',
   title: 'Image',
   gridSize: 3,
-  source: { kind: 'image', asset: 'natur/swans' },
+  source: { kind: 'image', asset: 'natur/vulkan' },
   shuffleDepth: 'relaxed',
   shuffleSeed: 1,
   optimalMoves: 18,

@@ -23,4 +23,15 @@ describe('GameBackground', () => {
 
     expect(screen.getByText('welt')).toBeTruthy();
   });
+
+  it.each([0, 1, 2, 3] as const)('renders without crashing at tension level %i', (level) => {
+    render(
+      <GameBackground tensionLevel={level}>
+        <Text>tension</Text>
+      </GameBackground>,
+    );
+
+    expect(screen.getByText('tension')).toBeTruthy();
+    expect(screen.getByTestId('tension-glow')).toBeTruthy();
+  });
 });

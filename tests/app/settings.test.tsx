@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import SettingsScreen from '../../src/app/settings/index';
 import { useProgressStore } from '../../src/store/progressStore';
+import { useSettingsStore } from '../../src/store/settingsStore';
 import { WORLDS } from '../../src/data/worlds';
 
 const mockBack = jest.fn();
@@ -53,5 +54,13 @@ describe('Settings screen', () => {
     fireEvent.press(screen.getByLabelText('Schließen'));
 
     expect(mockBack).toHaveBeenCalledTimes(1);
+  });
+
+  it('toggles visual effects on and off', () => {
+    render(<SettingsScreen />);
+
+    fireEvent(screen.getByLabelText('Visuelle Effekte'), 'valueChange', false);
+
+    expect(useSettingsStore.getState().visualEffectsEnabled).toBe(false);
   });
 });

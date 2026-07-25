@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageSourcePropType } from 'react-native';
-import Animated, { useAnimatedStyle, SharedValue } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+  interpolateColor,
+  SharedValue,
+} from 'react-native-reanimated';
 import { TILE_BORDER_RADIUS, TILE_GAP } from '../../constants/layout';
+import { TileAnimation } from '../../constants/theme';
 import { getTileOffset } from '../../engine/tileLayout';
 import { GlyphMotif } from '../../engine/patterns';
 import { TileGlyph } from './TileGlyph';
@@ -22,6 +30,7 @@ type Props = {
   animY: SharedValue<number>;
   textColor: string;
   accentColor: string;
+  animationsEnabled?: boolean | undefined;
 };
 
 export function PuzzleTile({
@@ -40,15 +49,35 @@ export function PuzzleTile({
   animY,
   textColor,
   accentColor,
+  animationsEnabled = true,
 }: Props): React.ReactElement | null {
   const row = Math.floor(positionIndex / gridSize);
   const col = positionIndex % gridSize;
   const baseX = col * (tileSize + TILE_GAP);
   const baseY = row * (tileSize + TILE_GAP);
 
+  const hintPulse = useSharedValue(1);
+
+  useEffect(() => {
+    if (!isHinted || !animationsEnabled) {
+      hintPulse.value = 1;
+      return;
+    }
+    hintPulse.value = withRepeat(
+      withTiming(0.35, { duration: TileAnimation.hintPulseDurationMs }),
+      -1,
+      true,
+    );
+  }, [isHinted, animationsEnabled, hintPulse]);
+
   // Hooks must precede any conditional return
   const animStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: baseX + animX.value }, { translateY: baseY + animY.value }],
+  }));
+  const hintStyle = useAnimatedStyle(() => ({
+    borderColor: isHinted
+      ? interpolateColor(hintPulse.value, [0.35, 1], ['transparent', accentColor])
+      : 'transparent',
   }));
 
   if (tileId === 0) return null;
@@ -66,10 +95,10 @@ export function PuzzleTile({
       height: tileSize,
       borderRadius: TILE_BORDER_RADIUS,
       borderWidth: isHinted ? 2.5 : 0,
-      borderColor: isHinted ? accentColor : 'transparent',
       backgroundColor: patternColor ?? '#cccccc',
     },
     animStyle,
+    hintStyle,
   ];
 
   return (

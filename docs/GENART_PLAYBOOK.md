@@ -148,6 +148,17 @@ three independent files that must go in three different model directories:
   (replaces T5 — Mistral-3-small reads prompts, hence the much bigger file)
 - `flux2-vae.safetensors` (~336MB) → `models/vae/`
 
+**Download source (verified 2026-07-25):** the repackaged split files live at
+**`Comfy-Org/flux2-dev`** on HuggingFace, under `split_files/<kind>/<name>`
+— e.g. `https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/diffusion_models/flux2_dev_fp8mixed.safetensors`.
+This repo is **gated** (gate is on `black-forest-labs/FLUX.2-dev`, the
+upstream weights repo, not on `Comfy-Org/flux2-dev` itself, but HF still
+requires an authenticated request) — a `HF_TOKEN` with the license accepted
+on your HF account is required, else every URL 401s. Pass it as
+`Authorization: Bearer $HF_TOKEN` on the `wget`/`curl` request. Do **not**
+guess a `comfyanonymous/flux2_dev_ComfyUI`-style repo name — that 404s (no
+such repo); `Comfy-Org/flux2-dev` is the correct one as of this writing.
+
 Graph-wise this means `UNETLoader` + `CLIPLoader` (`type: "flux2"`) +
 `VAELoader` instead of a single `CheckpointLoaderSimple`, plus the
 Flux2-specific `EmptyFlux2LatentImage` node instead of `EmptyLatentImage`.
@@ -223,3 +234,15 @@ FLUX.2 outputs for the other 4 worlds (`planeten`, `fahrzeuge`, `kosmos`,
 the user kept the existing Juggernaut choice for those. They remain
 available for comparison at `tools/.genart-staging/<world>/flux2/ingested/`
 if a future session wants to swap.
+
+**Update 2026-07-25:** `natur` (9 levels) and `tiere` (9 levels, new world)
+now also have real, wired-in images — **FLUX.2 [dev] fp8**, photorealistic
+style (a deliberate break from the other worlds' stylized-illustration
+prompts; see `docs/asset-prompts.md`). `natur`'s previous 3 images
+(`lion.png`/`swans.png`/`kitten.png`) were Picsum-sourced placeholders that
+didn't even match the level titles — replaced outright, not reused. All 18
+images passed ingest on the first try, no retries needed. Total pod time
+~30min on an A100 (checkpoint download + both generation batches),
+terminated immediately after. All 49 image-backed levels across the app
+now have real, wired assets — only `muster`/`glyphen` remain intentionally
+pattern-based (by design, not a placeholder gap).

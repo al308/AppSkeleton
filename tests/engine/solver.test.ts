@@ -1,4 +1,10 @@
-import { idaStar, greedyNextMove, computeHint, remainingMoves } from '../../src/engine/solver';
+import {
+  idaStar,
+  greedyNextMove,
+  computeHint,
+  remainingMoves,
+  tensionLevelFor,
+} from '../../src/engine/solver';
 import {
   createSolvedState,
   applyMove,
@@ -113,6 +119,30 @@ describe('remainingMoves', () => {
       expect(result.moves).toBe(manhattanDistance(state));
       expect(result.moves).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('tensionLevelFor', () => {
+  it.each([
+    [21, 0],
+    [20, 1],
+    [11, 1],
+    [10, 2],
+    [6, 2],
+    [5, 3],
+    [1, 3],
+    [0, 3],
+  ])('maps %i exact remaining moves to level %i', (moves, level) => {
+    expect(tensionLevelFor({ kind: 'exact', moves })).toBe(level);
+  });
+
+  it('never escalates on a lower-bound estimate, however small', () => {
+    expect(tensionLevelFor({ kind: 'atLeast', moves: 1 })).toBe(0);
+    expect(tensionLevelFor({ kind: 'atLeast', moves: 20 })).toBe(0);
+  });
+
+  it('never escalates when the distance is unknown', () => {
+    expect(tensionLevelFor({ kind: 'unknown' })).toBe(0);
   });
 });
 

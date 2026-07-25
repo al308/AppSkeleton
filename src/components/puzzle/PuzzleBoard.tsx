@@ -10,12 +10,15 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import { PuzzleState } from '../../engine/puzzle';
-import { PuzzleTile } from './PuzzleTile';
-import { derivePatternTiles, GlyphMotif } from '../../engine/patterns';
+import { AnimatedTile } from './AnimatedTile';
+import { BlankGlow } from './BlankGlow';
+import { BoardGlow } from './BoardGlow';
+import { derivePatternTiles } from '../../engine/patterns';
 import { Level } from '../../data/levels';
 import { resolveImageAsset } from '../../data/images';
 import { TILE_GAP, TILE_BORDER_RADIUS } from '../../constants/layout';
 import type { ControlMode } from '../../store/settingsStore';
+import type { TensionLevel } from '../ui/TensionGlow';
 
 // A swipe only needs to clear a small distance before it counts — keeping this
 // low makes the gesture feel responsive instead of "dead" on short flicks.
@@ -52,6 +55,8 @@ type Props = {
   accentColor: string;
   backgroundColor: string;
   textColor: string;
+  animationsEnabled?: boolean | undefined;
+  tensionLevel?: TensionLevel | undefined;
 };
 
 export function PuzzleBoard({
@@ -68,6 +73,8 @@ export function PuzzleBoard({
   accentColor,
   backgroundColor,
   textColor,
+  animationsEnabled = true,
+  tensionLevel = 0,
 }: Props): React.ReactElement {
   const { tiles, size } = puzzleState;
   const shakeX = useSharedValue(0);
@@ -174,12 +181,22 @@ export function PuzzleBoard({
         accessibilityLabel={`Puzzle ${size}×${size}`}
       >
         {tiles.map((tileId, positionIndex) => {
-          if (tileId === 0) return null;
+          if (tileId === 0) {
+            return (
+              <BlankGlow
+                key="blank"
+                positionIndex={positionIndex}
+                gridSize={size}
+                tileSize={tileSize}
+                enabled={animationsEnabled}
+              />
+            );
+          }
           const patternColor = patternTiles?.find((t) => t.tileId === tileId)?.color;
           const isHinted = hintedTileIndex === positionIndex;
 
           return (
-            <StaticTile
+            <AnimatedTile
               key={tileId}
               tileId={tileId}
               positionIndex={positionIndex}
@@ -194,35 +211,14 @@ export function PuzzleBoard({
               hintStep={isHinted ? hintStep + 1 : undefined}
               textColor={textColor}
               accentColor={accentColor}
+              animationsEnabled={animationsEnabled}
             />
           );
         })}
+        <BoardGlow level={tensionLevel} />
       </Animated.View>
     </GestureDetector>
   );
-}
-
-// Wrapper that owns its own shared values — never created inside a map callback
-type StaticTileProps = {
-  tileId: number;
-  positionIndex: number;
-  gridSize: number;
-  tileSize: number;
-  imageSource?: ImageSourcePropType | undefined;
-  patternColor?: string | undefined;
-  glyph?: GlyphMotif | undefined;
-  forceNumber?: boolean | undefined;
-  showNumber: boolean;
-  isHinted: boolean;
-  hintStep?: number | undefined;
-  textColor: string;
-  accentColor: string;
-};
-
-function StaticTile(props: StaticTileProps): React.ReactElement | null {
-  const animX = useSharedValue(0);
-  const animY = useSharedValue(0);
-  return <PuzzleTile {...props} animX={animX} animY={animY} />;
 }
 
 const styles = StyleSheet.create({

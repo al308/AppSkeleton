@@ -22,9 +22,10 @@ import { GameButton } from '../../components/ui/GameButton';
 import { GameBackground } from '../../components/ui/GameBackground';
 import { CompletionModal } from '../../components/celebration/CompletionModal';
 import { ConfettiEmitter } from '../../components/celebration/ConfettiEmitter';
+import { WinFlash } from '../../components/celebration/WinFlash';
 import { Game, Spacing, Typography, Radii } from '../../constants/theme';
 import { PuzzleState } from '../../engine/puzzle';
-import { remainingMoves, RemainingEstimate } from '../../engine/solver';
+import { remainingMoves, RemainingEstimate, tensionLevelFor } from '../../engine/solver';
 
 export default function GameScreen(): React.ReactElement {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -42,6 +43,7 @@ export default function GameScreen(): React.ReactElement {
   const [showPause, setShowPause] = useState(false);
   const [showCompletion, setShowCompletion] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showWinFlash, setShowWinFlash] = useState(false);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [coachmarkVisible, setCoachmarkVisible] = useState(false);
@@ -84,6 +86,9 @@ export default function GameScreen(): React.ReactElement {
     [puzzleState, hidesEstimate],
   );
 
+  const animationsEnabled = settings.visualEffectsEnabled && !reduceMotion;
+  const tensionLevel = animationsEnabled ? tensionLevelFor(remaining) : 0;
+
   const handleTick = useCallback((s: number) => tickTimer(s), [tickTimer]);
   useTimer({ isRunning: isTimerRunning && !showPause && !isWon, onTick: handleTick });
 
@@ -106,14 +111,18 @@ export default function GameScreen(): React.ReactElement {
   useEffect(() => {
     if (!isWon) return;
     setIsTimerRunning(false);
-    if (!reduceMotion) setShowConfetti(true);
+    if (animationsEnabled) {
+      setShowConfetti(true);
+      setShowWinFlash(true);
+    }
     const t = setTimeout(() => setShowCompletion(true), reduceMotion ? 0 : 1200);
     return () => clearTimeout(t);
-  }, [isWon, reduceMotion]);
+  }, [isWon, reduceMotion, animationsEnabled]);
 
   const handleReplay = useCallback(() => {
     setShowCompletion(false);
     setShowConfetti(false);
+    setShowWinFlash(false);
     hasMovedRef.current = false;
     restart();
     setIsTimerRunning(false);
@@ -124,6 +133,7 @@ export default function GameScreen(): React.ReactElement {
     const next = getNextLevel(level.id);
     setShowCompletion(false);
     setShowConfetti(false);
+    setShowWinFlash(false);
     if (next) {
       router.replace(`/game/${next.id}`);
     } else {
@@ -177,7 +187,7 @@ export default function GameScreen(): React.ReactElement {
       : settings.referenceMode;
 
   return (
-    <GameBackground worldId={level.world}>
+    <GameBackground worldId={level.world} tensionLevel={tensionLevel}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.topBar}>
           <Pressable
@@ -227,6 +237,8 @@ export default function GameScreen(): React.ReactElement {
               accentColor={Game.hintHighlight}
               backgroundColor={Game.tileBackground}
               textColor={Game.text}
+              animationsEnabled={animationsEnabled}
+              tensionLevel={tensionLevel}
             />
             {refMode === 'pip' && (
               <SolutionReference level={level} mode="pip" boardSize={boardSize} />
@@ -254,6 +266,7 @@ export default function GameScreen(): React.ReactElement {
           </View>
         </View>
 
+        {showWinFlash && <WinFlash />}
         {showConfetti && <ConfettiEmitter onFinished={() => setShowConfetti(false)} />}
 
         <CompletionModal

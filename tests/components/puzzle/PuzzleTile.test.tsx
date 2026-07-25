@@ -8,9 +8,19 @@ type HarnessProps = {
   glyph?: GlyphMotif;
   forceNumber?: boolean;
   showNumber?: boolean;
+  isHinted?: boolean;
+  hintStep?: number;
+  animationsEnabled?: boolean;
 };
 
-function Harness({ glyph, forceNumber, showNumber = false }: HarnessProps): React.ReactElement {
+function Harness({
+  glyph,
+  forceNumber,
+  showNumber = false,
+  isHinted = false,
+  hintStep,
+  animationsEnabled,
+}: HarnessProps): React.ReactElement {
   const animX = useSharedValue(0);
   const animY = useSharedValue(0);
   return (
@@ -23,11 +33,13 @@ function Harness({ glyph, forceNumber, showNumber = false }: HarnessProps): Reac
       glyph={glyph}
       forceNumber={forceNumber}
       showNumber={showNumber}
-      isHinted={false}
+      isHinted={isHinted}
+      hintStep={hintStep}
       animX={animX}
       animY={animY}
       textColor="#ffffff"
       accentColor="#a78bfa"
+      animationsEnabled={animationsEnabled}
     />
   );
 }
@@ -49,5 +61,25 @@ describe('PuzzleTile patterns', () => {
     render(<Harness forceNumber showNumber={false} />);
 
     expect(screen.getByText('5', { includeHiddenElements: true })).toBeTruthy();
+  });
+});
+
+describe('PuzzleTile hint pulse', () => {
+  it('renders the hint badge with animations enabled', () => {
+    render(<Harness isHinted hintStep={1} animationsEnabled />);
+
+    expect(screen.getByText('1', { includeHiddenElements: true })).toBeTruthy();
+  });
+
+  it('renders the hint badge with animations disabled (static border)', () => {
+    render(<Harness isHinted hintStep={1} animationsEnabled={false} />);
+
+    expect(screen.getByText('1', { includeHiddenElements: true })).toBeTruthy();
+  });
+
+  it('renders normally when not hinted', () => {
+    render(<Harness isHinted={false} />);
+
+    expect(screen.getByLabelText('Kachel 5')).toBeTruthy();
   });
 });

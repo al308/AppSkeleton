@@ -9,6 +9,7 @@ export type Theme = 'light' | 'dark' | 'auto';
 type Settings = {
   hapticsEnabled: boolean;
   multiSlideEnabled: boolean;
+  visualEffectsEnabled: boolean;
   controlMode: ControlMode;
   referenceMode: ReferenceMode;
   timerVisible: boolean;
@@ -27,6 +28,7 @@ type SettingsActions = {
 const DEFAULTS: Settings = {
   hapticsEnabled: true,
   multiSlideEnabled: false,
+  visualEffectsEnabled: true,
   controlMode: 'both',
   referenceMode: 'pip',
   timerVisible: true,

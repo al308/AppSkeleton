@@ -69,6 +69,11 @@ export default function SettingsScreen(): React.ReactElement {
 
           <Section title="Anzeige">
             <SwitchRow
+              label="Visuelle Effekte"
+              value={settings.visualEffectsEnabled}
+              onToggle={(v) => settings.setSetting('visualEffectsEnabled', v)}
+            />
+            <SwitchRow
               label="Timer anzeigen"
               value={settings.timerVisible}
               onToggle={(v) => settings.setSetting('timerVisible', v)}

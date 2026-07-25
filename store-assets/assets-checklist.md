@@ -11,22 +11,30 @@ Status as of this commit. ✅ = in the repo, 🔲 = still open.
 
 ## Screenshots
 
-- [ ] iPhone **6.9"** — 1320×2868, flattened — `store-assets/screenshots/ios-6.9/`
-      (suggest: title, two gameplay shots, level select). Mirror numbered
-      (`01_…`) into `fastlane/screenshots/en-US/` for `deliver`.
-- [ ] Android phone — same shots, `store-assets/screenshots/android-phone/`,
-      mirrored into `fastlane/metadata/android/en-US/images/phoneScreenshots/`
-- [ ] iPad 13" — 2064×2752 or 2048×2732, flattened — `supportsTablet: true` in
-      `app.json`, so this set is **required**, unlike HarborChaos (which has
-      `supportsTablet: false` and skips it). Mirror into
-      `fastlane/screenshots/en-US/` alongside the iPhone set.
+- [x] iPhone **6.9"** — 1320×2868, flattened — `store-assets/screenshots/ios-6.9/`
+      (01 title, 02 world select, 03 gameplay, 04 level select). Mirrored to
+      `fastlane/screenshots/en-US/`.
+- [x] Android phone — same 4 shots (same 1320×2868 source qualifies: 16:9,
+      ≥320px) — `store-assets/screenshots/android-phone/`, mirrored to
+      `fastlane/metadata/android/en-US/images/phoneScreenshots/`.
+- [x] iPad 13" — 2064×2752 (03 gameplay is 2752×2064 landscape — no portrait
+      gameplay capture was available, Apple accepts mixed orientation within
+      a set) — `store-assets/screenshots/ios-ipad-13/`, mirrored to
+      `fastlane/screenshots/en-US/ipad_*`. Required because `supportsTablet:
+true` in `app.json` (unlike HarborChaos, which has it `false`).
 
-Capture at a real device/simulator resolution, then scale to the exact size:
+Raw, unscaled simulator captures are kept under `store-assets/screenshots/raw/`
+for future re-crops. Regenerate the flattened sets with:
 
 ```bash
-sips -Z 2868 raw.png --out 01_home.png            # longest side → 2868 (6.9")
-sips -s format png --deleteColorManagementProperties in.png --out flat.png  # strip alpha
+magick raw.png -background "#0c0a24" -flatten -resize 1320x2868! tmp.png
+magick tmp.png -alpha remove -alpha off "PNG24:out.png"   # sips alone leaves alpha=yes
 ```
+
+`sips -Z` alone does not hit exact target dimensions (rounds to nearest even)
+and `sips --deleteColorManagementProperties` does not strip the alpha channel
+— ImageMagick's `-alpha remove -alpha off` with an explicit `PNG24:` output is
+what actually satisfies "no alpha".
 
 ## Google Play extras
 
