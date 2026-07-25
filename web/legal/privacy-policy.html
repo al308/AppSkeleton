@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Privacy Policy — MyApp</title>
+    <title>Privacy Policy — Shiffle</title>
     <style>
       *,
       *::before,
@@ -12,74 +12,119 @@
         margin: 0;
         padding: 0;
       }
+
       :root {
-        --bg: #0a0a1a;
-        --surface: #12122a;
-        --border: #2a2a4a;
+        --bg: #0c0a24;
+        --surface: #14123a;
+        --border: #2c2864;
         --accent: #7c5cfc;
         --accent-light: #a78bfa;
-        --text: #e2e2f0;
-        --text-muted: #8888aa;
+        --cyan: #60c8ff;
+        --text: #e8e6fb;
+        --text-muted: #9490c0;
+        --max-width: 780px;
       }
+
       body {
         background: var(--bg);
         color: var(--text);
         font-family:
           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 16px;
         line-height: 1.7;
         padding: 2rem 1rem 4rem;
       }
+
       .container {
-        max-width: 780px;
+        max-width: var(--max-width);
         margin: 0 auto;
       }
+
       header {
         text-align: center;
         margin-bottom: 3rem;
         padding-bottom: 2rem;
         border-bottom: 1px solid var(--border);
       }
+
       .logo {
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        color: var(--accent-light);
-        text-decoration: none;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         display: inline-block;
+        margin-bottom: 0.25rem;
       }
+
+      header p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
       h1 {
-        font-size: 1.9rem;
+        font-size: 2rem;
+        font-weight: 700;
         margin-bottom: 0.5rem;
+        color: var(--text);
       }
+
       h2 {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
+        font-weight: 600;
         color: var(--accent-light);
-        margin: 2.25rem 0 0.6rem;
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
         padding-left: 0.75rem;
         border-left: 3px solid var(--accent);
       }
-      p,
-      ul {
+
+      p {
         margin-bottom: 1rem;
       }
+
       ul {
         padding-left: 1.5rem;
+        margin-bottom: 1rem;
       }
+
+      li {
+        margin-bottom: 0.4rem;
+      }
+
       a {
         color: var(--accent-light);
+        text-decoration: none;
       }
-      .highlight {
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .highlight-box {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 1.25rem 1.5rem;
         margin: 1.5rem 0;
+        font-size: 0.95rem;
       }
-      .muted {
+
+      .highlight-box strong {
+        color: var(--accent-light);
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .last-updated {
         color: var(--text-muted);
-        font-size: 0.9rem;
+        font-size: 0.875rem;
       }
+
       footer {
-        margin-top: 3rem;
+        margin-top: 4rem;
         padding-top: 2rem;
         border-top: 1px solid var(--border);
         text-align: center;
@@ -91,73 +136,125 @@
   <body>
     <div class="container">
       <header>
-        <a href="../index.html" class="logo">✦ MyApp</a>
+        <a href="../index.html" class="logo">🧩 Shiffle</a>
+        <p>Sliding Picture Puzzle</p>
       </header>
 
       <h1>Privacy Policy</h1>
-      <p class="muted">
-        Last updated: January 1, 2026
-        <!-- TODO(you) -->
-      </p>
+      <p class="last-updated">Last updated: July 25, 2026</p>
 
-      <div class="highlight">
-        <strong>Summary.</strong> MyApp does not collect, store, or transmit any personal data.
-        There are no servers, no ads, and no in-app purchases. Your data stays on your device.
+      <div class="highlight-box">
+        <strong>Summary in plain language</strong>
+        Shiffle does not collect, store, or transmit any personal data. We have no servers. The app
+        contains no ads and no in-app purchases. Your game data (level progress, stars, settings)
+        lives only on your device and is never shared with anyone.
       </div>
 
       <h2>1. Who We Are</h2>
       <p>
-        MyApp is developed and published by <strong>Your Name</strong> ("we"). Questions:
-        <a href="mailto:you@example.com">you@example.com</a>.
+        Shiffle is a mobile puzzle game developed and published by <strong>Alex Lemken</strong>
+        ("we", "us", "our"). If you have questions about this policy, contact us at
+        <a href="mailto:alexlemken@googlemail.com">alexlemken@googlemail.com</a>.
       </p>
 
       <h2>2. Information We Collect</h2>
       <p>
-        We do <strong>not</strong> collect personally identifiable information. Specifically, we do
-        not:
+        We do <strong>not</strong> collect any personally identifiable information. Specifically:
       </p>
       <ul>
-        <li>require an account or login;</li>
-        <li>collect your name, email, phone number, or location;</li>
-        <li>collect analytics or usage statistics ourselves;</li>
-        <li>transmit data to our own servers — we have none.</li>
+        <li>We do <strong>not</strong> require account creation or login.</li>
+        <li>
+          We do <strong>not</strong> collect your name, email address, phone number, or location.
+        </li>
+        <li>
+          We do <strong>not</strong> collect gameplay analytics or usage statistics ourselves.
+        </li>
+        <li>We do <strong>not</strong> transmit any data to our own servers — we have none.</li>
       </ul>
 
-      <h2>3. Data Stored Locally</h2>
+      <h2>3. Data Stored Locally on Your Device</h2>
       <p>
-        The app stores preferences and progress <strong>only on your device</strong> (e.g. via
-        AsyncStorage). This never leaves the device and is removed when you uninstall the app.
+        The app uses your device's local storage (<code>AsyncStorage</code>) to save the following
+        information <strong>exclusively on your device</strong>:
       </p>
+      <ul>
+        <li>Your world and level progress, stars earned, and personal best move counts</li>
+        <li>Settings such as haptics, multi-slide, control mode, and reference display</li>
+      </ul>
+      <p>This data never leaves your device and is deleted when you uninstall the app.</p>
 
       <h2>4. No Advertising, No In-App Purchases</h2>
       <p>
-        This version contains no ads and no in-app purchases, and integrates no ad/monetisation SDK.
+        Shiffle v1.0 contains <strong>no advertisements</strong> and
+        <strong>no in-app purchases</strong>. We do not integrate any ad SDK or monetisation
+        framework. You will never be shown ads.
       </p>
 
       <h2>5. Children's Privacy</h2>
       <p>
-        Because we collect no personal data at all, the app complies with COPPA and GDPR-K. We do
-        not knowingly collect data from children.
+        Shiffle is suitable for a general audience. The game does not knowingly collect personal
+        information from children under 13 (or under 16 in the EU). Because we collect no personal
+        data at all, the app is fully compliant with COPPA and GDPR-K.
       </p>
 
-      <h2>6. Your Rights (GDPR)</h2>
+      <h2>6. Your Rights Under GDPR</h2>
       <p>
-        As we process no personal data, GDPR obligations are minimal. You can delete all locally
-        stored data by uninstalling the app, and you may contact your local data protection
-        authority.
+        If you are located in the European Economic Area (EEA), United Kingdom, or Switzerland, you
+        have rights under the General Data Protection Regulation (GDPR) including:
+      </p>
+      <ul>
+        <li>
+          <strong>Right of access</strong> — You can request a copy of any personal data we hold (we
+          hold none).
+        </li>
+        <li>
+          <strong>Right to erasure</strong> — You can uninstall the app to delete all locally stored
+          data.
+        </li>
+        <li>
+          <strong>Right to lodge a complaint</strong> — You can contact your local data protection
+          authority.
+        </li>
+      </ul>
+      <p>
+        As we do not process any personal data, GDPR obligations are minimal. All game data is
+        stored exclusively on your device and never transmitted to us or any third party.
       </p>
 
-      <h2>7. Third-Party Services</h2>
-      <p>This version embeds no third-party SDKs that collect or process personal data.</p>
+      <h2>7. Data Security</h2>
+      <p>
+        All data handled by the app is stored locally on your device using the device's built-in
+        storage mechanisms. We do not transmit any data over the internet. There are no servers to
+        breach.
+      </p>
 
-      <h2>8. Changes</h2>
-      <p>We may update this policy; the "Last updated" date above reflects the latest revision.</p>
+      <h2>8. Third-Party Services</h2>
+      <p>
+        Shiffle v1.0 does not integrate any third-party SDKs that collect or process personal data.
+        There are no analytics, advertising, or crash-reporting services embedded in this version.
+      </p>
 
-      <h2>9. Contact</h2>
-      <p>📧 <a href="mailto:you@example.com">you@example.com</a></p>
+      <h2>9. Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. When we do, we will update the "Last
+        updated" date at the top of this page. We encourage you to review this page periodically.
+        Continued use of the app after any changes constitutes your acceptance of the revised
+        policy.
+      </p>
+
+      <h2>10. Contact Us</h2>
+      <p>
+        If you have any questions, concerns, or requests regarding this Privacy Policy, please
+        contact us:
+      </p>
+      <p>
+        📧 Email: <a href="mailto:alexlemken@googlemail.com">alexlemken@googlemail.com</a><br />
+        🌐 Website:
+        <a href="https://shiffle.tenfives.com/">https://shiffle.tenfives.com/</a>
+      </p>
 
       <footer>
-        <p>&copy; 2026 Your Name — MyApp</p>
+        <p>&copy; 2026 Alex Lemken — Shiffle</p>
         <p style="margin-top: 0.5rem">
           <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
           <a href="terms-of-service.html">Terms of Service</a>

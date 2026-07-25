@@ -3,14 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO(you): replace MyApp / tagline / URLs throughout -->
-    <title>MyApp — Tagline</title>
-    <meta name="description" content="One-line description of your app for search and previews." />
+    <title>Shiffle — Sliding Picture Puzzle</title>
+    <meta
+      name="description"
+      content="Shiffle is a sliding picture puzzle across 9 hand-crafted worlds — nature, animals, planets, vehicles, patterns, and more. Solver-verified levels, star ratings, hints, and a training mode. Free, offline, no ads."
+    />
     <link rel="icon" href="./assets/favicon.png" type="image/png" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="MyApp — Tagline" />
-    <meta property="og:description" content="One-line description of your app." />
-    <meta property="og:image" content="./assets/icon-256.png" />
+    <meta property="og:title" content="Shiffle — Sliding Picture Puzzle" />
+    <meta
+      property="og:description"
+      content="Slide tiles back into place across 9 worlds of hand-picked artwork. Hints, training mode, and a live optimal-move counter. Free, offline, no ads."
+    />
+    <meta property="og:image" content="./assets/splash.png" />
     <style>
       *,
       *::before,
@@ -19,48 +24,66 @@
         margin: 0;
         padding: 0;
       }
+
       :root {
-        --bg: #0a0a1a;
-        --surface: #12122a;
-        --border: #2a2a4a;
+        --bg: #0c0a24;
+        --surface: #14123a;
+        --surface-2: #1b1850;
+        --border: #2c2864;
         --accent: #7c5cfc;
         --accent-light: #a78bfa;
         --cyan: #60c8ff;
-        --text: #e2e2f0;
-        --text-muted: #8888aa;
+        --gold: #f2b84b;
+        --text: #e8e6fb;
+        --text-muted: #9490c0;
+        --max-width: 1040px;
         --radius: 16px;
       }
+
       html {
         scroll-behavior: smooth;
       }
+
       body {
         background: var(--bg);
         color: var(--text);
         font-family:
           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 16px;
         line-height: 1.7;
-        padding: 4rem 1.25rem;
+        overflow-x: hidden;
         background-image:
-          radial-gradient(circle at 18% 12%, rgba(124, 92, 252, 0.2), transparent 42%),
-          radial-gradient(circle at 85% 8%, rgba(96, 200, 255, 0.14), transparent 40%);
+          radial-gradient(circle at 16% 10%, rgba(124, 92, 252, 0.22), transparent 42%),
+          radial-gradient(circle at 86% 8%, rgba(96, 200, 255, 0.14), transparent 40%),
+          radial-gradient(circle at 50% 96%, rgba(242, 184, 75, 0.08), transparent 55%);
         background-attachment: fixed;
       }
+
       .wrap {
-        max-width: 760px;
+        max-width: var(--max-width);
         margin: 0 auto;
-        text-align: center;
+        padding: 0 1.25rem;
       }
-      .hero-icon {
-        width: 104px;
-        height: 104px;
-        border-radius: 24px;
+
+      /* ── HERO ── */
+      .hero {
+        text-align: center;
+        padding: 4.5rem 1.25rem 3.5rem;
+      }
+      .hero-splash {
+        display: block;
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        margin: 0 auto 1.75rem;
+        border-radius: 20px;
         box-shadow: 0 12px 40px rgba(124, 92, 252, 0.4);
-        margin-bottom: 1.5rem;
       }
       .logo {
-        font-size: clamp(2.4rem, 9vw, 4rem);
+        font-size: clamp(2.6rem, 9vw, 4.25rem);
         font-weight: 800;
         letter-spacing: -0.02em;
+        line-height: 1.05;
         background: linear-gradient(135deg, var(--accent-light), var(--cyan));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -69,36 +92,108 @@
       }
       .tagline {
         color: var(--text-muted);
+        font-size: 1rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
         margin: 0.5rem 0 1.75rem;
       }
       .lede {
-        max-width: 600px;
+        max-width: 620px;
         margin: 0 auto 2rem;
         font-size: 1.1rem;
+        color: var(--text);
       }
+
       .badges {
         display: flex;
         flex-wrap: wrap;
         gap: 0.6rem;
         justify-content: center;
-        margin-bottom: 2.5rem;
+        margin-bottom: 2.25rem;
       }
       .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 999px;
         padding: 0.45rem 1rem;
         font-size: 0.875rem;
         font-weight: 600;
+        color: var(--text);
       }
+
+      .store-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        justify-content: center;
+      }
+      .store-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 0.7rem 1.3rem;
+        text-align: left;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .store-btn .sub {
+        display: block;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        line-height: 1.2;
+      }
+      .store-btn .main {
+        display: block;
+        font-size: 1.02rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .store-note {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      /* ── SECTION ── */
+      section {
+        padding: 3.5rem 0;
+      }
+      .section-head {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto 2.5rem;
+      }
+      .eyebrow {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        margin-bottom: 0.6rem;
+      }
+      h2 {
+        font-size: clamp(1.6rem, 4vw, 2.2rem);
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        margin-bottom: 0.65rem;
+      }
+      .section-head p {
+        color: var(--text-muted);
+      }
+
+      /* ── SCREENSHOTS ── */
       .shots {
         display: flex;
-        gap: 1rem;
+        gap: 1.1rem;
         justify-content: center;
         flex-wrap: wrap;
-        margin-bottom: 2.5rem;
       }
       .shots img {
         width: 220px;
@@ -107,11 +202,134 @@
         border: 1px solid var(--border);
         box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
       }
+
+      /* ── WORLDS ── */
+      .worlds {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+      .world {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1rem 0.5rem;
+        text-align: center;
+      }
+      .world .ic {
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
+      }
+      .world h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      /* ── FEATURE GRID ── */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+      }
+      .card .ic {
+        font-size: 1.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+      }
+      .card p {
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* ── HOW TO PLAY ── */
+      .steps {
+        max-width: 660px;
+        margin: 0 auto;
+        display: grid;
+        gap: 0.85rem;
+      }
+      .step {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.1rem 1.3rem;
+      }
+      .step .num {
+        flex-shrink: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 0.9rem;
+        color: white;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      }
+      .step p {
+        font-size: 0.95rem;
+      }
+      .step strong {
+        color: var(--text);
+      }
+
+      /* ── PRIVACY STRIP ── */
+      .privacy-strip {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .privacy-strip h2 {
+        font-size: 1.5rem;
+      }
+      .privacy-strip p {
+        color: var(--text-muted);
+        max-width: 540px;
+        margin: 0.5rem auto 1.25rem;
+      }
+      .privacy-strip a.btn {
+        display: inline-block;
+        padding: 0.65rem 1.4rem;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        color: white;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      /* ── FOOTER ── */
       footer {
         border-top: 1px solid var(--border);
-        padding-top: 2rem;
+        margin-top: 2rem;
+        padding: 2.5rem 1.25rem;
+        text-align: center;
         color: var(--text-muted);
         font-size: 0.9rem;
+      }
+      footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.5rem;
+        justify-content: center;
+        margin-bottom: 1rem;
       }
       footer a {
         color: var(--accent-light);
@@ -123,36 +341,244 @@
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <img class="hero-icon" src="./assets/icon-256.png" alt="MyApp app icon" />
-      <h1 class="logo">MYAPP</h1>
-      <p class="tagline">Your one-line positioning</p>
+    <!-- ── HERO ── -->
+    <header class="hero">
+      <img class="hero-splash" src="./assets/icon-256.png" alt="Shiffle app icon" />
+      <h1 class="logo">SHIFFLE</h1>
+      <p class="tagline">Sliding Picture Puzzle</p>
       <p class="lede">
-        A short, friendly paragraph describing what the app does and why it's nice to use.
+        Slide tiles back into place, one square at a time. No timers ticking against you, no
+        stacking, no rotating — just a scrambled picture and a clear path back to whole. Nine worlds
+        of hand-picked artwork, from quiet nature scenes to abstract patterns.
       </p>
 
       <div class="badges">
         <span class="badge">🆓 Free</span>
-        <span class="badge">📴 Offline</span>
+        <span class="badge">📴 Plays offline</span>
         <span class="badge">🚫 No ads</span>
         <span class="badge">🔒 No data collected</span>
       </div>
 
-      <div class="shots">
-        <!-- Drop a few phone screenshots in web/assets/screenshots/ -->
-        <img src="./assets/screenshots/01.png" alt="Screenshot 1" />
-        <img src="./assets/screenshots/02.png" alt="Screenshot 2" />
-        <img src="./assets/screenshots/03.png" alt="Screenshot 3" />
+      <div class="store-cta">
+        <span class="store-btn">
+          <span>🍎</span>
+          <span>
+            <span class="sub">Coming soon to the</span>
+            <span class="main">App Store</span>
+          </span>
+        </span>
+        <span class="store-btn">
+          <span>▶</span>
+          <span>
+            <span class="sub">Coming soon to</span>
+            <span class="main">Google Play</span>
+          </span>
+        </span>
       </div>
+      <p class="store-note">Launching soon on iOS and Android.</p>
+    </header>
 
-      <footer>
-        <p>
-          <a href="./legal/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
-          <a href="./legal/terms-of-service.html">Terms of Service</a> &nbsp;·&nbsp;
-          <a href="mailto:you@example.com">Contact</a>
-        </p>
-        <p style="margin-top: 0.75rem">© 2026 Your Name · MyApp</p>
-      </footer>
-    </div>
+    <!-- ── SCREENSHOTS ── -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">A look inside</p>
+          <h2>Nine worlds, one satisfying slide</h2>
+          <p>
+            Clean tiles, a calm palette, and a live counter that always shows how close you are.
+          </p>
+        </div>
+        <div class="shots">
+          <img src="./assets/screenshots/01.png" alt="Shiffle title screen" />
+          <img
+            src="./assets/screenshots/02.png"
+            alt="World selection screen with nine themed worlds"
+          />
+          <img
+            src="./assets/screenshots/03.png"
+            alt="Gameplay — sliding tiles to rebuild a picture"
+          />
+          <img
+            src="./assets/screenshots/04.png"
+            alt="Level select grid with stars earned per level"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WORLDS ── -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Worlds</p>
+          <h2>Something for every mood</h2>
+          <p>
+            Each world unlocks with stars earned in the last — nine themes, one long puzzle journey.
+          </p>
+        </div>
+        <div class="worlds">
+          <div class="world">
+            <div class="ic">🌿</div>
+            <h3>Natur</h3>
+          </div>
+          <div class="world">
+            <div class="ic">🦁</div>
+            <h3>Tiere</h3>
+          </div>
+          <div class="world">
+            <div class="ic">🪐</div>
+            <h3>Planeten</h3>
+          </div>
+          <div class="world">
+            <div class="ic">🚗</div>
+            <h3>Fahrzeuge</h3>
+          </div>
+          <div class="world">
+            <div class="ic">🔤</div>
+            <h3>Glyphen</h3>
+          </div>
+          <div class="world">
+            <div class="ic">⚽</div>
+            <h3>Sportarten</h3>
+          </div>
+          <div class="world">
+            <div class="ic">✨</div>
+            <h3>Kosmos</h3>
+          </div>
+          <div class="world">
+            <div class="ic">🔷</div>
+            <h3>Muster</h3>
+          </div>
+          <div class="world">
+            <div class="ic">🏙️</div>
+            <h3>Urban</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">What's inside</p>
+          <h2>Simple to learn, satisfying to master</h2>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="ic">🧩</div>
+            <h3>Solver-verified levels</h3>
+            <p>
+              Every level is checked for a fair, solvable shuffle and a known optimal move count —
+              no dead ends, no impossible boards.
+            </p>
+          </div>
+          <div class="card">
+            <div class="ic">⭐</div>
+            <h3>3-star challenge</h3>
+            <p>
+              Beat the optimal move count for three stars, then come back and shave your solution
+              down to perfect.
+            </p>
+          </div>
+          <div class="card">
+            <div class="ic">📈</div>
+            <h3>Live "moves to go" HUD</h3>
+            <p>
+              A running counter shows the optimal remaining moves as you play — always know how
+              close you are to a clean solve.
+            </p>
+          </div>
+          <div class="card">
+            <div class="ic">💡</div>
+            <h3>Hints when you're stuck</h3>
+            <p>
+              A built-in solver offers one-step and three-step hints, plus reference views (pip,
+              side, or ghost overlay) to guide you without spoiling it.
+            </p>
+          </div>
+          <div class="card">
+            <div class="ic">🎓</div>
+            <h3>Training mode</h3>
+            <p>
+              A guided coach walks you through moves with animated arrows — perfect for learning the
+              ropes on a new grid size.
+            </p>
+          </div>
+          <div class="card">
+            <div class="ic">📴</div>
+            <h3>Play anywhere</h3>
+            <p>
+              No internet, no account, no cloud sync. Your progress, stars, and personal bests are
+              saved locally on your device.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── HOW TO PLAY ── -->
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">How to play</p>
+          <h2>You'll get it in seconds</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="num">1</span>
+            <p>
+              Pick a <strong>world</strong> and a level. The picture is scrambled into a grid with
+              one open space.
+            </p>
+          </div>
+          <div class="step">
+            <span class="num">2</span>
+            <p>
+              <strong>Tap or swipe</strong> a tile next to the gap to slide it into place.
+              Multi-slide lets you move a whole row or column at once.
+            </p>
+          </div>
+          <div class="step">
+            <span class="num">3</span>
+            <p>
+              Watch the <strong>"moves to go" counter</strong> tick down as the picture comes back
+              together.
+            </p>
+          </div>
+          <div class="step">
+            <span class="num">4</span>
+            <p>
+              Solve within the level's <strong>optimal move count</strong> for all three stars, then
+              unlock the next world.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRIVACY ── -->
+    <section>
+      <div class="wrap">
+        <div class="privacy-strip">
+          <h2>Built private by design</h2>
+          <p>
+            Shiffle collects no personal data, has no servers, shows no ads, and includes no in-app
+            purchases. Everything you do stays on your device.
+          </p>
+          <a class="btn" href="./legal/privacy-policy.html">Read the privacy policy</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+      <nav>
+        <a href="./legal/privacy-policy.html">Privacy Policy</a>
+        <a href="./legal/terms-of-service.html">Terms of Service</a>
+        <a href="mailto:alexlemken@googlemail.com">Contact</a>
+      </nav>
+      <p>© 2026 Alex Lemken · Shiffle — built with React Native &amp; Expo</p>
+    </footer>
   </body>
 </html>

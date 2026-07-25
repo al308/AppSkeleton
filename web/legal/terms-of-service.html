@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Terms of Service — MyApp</title>
+    <title>Terms of Service — Shiffle</title>
     <style>
       *,
       *::before,
@@ -12,67 +12,118 @@
         margin: 0;
         padding: 0;
       }
+
       :root {
-        --bg: #0a0a1a;
-        --surface: #12122a;
-        --border: #2a2a4a;
+        --bg: #0c0a24;
+        --surface: #14123a;
+        --border: #2c2864;
         --accent: #7c5cfc;
         --accent-light: #a78bfa;
-        --text: #e2e2f0;
-        --text-muted: #8888aa;
+        --cyan: #60c8ff;
+        --text: #e8e6fb;
+        --text-muted: #9490c0;
+        --max-width: 780px;
       }
+
       body {
         background: var(--bg);
         color: var(--text);
         font-family:
           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 16px;
         line-height: 1.7;
         padding: 2rem 1rem 4rem;
       }
+
       .container {
-        max-width: 780px;
+        max-width: var(--max-width);
         margin: 0 auto;
       }
+
       header {
         text-align: center;
         margin-bottom: 3rem;
         padding-bottom: 2rem;
         border-bottom: 1px solid var(--border);
       }
+
       .logo {
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        color: var(--accent-light);
-        text-decoration: none;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         display: inline-block;
+        margin-bottom: 0.25rem;
       }
-      h1 {
-        font-size: 1.9rem;
-        margin-bottom: 0.5rem;
-      }
-      h2 {
-        font-size: 1.2rem;
-        color: var(--accent-light);
-        margin: 2.25rem 0 0.6rem;
-        padding-left: 0.75rem;
-        border-left: 3px solid var(--accent);
-      }
-      p,
-      ul {
-        margin-bottom: 1rem;
-      }
-      ul {
-        padding-left: 1.5rem;
-      }
-      a {
-        color: var(--accent-light);
-      }
-      .muted {
+
+      header p {
         color: var(--text-muted);
         font-size: 0.9rem;
       }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent-light);
+        margin-top: 2.5rem;
+        margin-bottom: 0.75rem;
+        padding-left: 0.75rem;
+        border-left: 3px solid var(--accent);
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      li {
+        margin-bottom: 0.4rem;
+      }
+
+      a {
+        color: var(--accent-light);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .highlight-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.25rem 1.5rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box strong {
+        color: var(--accent-light);
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .last-updated {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
+
       footer {
-        margin-top: 3rem;
+        margin-top: 4rem;
         padding-top: 2rem;
         border-top: 1px solid var(--border);
         text-align: center;
@@ -84,70 +135,195 @@
   <body>
     <div class="container">
       <header>
-        <a href="../index.html" class="logo">✦ MyApp</a>
+        <a href="../index.html" class="logo">🧩 Shiffle</a>
+        <p>Sliding Picture Puzzle</p>
       </header>
 
       <h1>Terms of Service</h1>
-      <p class="muted">
-        Last updated: January 1, 2026
-        <!-- TODO(you) -->
+      <p class="last-updated">Last updated: July 25, 2026</p>
+
+      <div class="highlight-box">
+        <strong>Please read these Terms before using Shiffle.</strong>
+        By downloading or using the app, you agree to these terms. If you do not agree, please do
+        not use the app.
+      </div>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>
+        These Terms of Service ("Terms") govern your use of <strong>Shiffle</strong> (the "App"), a
+        mobile game developed by <strong>Alex Lemken</strong> ("Developer", "we", "us", "our"). By
+        accessing or using the App, you confirm that you are at least 8 years old (or have parental
+        consent), and that you agree to be bound by these Terms.
       </p>
 
-      <h2>1. Acceptance</h2>
+      <h2>2. License to Use</h2>
       <p>
-        By downloading or using MyApp ("the app"), you agree to these terms. If you disagree, do not
-        use the app.
+        We grant you a limited, non-exclusive, non-transferable, revocable license to download and
+        use the App solely for your personal, non-commercial entertainment purposes, subject to
+        these Terms.
+      </p>
+      <p>You may <strong>not</strong>:</p>
+      <ul>
+        <li>Copy, modify, distribute, sell, or lease any part of the App</li>
+        <li>Reverse engineer, decompile, or attempt to extract the source code</li>
+        <li>Use the App for any commercial purpose without our written consent</li>
+        <li>
+          Use cheats, bots, hacks, or any unauthorized software to modify or interfere with the App
+        </li>
+        <li>Remove or obscure any copyright or proprietary notices in the App</li>
+      </ul>
+
+      <h2>3. Intellectual Property</h2>
+      <p>
+        All content within the App — including but not limited to artwork, puzzle images, game
+        design, software code, and the "Shiffle" name and logo — is owned by or licensed to the
+        Developer and is protected by applicable intellectual property laws.
+      </p>
+      <p>
+        Nothing in these Terms transfers any intellectual property rights to you. Your use of the
+        App does not grant you any ownership of any content or materials within the App.
       </p>
 
-      <h2>2. License</h2>
+      <h2>4. Free to Play — No Ads, No In-App Purchases</h2>
       <p>
-        We grant you a personal, non-exclusive, non-transferable, revocable license to use the app
-        for personal, non-commercial purposes, subject to these terms and the app store's terms.
+        Shiffle is free to download and contains <strong>no advertisements</strong> and
+        <strong>no in-app purchases</strong>. You will never be asked to pay for any content or
+        feature within the App. If this changes in a future version, these Terms will be updated and
+        you will be notified.
       </p>
 
-      <h2>3. Acceptable Use</h2>
+      <h2>5. User Conduct</h2>
       <p>
-        You agree not to reverse-engineer, redistribute, or misuse the app or attempt to disrupt it.
+        You agree to use the App only for lawful purposes and in a manner consistent with these
+        Terms.
+      </p>
+      <p>Prohibited conduct includes, but is not limited to:</p>
+      <ul>
+        <li>Attempting to manipulate game data in unauthorized ways</li>
+        <li>Interfering with the App's functionality or other users' experience</li>
+        <li>
+          Using the App to transmit malicious code or engage in any activity that damages our
+          systems
+        </li>
+      </ul>
+
+      <h2>6. Disclaimer of Warranties</h2>
+      <p>
+        The App is provided on an <strong>"AS IS" and "AS AVAILABLE"</strong> basis, without
+        warranties of any kind, either express or implied. To the fullest extent permitted by
+        applicable law, the Developer disclaims all warranties, including but not limited to:
+      </p>
+      <ul>
+        <li>Implied warranties of merchantability and fitness for a particular purpose</li>
+        <li>Warranties that the App will be uninterrupted, error-free, or free of viruses</li>
+        <li>Warranties regarding the accuracy or reliability of any content in the App</li>
+      </ul>
+
+      <h2>7. Limitation of Liability</h2>
+      <p>
+        To the maximum extent permitted by applicable law, the Developer shall not be liable for any
+        indirect, incidental, special, consequential, or punitive damages, including but not limited
+        to: loss of data, loss of profits, loss of goodwill, service interruption, or device damage,
+        arising from or related to your use of or inability to use the App.
+      </p>
+      <p>
+        In jurisdictions that do not allow the limitation of liability for consequential or
+        incidental damages, our liability is limited to the maximum extent permitted by law.
       </p>
 
-      <h2>4. Intellectual Property</h2>
-      <p>The app and its content are owned by Your Name and protected by applicable law.</p>
-
-      <h2>5. Disclaimer</h2>
+      <h2>8. Privacy</h2>
       <p>
-        The app is provided "as is", without warranties of any kind. We do not guarantee it will be
-        uninterrupted or error-free.
+        Your privacy is important to us. Please review our
+        <a href="privacy-policy.html">Privacy Policy</a>, which explains how we handle data in
+        connection with the App. The Privacy Policy is incorporated by reference into these Terms.
       </p>
 
-      <h2>6. Limitation of Liability</h2>
+      <h2>9. Third-Party Services</h2>
       <p>
-        To the maximum extent permitted by law, we are not liable for any indirect or consequential
-        damages arising from your use of the app.
+        Shiffle v1.0 does not integrate any third-party SDKs for advertising, analytics, or data
+        collection. The App is distributed via the Apple App Store and Google Play Store, whose own
+        terms and privacy policies apply to the download and installation process.
       </p>
 
-      <h2>7. App Store Terms</h2>
+      <h2>10. App Store / Play Store Terms</h2>
       <p>
-        Your use is also subject to the
-        <a href="https://www.apple.com/legal/internet-services/itunes/us/terms.html"
-          >Apple Media Services Terms</a
-        >
-        and the
-        <a href="https://play.google.com/intl/en_us/about/play-terms/"
-          >Google Play Terms of Service</a
-        >.
+        Your use of the App is also subject to the terms of the platform through which you
+        downloaded it:
+      </p>
+      <ul>
+        <li>
+          <strong>Apple App Store:</strong>
+          <a
+            href="https://www.apple.com/legal/internet-services/itunes/us/terms.html"
+            target="_blank"
+            rel="noopener"
+          >
+            Apple Media Services Terms and Conditions
+          </a>
+        </li>
+        <li>
+          <strong>Google Play Store:</strong>
+          <a
+            href="https://play.google.com/intl/en_us/about/play-terms/"
+            target="_blank"
+            rel="noopener"
+          >
+            Google Play Terms of Service
+          </a>
+        </li>
+      </ul>
+
+      <h2>11. Children</h2>
+      <p>
+        The App is appropriate for a general audience. We do not knowingly collect personal
+        information from children under 13. If you are a parent or guardian and believe your child
+        has provided personal information, please contact us immediately at
+        <a href="mailto:alexlemken@googlemail.com">alexlemken@googlemail.com</a>.
       </p>
 
-      <h2>8. Changes</h2>
-      <p>We may update these terms; continued use after changes constitutes acceptance.</p>
-
-      <h2>9. Contact</h2>
+      <h2>12. Updates and Changes</h2>
       <p>
-        📧 <a href="mailto:you@example.com">you@example.com</a> &nbsp;·&nbsp; 🌐
-        <a href="https://example.com/">https://example.com/</a>
+        We may update the App from time to time to add features, fix bugs, or address security
+        issues. We may also update these Terms. When we make material changes, we will update the
+        "Last updated" date above. Your continued use of the App after any changes constitutes
+        acceptance of the new Terms.
+      </p>
+      <p>
+        We reserve the right to modify, suspend, or discontinue the App (or any part thereof) at any
+        time without notice or liability.
+      </p>
+
+      <h2>13. Governing Law</h2>
+      <p>
+        These Terms shall be governed by and construed in accordance with the laws of
+        <strong>Germany</strong>, without regard to its conflict of law principles. Any disputes
+        arising under these Terms shall be subject to the exclusive jurisdiction of the courts
+        located in <strong>Germany</strong>.
+      </p>
+
+      <h2>14. Severability</h2>
+      <p>
+        If any provision of these Terms is held to be invalid or unenforceable, the remaining
+        provisions will continue in full force and effect.
+      </p>
+
+      <h2>15. Entire Agreement</h2>
+      <p>
+        These Terms, together with our Privacy Policy, constitute the entire agreement between you
+        and the Developer regarding the use of the App, and supersede all prior agreements relating
+        to the same subject matter.
+      </p>
+
+      <h2>16. Contact</h2>
+      <p>If you have questions about these Terms of Service, please contact us:</p>
+      <p>
+        📧 Email: <a href="mailto:alexlemken@googlemail.com">alexlemken@googlemail.com</a><br />
+        🌐 Website:
+        <a href="https://shiffle.tenfives.com/">https://shiffle.tenfives.com/</a>
       </p>
 
       <footer>
-        <p>&copy; 2026 Your Name — MyApp</p>
+        <p>&copy; 2026 Alex Lemken — Shiffle</p>
         <p style="margin-top: 0.5rem">
           <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
           <a href="terms-of-service.html">Terms of Service</a>
