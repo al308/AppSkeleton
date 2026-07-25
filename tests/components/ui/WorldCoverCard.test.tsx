@@ -13,9 +13,9 @@ const world: World = {
 
 const progress: WorldProgress = {
   solvedCount: 4,
-  totalLevels: 15,
+  totalLevels: 9,
   earnedStars: 9,
-  maxStars: 45,
+  maxStars: 27,
 };
 
 describe('WorldCoverCard', () => {
@@ -23,8 +23,8 @@ describe('WorldCoverCard', () => {
     render(<WorldCoverCard world={world} progress={progress} isUnlocked onPress={() => {}} />);
 
     expect(screen.getByText('Muster')).toBeTruthy();
-    expect(screen.getByText('4/15 gelöst')).toBeTruthy();
-    expect(screen.getByText(/9\/45/)).toBeTruthy();
+    expect(screen.getByText('4/9 gelöst')).toBeTruthy();
+    expect(screen.getByText(/9\/27/)).toBeTruthy();
   });
 
   it('navigates on press when unlocked', () => {

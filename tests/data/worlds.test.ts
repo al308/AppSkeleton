@@ -8,20 +8,14 @@ describe('worlds data invariants', () => {
     expect(WORLDS.length).toBeLessThanOrEqual(10);
   });
 
-  // The two original worlds (natur kept at 9; muster/glyphen predate the 5–9
-  // target and intentionally keep their larger, fully-baked level sets). Every
-  // newer world must sit in the 5–9 band.
-  const LEGACY_LARGE_WORLDS = new Set(['muster', 'glyphen']);
-
   it('gives every world at least 5 levels', () => {
     for (const world of WORLDS) {
       expect(getLevelsForWorld(world.id).length).toBeGreaterThanOrEqual(5);
     }
   });
 
-  it('keeps every non-legacy world within 5–9 levels', () => {
+  it('keeps every world within 5–9 levels', () => {
     for (const world of WORLDS) {
-      if (LEGACY_LARGE_WORLDS.has(world.id)) continue;
       expect(getLevelsForWorld(world.id).length).toBeLessThanOrEqual(9);
     }
   });

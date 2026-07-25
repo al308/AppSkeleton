@@ -9,9 +9,28 @@ import type { ImageSourcePropType } from 'react-native';
 //   2. Add a `'<world>/<name>': require('...')` line below.
 //   3. Point the matching level's `source` at `img('<world>', '<name>')`.
 const IMAGE_REGISTRY = {
-  'natur/lion': require('../../assets/images/worlds/natur/lion.png'),
-  'natur/swans': require('../../assets/images/worlds/natur/swans.png'),
-  'natur/kitten': require('../../assets/images/worlds/natur/kitten.png'),
+  // TEMP placeholders — natur/tiere images.ts entries below reuse these 3
+  // PNGs cyclically until docs/specs/worlds-restructure.md Phase 4 lands the
+  // real photorealistic JPGs (18 distinct images) and these lines are
+  // replaced with one require() per new key.
+  'natur/gletscher': require('../../assets/images/worlds/natur/lion.png'),
+  'natur/vulkan': require('../../assets/images/worlds/natur/swans.png'),
+  'natur/geysir': require('../../assets/images/worlds/natur/kitten.png'),
+  'natur/felskueste': require('../../assets/images/worlds/natur/lion.png'),
+  'natur/strand': require('../../assets/images/worlds/natur/swans.png'),
+  'natur/weizenfeld': require('../../assets/images/worlds/natur/kitten.png'),
+  'natur/wolken': require('../../assets/images/worlds/natur/lion.png'),
+  'natur/bergsee': require('../../assets/images/worlds/natur/swans.png'),
+  'natur/herbstwald': require('../../assets/images/worlds/natur/kitten.png'),
+  'tiere/adler': require('../../assets/images/worlds/natur/lion.png'),
+  'tiere/orca': require('../../assets/images/worlds/natur/swans.png'),
+  'tiere/schneeleopard': require('../../assets/images/worlds/natur/kitten.png'),
+  'tiere/tiger': require('../../assets/images/worlds/natur/lion.png'),
+  'tiere/kolibri': require('../../assets/images/worlds/natur/swans.png'),
+  'tiere/pfau': require('../../assets/images/worlds/natur/kitten.png'),
+  'tiere/chamaeleon': require('../../assets/images/worlds/natur/lion.png'),
+  'tiere/wanderfalke': require('../../assets/images/worlds/natur/swans.png'),
+  'tiere/qualle': require('../../assets/images/worlds/natur/kitten.png'),
   'planeten/roter-planet': require('../../assets/images/worlds/planeten/roter-planet.jpg'),
   'planeten/gasriese': require('../../assets/images/worlds/planeten/gasriese.jpg'),
   'planeten/ringsystem': require('../../assets/images/worlds/planeten/ringsystem.jpg'),

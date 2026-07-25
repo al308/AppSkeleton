@@ -25,6 +25,11 @@ export const WORLD_THEMES: Record<string, WorldTheme> = {
     accent: '#5be59a',
     frame: 'rgba(91, 229, 154, 0.30)',
   },
+  tiere: {
+    gradient: ['#3d2c10', '#251a09', '#130d04'],
+    accent: '#e0a840',
+    frame: 'rgba(224, 168, 64, 0.30)',
+  },
   muster: {
     gradient: ['#3a153f', '#220c2b', '#100616'],
     accent: '#d68bff',

@@ -17,13 +17,14 @@ type WorldSeed = Omit<World, 'unlockStarThreshold'>;
 // Order interleaves concrete and abstract themes; muster and glyphen are kept
 // apart on purpose.
 const WORLD_SEEDS: WorldSeed[] = [
-  { id: 'natur', title: 'Natur', description: 'Tiere und Landschaften' },
-  { id: 'muster', title: 'Muster', description: 'Geometrische Muster und Farbverläufe' },
+  { id: 'natur', title: 'Natur', description: 'Landschaften und Naturwunder' },
+  { id: 'tiere', title: 'Tiere', description: 'Wildtiere in freier Natur' },
   { id: 'planeten', title: 'Planeten', description: 'Welten, Monde und Ringe' },
   { id: 'fahrzeuge', title: 'Fahrzeuge', description: 'Autos, Schiffe und Flieger' },
   { id: 'glyphen', title: 'Glyphen', description: 'Linien, Zahlen und neue Formen' },
   { id: 'sport', title: 'Sportarten', description: 'Spielszenen und Action' },
   { id: 'kosmos', title: 'Kosmos', description: 'Nebel, Sterne und Tiefe' },
+  { id: 'muster', title: 'Muster', description: 'Geometrische Muster und Farbverläufe' },
   { id: 'urban', title: 'Urban', description: 'Städte, Fassaden und Neon' },
 ];
 

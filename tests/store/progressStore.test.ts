@@ -11,8 +11,11 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
-const muster = WORLDS.find((w) => w.id === 'muster')!;
+// glyphen unlocks earlier than muster in current menu order (see worlds.ts);
+// kept as named lookups (not hardcoded thresholds) so this test tracks
+// whatever order WORLD_SEEDS defines.
 const glyphen = WORLDS.find((w) => w.id === 'glyphen')!;
+const muster = WORLDS.find((w) => w.id === 'muster')!;
 
 function recordsWithStars(total: number): Record<string, PuzzleRecord> {
   const records: Record<string, PuzzleRecord> = {};
@@ -45,23 +48,23 @@ describe('world unlock thresholds', () => {
 
 describe('worldsUnlockedBy', () => {
   it('keeps later worlds locked below their threshold', () => {
-    const result = worldsUnlockedBy(recordsWithStars(muster.unlockStarThreshold - 1), ['natur']);
+    const result = worldsUnlockedBy(recordsWithStars(glyphen.unlockStarThreshold - 1), ['natur']);
 
-    expect(result).toEqual(['natur']);
+    expect(result).toEqual(['natur', 'tiere', 'planeten', 'fahrzeuge']);
   });
 
   it('unlocks a world once its star threshold is reached', () => {
-    const result = worldsUnlockedBy(recordsWithStars(muster.unlockStarThreshold), ['natur']);
+    const result = worldsUnlockedBy(recordsWithStars(glyphen.unlockStarThreshold), ['natur']);
 
-    expect(result).toContain('muster');
-    expect(result).not.toContain('glyphen');
+    expect(result).toContain('glyphen');
+    expect(result).not.toContain('muster');
   });
 
   it('unlocks every world when the highest threshold is met', () => {
-    const result = worldsUnlockedBy(recordsWithStars(glyphen.unlockStarThreshold), ['natur']);
+    const result = worldsUnlockedBy(recordsWithStars(muster.unlockStarThreshold), ['natur']);
 
-    expect(result).toContain('muster');
     expect(result).toContain('glyphen');
+    expect(result).toContain('muster');
   });
 
   it('returns the same array reference when nothing changes (no needless re-render)', () => {
