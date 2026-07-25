@@ -16,115 +16,168 @@ Save to: `assets/images/worlds/<world>/<levelId>.jpg`
 - Square format 1:1, compose centrally with a clear focal point
 - Strong color contrast and distinct regions that "reveal" nicely when assembled
 - Avoid: real people's faces, copyrighted characters, brand logos, text in the image
-- Style: stylized / painterly / illustration — not photorealistic stock photography
+- Style: **photorealistic photography** — sharp detail, natural/dramatic
+  lighting, camera-like composition (not painterly/illustration). This is the
+  current standard as of the Natur/Tiere realism pass (see
+  `docs/specs/worlds-restructure.md`); Planeten/Fahrzeuge/Sport/Kosmos/Muster/
+  Urban below still show their original stylized/painterly prompts and haven't
+  been regenerated to match yet.
 - Minimum 1024×1024, target 1200×1200 for retina quality
 
 ---
 
-## World 1 — Natur
+## World — Natur
 
-### natur_01 · Bergwiese (`bergwiese.jpg`)
+Photorealistic landscape photography (see the style-rule note above).
 
-```
-Aerial view of an alpine meadow in full bloom, lush green grass with scattered wildflowers
-in purple, yellow and white, dramatic rocky peaks in the background, golden hour light,
-painterly illustration style, vibrant colors, square composition centered on the flower field,
-no people, --ar 1:1 --style raw
-```
-
-### natur_02 · Wasserfall (`wasserfall.jpg`)
+### natur_01 · Gletscher (`gletscher.jpg`)
 
 ```
-A powerful jungle waterfall cascading over mossy rocks into a crystal-clear turquoise pool,
-lush tropical vegetation surrounding it, misty spray catching sunlight,
-stylized illustration with bold colors, centered composition, --ar 1:1
+A massive blue-white glacier wall with deep crevasses, cold morning light raking across the ice,
+a fjord of dark water at its base, photorealistic photography, dramatic natural lighting,
+sharp detail, wide-angle landscape shot, no people, no text, --ar 1:1
 ```
 
-### natur_03 · Sonnenblumenfeld (`sonnenblumen.jpg`)
+### natur_02 · Vulkan (`vulkan.jpg`)
 
 ```
-A vast field of sunflowers in full bloom stretching to the horizon,
-bright blue sky with fluffy white clouds, warm golden sunlight,
-bold graphic illustration style with strong color blocks,
-centered overhead-angle shot showing the radial pattern of the flowers, --ar 1:1
+An active volcano cone erupting with a glowing lava plume against a dusky sky,
+dark ash clouds billowing upward, photorealistic photography, dramatic natural lighting,
+long exposure, sharp detail, no people, no text, --ar 1:1
 ```
 
-### natur_04 · Herbstwald (`herbstwald.jpg`)
+### natur_03 · Geysir (`geysir.jpg`)
 
 ```
-Dense autumn forest canopy viewed from below looking up,
-leaves in deep red, orange, yellow and brown,
-sunlight filtering through in golden rays,
-abstract painterly style, rich texture, centered composition, --ar 1:1
+A tall geyser erupting in a steaming mineral basin, backlit water plume against a pale sky,
+warm mineral-orange terraces in the foreground, photorealistic photography,
+telephoto compression, sharp detail, no people, no text, --ar 1:1
 ```
 
-### natur_05 · Küstenlandschaft (`kueste.jpg`)
+### natur_04 · Felsküste (`felskueste.jpg`)
 
 ```
-Dramatic coastal cliffs meeting a turquoise ocean, white foam waves,
-a lighthouse on a rocky promontory in the distance,
-clear blue sky with a few clouds, stylized illustration with strong contrast,
-aerial perspective, --ar 1:1
+A rugged rocky coastline with tall sea stacks battered by crashing waves, dramatic overcast sky,
+cool grey-blue palette with white spray, photorealistic photography,
+long exposure motion in the surf, sharp detail, no people, no text, --ar 1:1
 ```
 
-### natur_06 · Schneegipfel (`schneegipfel.jpg`)
+### natur_05 · Strand (`strand.jpg`)
 
 ```
-Snow-capped mountain peaks at sunrise, pink and orange alpenglow on the summits,
-deep blue glaciers and icy ridges, dramatic scale, stylized alpine illustration,
-centered triangular mountain composition, no people, --ar 1:1
+A tropical beach with turquoise water and white sand, gentle waves and a few scattered palm
+leaves, bright midday sun, photorealistic photography, natural sunlight, sharp detail,
+no people, no text, --ar 1:1
 ```
 
-### natur_07 · Tropischer Regenwald (`regenwald.jpg`)
+### natur_06 · Weizenfeld (`weizenfeld.jpg`)
 
 ```
-Lush tropical rainforest canopy from above, multiple shades of green,
-winding river visible through the treetops, exotic birds in bright colors,
-morning mist in the valleys, painterly illustration, rich detail, --ar 1:1
+A golden wheat field rippling under a wide summer sky, warm late-afternoon light raking
+across the grain, a distant tree line on the horizon, photorealistic photography,
+golden-hour natural light, sharp detail, no people, no text, --ar 1:1
 ```
 
-### natur_08 · Wüstenmorgen (`wueste.jpg`)
+### natur_07 · Wolken (`wolken.jpg`)
 
 ```
-Vast desert landscape at dawn, dramatic sand dunes in warm orange and golden tones,
-long shadows, a single large cactus silhouette,
-violet and pink sky, minimalist stylized illustration, --ar 1:1
+A dramatic sky filled with towering cumulus clouds lit from below by a low sun,
+gradient from deep blue to warm gold, photorealistic aerial photography,
+dramatic natural light, sharp detail, no people, no text, --ar 1:1
 ```
 
-### natur_09 · Nordlichter (`nordlichter.jpg`)
+### natur_08 · Bergsee (`bergsee.jpg`)
 
 ```
-Northern lights (aurora borealis) in vivid green, cyan and purple
-dancing across a dark arctic night sky,
-snow-covered pine forest reflected in a still frozen lake below,
-dreamlike illustration style, strong color contrast, --ar 1:1
+A still alpine lake mirroring snow-capped mountain peaks, deep blue water, crisp clear
+daylight, photorealistic photography, crisp natural daylight, sharp detail,
+strong symmetrical composition, no people, no text, --ar 1:1
 ```
 
-### natur_10 · Korallenriff (`korallenriff.jpg`)
+### natur_09 · Herbstwald (`herbstwald.jpg`)
 
 ```
-Vibrant coral reef scene viewed from slightly above,
-colorful coral formations in pink, orange and purple,
-schools of tropical fish in electric blue and yellow,
-crystal clear water with light rays, stylized illustration, --ar 1:1
+A dense autumn forest with red, orange and gold foliage, soft shafts of light breaking
+through the canopy, a narrow path receding into the trees, photorealistic photography,
+soft forest light, sharp detail, no people, no text, --ar 1:1
 ```
 
-### natur_11 · Kirschblüte (`kirschbluete.jpg`)
+---
+
+## World — Tiere
+
+Photorealistic wildlife photography (see the style-rule note above).
+
+### tiere_01 · Adler im Sturzflug (`adler.jpg`)
 
 ```
-Japanese cherry blossom park in full bloom,
-dense canopy of soft pink sakura flowers filling the frame,
-a traditional stone lantern visible below,
-gentle petals falling, soft pastel illustration style, --ar 1:1
+A golden eagle diving steeply with wings swept back, sharp talons forward, dramatic cloudy
+mountain sky background, photorealistic wildlife photography, fast shutter freeze,
+sharp detail, strong dynamic diagonal composition, no people, no text, --ar 1:1
 ```
 
-### natur_12 · Vulkanlandschaft (`vulkan.jpg`)
+### tiere_02 · Orca-Breach (`orca.jpg`)
 
 ```
-Active volcano at night, glowing orange and red lava flows cutting through black basalt,
-dramatic plume of smoke and ash lit from below,
-star-filled sky above, stylized illustration with strong contrast,
-aerial perspective, no people, --ar 1:1
+An orca breaching fully out of deep blue ocean water, dramatic spray and splash, overcast
+sky, high contrast black-and-white orca against cool blue water, photorealistic wildlife
+photography, fast shutter freeze, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_03 · Schneeleopard (`schneeleopard.jpg`)
+
+```
+A snow leopard perched on a rocky outcrop in a snowy mountain landscape amid falling snow,
+thick spotted fur, alert posture, cool blue-grey palette, photorealistic wildlife
+photography, natural overcast light, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_04 · Tiger-Sprung (`tiger.jpg`)
+
+```
+A Bengal tiger mid-leap through tall golden grass, muscles taut, dramatic low-angle view,
+warm orange and black stripes against a soft green background, photorealistic wildlife
+photography, fast shutter freeze, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_05 · Kolibri-Schwebeflug (`kolibri.jpg`)
+
+```
+A hummingbird hovering mid-air beside a bright red tropical flower, wings frozen mid-beat,
+iridescent green-blue plumage, soft blurred foliage background, photorealistic macro
+photography, fast shutter freeze, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_06 · Pfau-Rad (`pfau.jpg`)
+
+```
+A peacock with its tail fully fanned out, iridescent blue-green eye-spot feathers backlit
+and displayed symmetrically, centered composition, photorealistic wildlife photography,
+natural backlight, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_07 · Chamäleon-Makro (`chamaeleon.jpg`)
+
+```
+An extreme macro shot of a chameleon gripping a branch mid color-change, richly textured
+scaly skin in vivid green and turquoise, one eye rotated toward camera, soft blurred jungle
+background, photorealistic macro photography, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_08 · Wanderfalke (`wanderfalke.jpg`)
+
+```
+A peregrine falcon in a steep high-speed stoop dive, wings folded tight against its body,
+streaking diagonally against a pale sky, photorealistic wildlife photography,
+low-angle dramatic perspective, fast shutter freeze, sharp detail, no people, no text, --ar 1:1
+```
+
+### tiere_09 · Tiefsee-Qualle (`qualle.jpg`)
+
+```
+A translucent deep-sea jellyfish glowing bioluminescent blue against the black ocean depths,
+trailing tentacles, bubbles rising, photorealistic underwater photography, dramatic low
+light, sharp detail, centered composition, no people, no text, --ar 1:1
 ```
 
 ---

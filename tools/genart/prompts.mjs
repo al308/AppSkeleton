@@ -1,8 +1,10 @@
 // Prompt list for the genart pipeline (docs/specs/genart-pipeline.md).
 // Content mirrors docs/asset-prompts.md — keep both in sync when editing.
 // One entry per placeholder-world level (title/gridSize sourced from
-// src/data/levels.ts). Style rules follow the existing `natur` prompts:
-// square 1:1, stylized/painterly, strong regions, no people/logos/text.
+// src/data/levels.ts). Square 1:1, strong regions, no people/logos/text.
+// Planeten..Urban below use the original stylized/painterly style; Natur
+// and Tiere use the newer photorealistic style — see the style-rule note
+// in docs/asset-prompts.md for why the two styles currently coexist.
 
 export const PROMPTS = [
   // ── Planeten ──────────────────────────────────────────────────────────
@@ -230,5 +232,141 @@ export const PROMPTS = [
     filename: 'nachtleben.jpg',
     prompt:
       'A lively city street at night with colorful illuminated shop signs and string lights, reflections on wet pavement, stylized illustration, vivid color contrast, centered composition, no people, no readable text, no logos',
+  },
+
+  // ── Natur ─────────────────────────────────────────────────────────────
+  // Photorealistic photography, not stylized illustration — a deliberate
+  // break from every other world's style, see docs/asset-prompts.md and
+  // docs/specs/worlds-restructure.md. Replaces the original 3 Picsum/
+  // Unsplash placeholders (licensing trap, see feedback_image_licensing
+  // memory) plus the 6 levels that never had real images.
+  {
+    world: 'natur',
+    levelId: 'natur_01',
+    filename: 'gletscher.jpg',
+    prompt:
+      'A massive blue-white glacier wall with deep crevasses, cold morning light raking across the ice, a fjord of dark water at its base, photorealistic photography, dramatic natural lighting, sharp detail, wide-angle landscape shot, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_02',
+    filename: 'vulkan.jpg',
+    prompt:
+      'An active volcano cone erupting with a glowing lava plume against a dusky sky, dark ash clouds billowing upward, photorealistic photography, dramatic natural lighting, long exposure, sharp detail, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_03',
+    filename: 'geysir.jpg',
+    prompt:
+      'A tall geyser erupting in a steaming mineral basin, backlit water plume against a pale sky, warm mineral-orange terraces in the foreground, photorealistic photography, telephoto compression, sharp detail, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_04',
+    filename: 'felskueste.jpg',
+    prompt:
+      'A rugged rocky coastline with tall sea stacks battered by crashing waves, dramatic overcast sky, cool grey-blue palette with white spray, photorealistic photography, long exposure motion in the surf, sharp detail, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_05',
+    filename: 'strand.jpg',
+    prompt:
+      'A tropical beach with turquoise water and white sand, gentle waves and a few scattered palm leaves, bright midday sun, photorealistic photography, natural sunlight, sharp detail, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_06',
+    filename: 'weizenfeld.jpg',
+    prompt:
+      'A golden wheat field rippling under a wide summer sky, warm late-afternoon light raking across the grain, a distant tree line on the horizon, photorealistic photography, golden-hour natural light, sharp detail, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_07',
+    filename: 'wolken.jpg',
+    prompt:
+      'A dramatic sky filled with towering cumulus clouds lit from below by a low sun, gradient from deep blue to warm gold, photorealistic aerial photography, dramatic natural light, sharp detail, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_08',
+    filename: 'bergsee.jpg',
+    prompt:
+      'A still alpine lake mirroring snow-capped mountain peaks, deep blue water, crisp clear daylight, photorealistic photography, crisp natural daylight, sharp detail, strong symmetrical composition, no people, no text',
+  },
+  {
+    world: 'natur',
+    levelId: 'natur_09',
+    filename: 'herbstwald.jpg',
+    prompt:
+      'A dense autumn forest with red, orange and gold foliage, soft shafts of light breaking through the canopy, a narrow path receding into the trees, photorealistic photography, soft forest light, sharp detail, no people, no text',
+  },
+
+  // ── Tiere ─────────────────────────────────────────────────────────────
+  // Photorealistic wildlife photography, same style break as Natur above.
+  {
+    world: 'tiere',
+    levelId: 'tiere_01',
+    filename: 'adler.jpg',
+    prompt:
+      'A golden eagle diving steeply with wings swept back, sharp talons forward, dramatic cloudy mountain sky background, photorealistic wildlife photography, fast shutter freeze, sharp detail, strong dynamic diagonal composition, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_02',
+    filename: 'orca.jpg',
+    prompt:
+      'An orca breaching fully out of deep blue ocean water, dramatic spray and splash, overcast sky, high contrast black-and-white orca against cool blue water, photorealistic wildlife photography, fast shutter freeze, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_03',
+    filename: 'schneeleopard.jpg',
+    prompt:
+      'A snow leopard perched on a rocky outcrop in a snowy mountain landscape amid falling snow, thick spotted fur, alert posture, cool blue-grey palette, photorealistic wildlife photography, natural overcast light, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_04',
+    filename: 'tiger.jpg',
+    prompt:
+      'A Bengal tiger mid-leap through tall golden grass, muscles taut, dramatic low-angle view, warm orange and black stripes against a soft green background, photorealistic wildlife photography, fast shutter freeze, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_05',
+    filename: 'kolibri.jpg',
+    prompt:
+      'A hummingbird hovering mid-air beside a bright red tropical flower, wings frozen mid-beat, iridescent green-blue plumage, soft blurred foliage background, photorealistic macro photography, fast shutter freeze, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_06',
+    filename: 'pfau.jpg',
+    prompt:
+      'A peacock with its tail fully fanned out, iridescent blue-green eye-spot feathers backlit and displayed symmetrically, centered composition, photorealistic wildlife photography, natural backlight, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_07',
+    filename: 'chamaeleon.jpg',
+    prompt:
+      'An extreme macro shot of a chameleon gripping a branch mid color-change, richly textured scaly skin in vivid green and turquoise, one eye rotated toward camera, soft blurred jungle background, photorealistic macro photography, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_08',
+    filename: 'wanderfalke.jpg',
+    prompt:
+      'A peregrine falcon in a steep high-speed stoop dive, wings folded tight against its body, streaking diagonally against a pale sky, photorealistic wildlife photography, low-angle dramatic perspective, fast shutter freeze, sharp detail, no people, no text',
+  },
+  {
+    world: 'tiere',
+    levelId: 'tiere_09',
+    filename: 'qualle.jpg',
+    prompt:
+      'A translucent deep-sea jellyfish glowing bioluminescent blue against the black ocean depths, trailing tentacles, bubbles rising, photorealistic underwater photography, dramatic low light, sharp detail, centered composition, no people, no text',
   },
 ];
