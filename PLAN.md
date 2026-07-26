@@ -247,6 +247,106 @@ Kosmos(30) · Urban(35).
 - _DoD:_ `accentColor`-Altfeld migriert/entfernt; README/Concept-Hinweis, wie ein
   echtes PNG je Welt eingehängt wird (ein-Zeilen-Registry-Eintrag); `just check` grün.
 
+## Feature: Sound + Musik 🟡 (App-Engine implementiert, Assets warten auf manuelle Review — Spec: [docs/specs/sound-and-music.md](docs/specs/sound-and-music.md))
+
+Aktuell existiert keine Audio-Ebene — nur `expo-haptics` (Tile-Move, Invalid-Move,
+Win). Diese Feature fügt ein echtes SFX- + Ambient-Musik-System hinzu, verdrahtet an
+jeden bestehenden Haptic-Touchpoint, plus einen loopenden Ambient-Bed pro Welt,
+steuerbar über zwei neue unabhängige Settings-Toggles (`soundEnabled`,
+`musicEnabled`). Asset-Erzeugung läuft getrennt über `assetgen/sounds.yaml` (14 SFX +
+9 Welt-Ambiences via Stable Audio Open 1.0) — aktuell **blockiert**, da der
+HuggingFace-Account hinter `HF_TOKEN` die Lizenz auf `stabilityai/stable-audio-open-1.0`
+(gated repo, 403 `GatedRepoError`) noch nicht akzeptiert hat. Das App-seitige Engine
+muss deshalb korrekt ohne echte Dateien funktionieren (alle `assetMap`-Einträge
+`undefined` → no-op statt Crash) und automatisch aktivieren, sobald echte Dateien +
+Map-Einträge nachgereicht werden.
+
+### Struktur-Änderungen
+
+- Neue Dependency: `expo-audio` (via `npx expo install expo-audio`, SDK-54-Version).
+- Neues Modul `src/audio/`: `assetMap.ts` (statische `require()`-Maps, initial alle
+  `undefined`), `soundEffects.ts` (Preload + `playSound(name)`, no-op bei fehlendem
+  Asset oder `soundEnabled: false`), `musicPlayer.ts` (`playWorldMusic(worldId)` /
+  `stopMusic()`, Cross-Fade ~600ms, no-op bei fehlendem Asset oder
+  `musicEnabled: false`).
+- `src/store/settingsStore.ts`: `soundEnabled`, `musicEnabled` (beide Default `true`).
+- Landing-Zone für echte Binaries (design-owned, nicht Teil dieser Implementierung):
+  `assets/audio/sfx/`, `assets/audio/music/`.
+
+### Phasen mit Stage-Gates
+
+**Phase 1 — Dependency + Settings + leeres Audio-Modul.**
+
+- _DoD (Funktionalität):_ `expo-audio` installiert; `soundEnabled`/`musicEnabled` in
+  `settingsStore` + zwei neue `SwitchRow`s in `settings/index.tsx` ("Sound", "Musik");
+  `src/audio/assetMap.ts` mit vollständiger `SoundEffectName`-Union (14 Namen aus
+  `assetgen/sounds.yaml`) und Welt-Musik-Map, beide komplett `undefined`.
+- _DoD (Tests):_ `tests/store/settingsStore.test.ts` erweitert (neue Keys +
+  Persistenz); `tests/app/settings.test.tsx` erweitert (neue Switches rendern +
+  toggeln).
+- _Verify:_ `npm test -- tests/store/settingsStore.test.ts tests/app/settings.test.tsx`
+
+**Phase 2 — `soundEffects.ts` + `musicPlayer.ts` (Engine, noch nicht verdrahtet).**
+
+- _DoD (Funktionalität):_ `playSound(name)` und `playWorldMusic(worldId)` /
+  `stopMusic()` implementiert; beide lesen `soundEnabled`/`musicEnabled` aus dem
+  Store; beide no-open (warn-once via `console.warn`, kein Throw) bei
+  `undefined`-Map-Eintrag.
+- _DoD (Tests):_ `tests/audio/soundEffects.test.ts`, `tests/audio/musicPlayer.test.ts`
+  — `expo-audio` an der Grenze gemockt (kein echtes Audio in Jest), Assertions für:
+  no-op bei disabled Setting, no-op bei fehlendem Asset, Aufruf der
+  Player-API bei enabled + vorhandenem Asset.
+- _Verify:_ `npm test -- tests/audio`
+
+**Phase 3 — Verdrahtung in bestehende Touchpoints.**
+
+- _DoD (Funktionalität):_ `playSound(...)` ergänzt (nie ersetzt) an jedem Haptic-Call:
+  `PuzzleBoard.tsx` (tile-slide/tile-invalid), `CompletionModal.tsx`
+  (level-complete-fanfare, new-best-record, star-earned), Confetti-Trigger in
+  `game/[id].tsx` (confetti-burst), `handleHint` (hint-reveal), Welt-/Level-Unlock in
+  `worlds.tsx`/`world/[id].tsx`, `GameButton`-Press (button-tap) + Zurück-Pressables
+  (nav-back), Pause-Modal open/close (modal-open/modal-close),
+  `training/[lesson].tsx` Schritt-Abschluss (training-step-complete).
+  `playWorldMusic`/`stopMusic` an World-/Game-Screen Mount/Unmount.
+- _DoD (Tests):_ bestehende Komponententests bleiben grün (Sound-Calls sind
+  Zusatzaufrufe, keine Verhaltensänderung); keine neuen Snapshot-Brüche.
+- _Verify:_ `just check` grün; manueller Durchlauf (siehe unten).
+
+**Phase 4 — Aufräumen + Doku.** ✅ (erledigt)
+
+- _DoD:_ `assets/audio/sfx/.gitkeep`, `assets/audio/music/.gitkeep` angelegt;
+  PLAN.md-Eintrag auf ✅ aktualisiert sobald echte Assets eingehängt sind (separater
+  Schritt, sobald `assetgen`-Batch nach HF-Lizenz-Freischaltung durchläuft).
+
+**Status:** Phasen 1–4 umgesetzt, `just check` grün (36 Suites, 215 Tests). Der
+`assetgen`-Batch lief erfolgreich durch (HF-Lizenz wurde freigegeben) — 23 Assets ×
+2 Kandidaten = 46 Klänge liegen in `assetgen/.assetgen-staging/audio/<name>/candidate-N.mp3`,
+`ingest-audio.mjs` bestätigt korrekte Dauer für alle 46 (Welt-Ambiences auf 47s
+nachgezogen — Stable Audio Open 1.0s harte Obergrenze, ursprünglich 30s). Auf
+expliziten Wunsch ist **`candidate-1` je Asset bereits als Platzhalter-Default
+eingehängt** — alle 14 SFX in `assets/audio/sfx/`, alle 9 Welt-Ambiences in
+`assets/audio/music/`, beide in `src/audio/assetMap.ts` per `require()`
+registriert. Die App spielt damit bereits echten (wenn auch ungehört/nicht
+kuratierten) Sound. **Offen:** finale Auswahl der Kandidaten aus dem Spiel heraus
+(Nutzerwunsch, für später) — laut `docs/AUDIO.md` kann kein Tool beurteilen, ob ein
+Klang tatsächlich passt, nur Dauer/Stille. `world-unlock`/`level-unlock` haben
+reale Dateien registriert, sind aber noch nirgends verdrahtet — beide Screens
+leiten den Unlock-Status nur aus `records`/`unlockedWorldIds` beim Rendern ab, es
+gibt noch keinen expliziten "gerade freigeschaltet"-Übergang zum Anhängen eines
+Einmal-Sounds (siehe Spec-Abschnitt Non-Goals-Ergänzung).
+
+### Verifikation (alle Phasen)
+
+```
+just check    # lint + tsc --noEmit (strict) + jest
+```
+
+Manuell: bei beiden Settings an, aber **ohne** echte Audiodateien einen Level
+komplett durchspielen (Move, Invalid-Move, Hint, Win) — kein Crash, nur erwartete
+einmalige "asset missing"-Warnungen. Sobald echte Dateien vorhanden sind: gleicher
+Durchlauf, jetzt mit hörbarem Sound je Touchpoint und sauberem Cross-Fade beim
+Wechsel World-Screen → Game-Screen.
+
 ## Verifikationskommando (alle Phasen)
 
 ```

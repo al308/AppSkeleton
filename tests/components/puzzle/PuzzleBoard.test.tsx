@@ -4,6 +4,11 @@ import { PuzzleBoard, selectGesture } from '../../../src/components/puzzle/Puzzl
 import { createSolvedState, applyMove, PuzzleState } from '../../../src/engine/puzzle';
 import { Level } from '../../../src/data/levels';
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
+
 describe('selectGesture — control mode', () => {
   it('enables only the tap gesture in tap mode', () => {
     const tap = Gesture.Tap();

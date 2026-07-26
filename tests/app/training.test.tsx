@@ -11,6 +11,11 @@ jest.mock('expo-router', () => ({
   useLocalSearchParams: () => ({ lesson: mockState.lesson }),
 }));
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
+
 describe('TrainingScreen', () => {
   beforeEach(() => {
     mockReplace.mockClear();

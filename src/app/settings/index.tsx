@@ -7,6 +7,7 @@ import { useSettingsStore, ControlMode, ReferenceMode } from '../../store/settin
 import { useProgressStore } from '../../store/progressStore';
 import { GameBackground } from '../../components/ui/GameBackground';
 import { Game, Spacing, Typography, Radii } from '../../constants/theme';
+import { playSound } from '../../audio/soundEffects';
 
 function appVersionLabel(): string {
   const version = Constants.expoConfig?.version ?? '';
@@ -26,7 +27,14 @@ export default function SettingsScreen(): React.ReactElement {
     <GameBackground>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
-          <Pressable onPress={() => router.back()} accessibilityLabel="Schließen" hitSlop={8}>
+          <Pressable
+            onPress={() => {
+              playSound('nav-back');
+              router.back();
+            }}
+            accessibilityLabel="Schließen"
+            hitSlop={8}
+          >
             <Text style={styles.closeBtn}>Fertig</Text>
           </Pressable>
           <Text style={styles.title}>Einstellungen</Text>
@@ -47,6 +55,16 @@ export default function SettingsScreen(): React.ReactElement {
               label="Haptisches Feedback"
               value={settings.hapticsEnabled}
               onToggle={(v) => settings.setSetting('hapticsEnabled', v)}
+            />
+            <SwitchRow
+              label="Sound"
+              value={settings.soundEnabled}
+              onToggle={(v) => settings.setSetting('soundEnabled', v)}
+            />
+            <SwitchRow
+              label="Musik"
+              value={settings.musicEnabled}
+              onToggle={(v) => settings.setSetting('musicEnabled', v)}
             />
             <SwitchRow
               label="Mehrfach-Schieben"

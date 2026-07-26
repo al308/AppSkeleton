@@ -11,6 +11,7 @@ import { GameBackground } from '../components/ui/GameBackground';
 import { useReduceMotion } from '../hooks/useReduceMotion';
 import { Game, Spacing, Typography } from '../constants/theme';
 import { DEV_UNLOCK_ALL } from '../constants/devFlags';
+import { playSound } from '../audio/soundEffects';
 
 export default function WorldsScreen(): React.ReactElement {
   const router = useRouter();
@@ -30,7 +31,10 @@ export default function WorldsScreen(): React.ReactElement {
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
           <Pressable
-            onPress={() => router.back()}
+            onPress={() => {
+              playSound('nav-back');
+              router.back();
+            }}
             accessibilityLabel="Zurück"
             accessibilityRole="button"
             hitSlop={10}
@@ -43,7 +47,10 @@ export default function WorldsScreen(): React.ReactElement {
             <Text style={styles.appTitle}>Welten</Text>
           </View>
           <Pressable
-            onPress={() => router.push('/settings')}
+            onPress={() => {
+              playSound('button-tap');
+              router.push('/settings');
+            }}
             accessibilityLabel="Einstellungen"
             accessibilityRole="button"
             hitSlop={10}

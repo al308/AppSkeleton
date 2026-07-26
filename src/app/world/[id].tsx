@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Pressable } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +11,8 @@ import { LevelCard } from '../../components/ui/LevelCard';
 import { GameBackground } from '../../components/ui/GameBackground';
 import { Game, Spacing, Typography } from '../../constants/theme';
 import { DEV_UNLOCK_ALL } from '../../constants/devFlags';
+import { playSound } from '../../audio/soundEffects';
+import { playWorldMusic, stopMusic } from '../../audio/musicPlayer';
 
 const COLUMNS = 3;
 
@@ -22,6 +24,11 @@ export default function WorldScreen(): React.ReactElement {
 
   const world = getWorld(id);
   const levels = getLevelsForWorld(id);
+
+  useEffect(() => {
+    if (world) playWorldMusic(world.id);
+    return () => stopMusic();
+  }, [world?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isUnlocked = (_level: Level, index: number): boolean => {
     if (DEV_UNLOCK_ALL || devUnlockAll) return true;
@@ -48,7 +55,10 @@ export default function WorldScreen(): React.ReactElement {
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
           <Pressable
-            onPress={() => router.back()}
+            onPress={() => {
+              playSound('nav-back');
+              router.back();
+            }}
             accessibilityLabel="Zurück"
             accessibilityRole="button"
             hitSlop={10}

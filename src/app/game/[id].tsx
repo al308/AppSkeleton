@@ -15,6 +15,8 @@ import { useSettingsStore } from '../../store/settingsStore';
 import { usePuzzle } from '../../hooks/usePuzzle';
 import { useTimer } from '../../hooks/useTimer';
 import { useOrientation } from '../../hooks/useOrientation';
+import { playSound } from '../../audio/soundEffects';
+import { playWorldMusic, stopMusic } from '../../audio/musicPlayer';
 import { PuzzleBoard } from '../../components/puzzle/PuzzleBoard';
 import { SolutionReference } from '../../components/puzzle/SolutionReference';
 import { HUD } from '../../components/ui/HUD';
@@ -52,6 +54,11 @@ export default function GameScreen(): React.ReactElement {
   useEffect(() => {
     AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);
   }, []);
+
+  useEffect(() => {
+    if (level) playWorldMusic(level.world);
+    return () => stopMusic();
+  }, [level?.world]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const initialState: PuzzleState = useMemo(() => {
     if (!level) return { tiles: [], size: 3, blankIndex: 0 };
@@ -114,6 +121,7 @@ export default function GameScreen(): React.ReactElement {
     if (animationsEnabled) {
       setShowConfetti(true);
       setShowWinFlash(true);
+      playSound('confetti-burst');
     }
     const t = setTimeout(() => setShowCompletion(true), reduceMotion ? 0 : 1200);
     return () => clearTimeout(t);
@@ -144,6 +152,7 @@ export default function GameScreen(): React.ReactElement {
   const handleHint = useCallback(() => {
     if (hints.hintsRemaining <= 0) return;
     hints.requestHint(puzzleState, 1);
+    playSound('hint-reveal');
   }, [hints, puzzleState]);
 
   const hintedPositionIndex: number | null = useMemo(() => {
@@ -191,7 +200,10 @@ export default function GameScreen(): React.ReactElement {
       <SafeAreaView style={styles.safe}>
         <View style={styles.topBar}>
           <Pressable
-            onPress={() => setShowPause(true)}
+            onPress={() => {
+              playSound('modal-open');
+              setShowPause(true);
+            }}
             accessibilityLabel="Zurück"
             accessibilityRole="button"
             hitSlop={10}
@@ -286,7 +298,13 @@ export default function GameScreen(): React.ReactElement {
           <View style={styles.pauseOverlay}>
             <View style={styles.pauseCard}>
               <Text style={styles.pauseTitle}>Pause</Text>
-              <GameButton label="Weiter spielen" onPress={() => setShowPause(false)} />
+              <GameButton
+                label="Weiter spielen"
+                onPress={() => {
+                  playSound('modal-close');
+                  setShowPause(false);
+                }}
+              />
               <GameButton
                 label="Neustart"
                 variant="ghost"

@@ -1,0 +1,71 @@
+# AssetGen manifest template.
+#
+# Copy this file to assets.yaml in your project root (or pass
+# --manifest <path> to generate.mjs) and fill in `project` + `assets`.
+#
+# Philosophy: you describe WHAT each asset is (the subject); prompts.mjs
+# handles HOW it looks (style, lighting, framing, negative prompts) from the
+# `project.style` block below, so style stays consistent across every asset
+# without repeating it 40 times. See docs/STYLE_GUIDE.md before filling this
+# in — five minutes spent on `project.style` is worth more than any amount
+# of per-asset prompt tweaking.
+
+project:
+  name: my-game
+  # See docs/STYLE_GUIDE.md. If omitted, the tool falls back to a "Stylized
+  # Game Art" default and prints a warning asking you to confirm — set this
+  # deliberately instead of relying on the fallback.
+  style: >
+    Hand-painted stylized game art in the visual language of a Nordic/Viking
+    fantasy world: bold simplified shapes, rich saturated but slightly muted
+    palette (deep blues, weathered wood browns, iron greys, accent gold),
+    painterly rendering with visible brushwork texture, dramatic directional
+    lighting with strong rim-light, no photorealism.
+
+  # Square is the safe default for most app/game asset slots (icons, tiles,
+  # cards). Override per-asset with `aspect:` if a slot needs otherwise.
+  default_aspect: '1:1' # one of 1:1, 3:2, 2:3, 16:9, 9:16
+
+  # Exclusions applied to every asset on top of each asset's own `exclude:`.
+  # Keep this to genuinely global constraints (e.g. "no people" for an
+  # environment-only asset set) — asset-specific exclusions belong on the
+  # asset itself.
+  global_exclude: [text, watermark, logo, signature, ui elements, low quality]
+
+# One entry per asset you need generated. `name` becomes the output
+# filename (`<name>.jpg`); keep it kebab-case and stable — re-running the
+# pipeline for a single asset uses this name to target it.
+assets:
+  - name: frost-giant-portrait
+    description: >
+      a towering frost giant, cracked ice-blue skin glowing faintly at the
+      fissures, thick braided white hair and beard, heavy fur and bone armor,
+      an expression of cold menace
+    framing: close-up portrait, centered, shoulders-up, symmetrical
+    # Per-asset override of project.style — use sparingly, only when one
+    # asset genuinely needs to break the house style (e.g. a UI icon next
+    # to painterly environment art).
+    # style_override: ...
+    exclude: [multiple heads, extra limbs, weapon in frame]
+
+  - name: longship-fjord
+    description: >
+      a weathered Viking longship beached on a rocky fjord shore, carved
+      dragon prow, sail furled around the mast, low mist rolling across the
+      water at dawn
+    framing: wide environmental shot, low horizon, three-quarter angle
+    aspect: '16:9'
+
+  - name: rune-stone-forest
+    description: >
+      an ancient moss-covered rune stone standing in a dense pine forest,
+      faint blue glow emanating from the carved runes, shafts of light
+      breaking through the canopy
+    framing: centered, eye-level, subject fills lower two-thirds of frame
+
+  # Add as many entries as you have assets to generate. There is no
+  # per-run limit — generate.mjs processes the whole manifest by default,
+  # or a subset via --only <name1,name2> / --tag <tag>.
+
+# Optional: group assets and target a subset with --tag <tag>.
+# Add `tags: [ui, icon]` to any asset entry above to use this.

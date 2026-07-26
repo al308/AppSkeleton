@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, Pressable, ViewStyle } from 'react-native';
 import { Game, Spacing, Radii, Typography } from '../../constants/theme';
+import { playSound } from '../../audio/soundEffects';
 
 type Variant = 'primary' | 'ghost';
 
@@ -24,9 +25,13 @@ export function GameButton({
   accessibilityLabel,
 }: Props): React.ReactElement {
   const isPrimary = variant === 'primary';
+  const handlePress = useCallback(() => {
+    playSound('button-tap');
+    onPress();
+  }, [onPress]);
   return (
     <Pressable
-      onPress={onPress}
+      onPress={handlePress}
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}

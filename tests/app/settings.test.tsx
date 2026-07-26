@@ -63,4 +63,20 @@ describe('Settings screen', () => {
 
     expect(useSettingsStore.getState().visualEffectsEnabled).toBe(false);
   });
+
+  it('toggles sound on and off', () => {
+    render(<SettingsScreen />);
+
+    fireEvent(screen.getByLabelText('Sound'), 'valueChange', false);
+
+    expect(useSettingsStore.getState().soundEnabled).toBe(false);
+  });
+
+  it('toggles music on and off', () => {
+    render(<SettingsScreen />);
+
+    fireEvent(screen.getByLabelText('Musik'), 'valueChange', false);
+
+    expect(useSettingsStore.getState().musicEnabled).toBe(false);
+  });
 });

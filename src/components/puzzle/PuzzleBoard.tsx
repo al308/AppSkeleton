@@ -9,6 +9,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
+import { playSound } from '../../audio/soundEffects';
 import { PuzzleState } from '../../engine/puzzle';
 import { AnimatedTile } from './AnimatedTile';
 import { BlankGlow } from './BlankGlow';
@@ -116,8 +117,10 @@ export function PuzzleBoard({
       const valid = onMove(tileIndex);
       if (valid) {
         triggerHaptic(true);
+        playSound('tile-slide');
       } else {
         playInvalidShake();
+        playSound('tile-invalid');
       }
     },
     [onMove, triggerHaptic, playInvalidShake],

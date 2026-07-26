@@ -9,6 +9,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
+import { playSound } from '../../audio/soundEffects';
 import { StarRating } from '../ui/StarRating';
 import { GameButton } from '../ui/GameButton';
 import { Game, Spacing, Radii, Typography } from '../../constants/theme';
@@ -64,6 +65,9 @@ export function CompletionModal({
       );
       badgeScale.value = withDelay(280, withSpring(1, { damping: 8, stiffness: 130 }));
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      playSound('level-complete-fanfare');
+      playSound('star-earned');
+      if (isNewBest) playSound('new-best-record');
     } else {
       slideY.value = 320;
       opacity.value = 0;

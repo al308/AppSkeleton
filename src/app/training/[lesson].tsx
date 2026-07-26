@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View, Text, Pressable, ScrollView, AccessibilityInfo } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,6 +14,7 @@ import { TRAINING_LESSONS, getTrainingLesson, TrainingLesson } from '../../data/
 import { Level } from '../../data/levels';
 import { TILE_GAP } from '../../constants/layout';
 import { Game, Spacing, Typography } from '../../constants/theme';
+import { playSound } from '../../audio/soundEffects';
 
 // A teaching board uses a synthetic pattern level (no image asset needed) and always
 // shows tile numbers — the numbers are the learner's anchor for tracking each tile.
@@ -70,6 +71,15 @@ function TrainingLessonView({ lesson }: { lesson: TrainingLesson }): React.React
       .catch(() => undefined);
   }, []);
 
+  const isFirstStepRender = useRef(true);
+  useEffect(() => {
+    if (isFirstStepRender.current) {
+      isFirstStepRender.current = false;
+      return;
+    }
+    playSound('training-step-complete');
+  }, [session.stepIndex]);
+
   const ts = tileSize(lesson.gridSize);
 
   // Only the schema move is accepted; any other tile shakes via the board's own feedback.
@@ -89,7 +99,10 @@ function TrainingLessonView({ lesson }: { lesson: TrainingLesson }): React.React
       <SafeAreaView style={styles.safe}>
         <View style={styles.topBar}>
           <Pressable
-            onPress={() => router.replace('/')}
+            onPress={() => {
+              playSound('nav-back');
+              router.replace('/');
+            }}
             accessibilityLabel="Training verlassen"
             accessibilityRole="button"
             hitSlop={10}

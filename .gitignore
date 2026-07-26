@@ -71,6 +71,13 @@ tools/solver-results.json
 tools/.genart-staging/
 tools/genart/.build/
 
+# assetgen: portable asset-generation tool (docs/specs/none — see
+# assetgen/README.md). Staging output and local env never committed.
+assetgen/.assetgen-staging/
+assetgen/.env
+assetgen/assets.yaml
+assetgen/sounds.yaml
+
 # Python bytecode
 __pycache__/
 *.pyc

@@ -8,6 +8,8 @@ export type Theme = 'light' | 'dark' | 'auto';
 
 type Settings = {
   hapticsEnabled: boolean;
+  soundEnabled: boolean;
+  musicEnabled: boolean;
   multiSlideEnabled: boolean;
   visualEffectsEnabled: boolean;
   controlMode: ControlMode;
@@ -27,6 +29,8 @@ type SettingsActions = {
 
 const DEFAULTS: Settings = {
   hapticsEnabled: true,
+  soundEnabled: true,
+  musicEnabled: true,
   multiSlideEnabled: false,
   visualEffectsEnabled: true,
   controlMode: 'both',

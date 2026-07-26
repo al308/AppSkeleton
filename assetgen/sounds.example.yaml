@@ -1,0 +1,54 @@
+# AssetGen sound manifest template.
+#
+# Copy to sounds.yaml (or pass --manifest <path> to generate-audio.mjs) and
+# fill in `project` + `assets`. See docs/AUDIO.md before generating anything
+# real — model choice, licensing, and the ComfyUI setup have real caveats.
+#
+# Same philosophy as assets.example.yaml (images): describe WHAT each sound
+# is, the tool handles consistent sonic style via `project.audio_style`.
+
+project:
+  name: my-game
+  # Optional shared sonic identity applied to every sound on top of its own
+  # description — e.g. "retro 8-bit chiptune" vs. "warm analog synth" vs.
+  # "crisp realistic foley". Stable Audio Open 1.0 is a text-to-audio
+  # diffusion model, not a synthesizer — it can't guarantee a literal
+  # "8-bit" waveform, but style language does measurably shift its output
+  # character. If omitted, the tool warns and generates from bare
+  # descriptions only (no warning suppression — see docs/AUDIO.md).
+  audio_style: >
+    Crisp, punchy game UI and foley sound design, close-mic'd, clean digital
+    production, no reverb tail, no background noise or hiss.
+
+  default_duration_seconds: 3 # most UI/SFX cues; override per-asset for longer ambiences
+
+  # Exclusions applied to every sound on top of each asset's own `exclude:`.
+  audio_global_exclude: [reverb, echo, background noise, hiss, low fidelity]
+
+assets:
+  - name: puzzle-tile-slide
+    description: a short satisfying wooden tile sliding and clicking into place
+    duration_seconds: 1
+
+  - name: level-complete-fanfare
+    description: a bright triumphant short fanfare, ascending chime notes, victorious mood
+    duration_seconds: 3
+    # By default "music"/"voice"/"singing" are excluded (most manifest
+    # entries are UI/foley SFX, where an invented melody is unwanted) — a
+    # genuinely musical cue like this one needs allow_music: true, or the
+    # default exclusion actively fights the description. See docs/AUDIO.md.
+    allow_music: true
+
+  - name: menu-button-tap
+    description: a soft short UI click, subtle and unobtrusive
+    duration_seconds: 1
+
+  - name: ambient-wind-loop
+    description: a gentle constant wind ambience over a snowy mountain pass
+    duration_seconds: 12
+    loopable: true # asks the model for a seamless loop — always spot-check the loop point manually, it is not guaranteed
+
+
+  # Add as many entries as you have sounds to generate. There is no
+  # per-run limit — generate-audio.mjs processes the whole manifest by
+  # default, or a subset via --only <name1,name2> / --tag <tag>.

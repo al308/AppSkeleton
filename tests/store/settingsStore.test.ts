@@ -20,3 +20,21 @@ describe('settingsStore visualEffectsEnabled', () => {
     expect(useSettingsStore.getState().visualEffectsEnabled).toBe(false);
   });
 });
+
+describe('settingsStore soundEnabled / musicEnabled', () => {
+  beforeEach(() => {
+    useSettingsStore.getState().reset();
+  });
+
+  it('default to enabled', () => {
+    expect(useSettingsStore.getState().soundEnabled).toBe(true);
+    expect(useSettingsStore.getState().musicEnabled).toBe(true);
+  });
+
+  it('update independently when set to disabled', () => {
+    useSettingsStore.getState().setSetting('soundEnabled', false);
+
+    expect(useSettingsStore.getState().soundEnabled).toBe(false);
+    expect(useSettingsStore.getState().musicEnabled).toBe(true);
+  });
+});
